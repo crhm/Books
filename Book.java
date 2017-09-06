@@ -1,7 +1,7 @@
 public class Book {
 	
 	private String title;
-	private Author author; //create class author
+	private Author author;
 	private String isbn;
 	private long goodreadsID;
 	private double numPages;
@@ -13,20 +13,20 @@ public class Book {
 	private Shelf shelf;
 	
 
-	/** Constructor de libro
-	 * Idealmente esos datos son sacados de un fichero csv de exportacion de estantes goodreads
-	 * y modificados necesiariamente (i.e. fechas, casts ?)
-	 * @param title String de titulo de librp
-	 * @param author Instancia de clase Author para el autor
-	 * @param isbn String de ISBN del libro
-	 * @param goodreadsID Long del numero de id dado por goodreads
-	 * @param numPages Double de numero de paginas
-	 * @param yearPublished String de ano de publicacion (primera publicacion)
-	 * @param generalRating Double de nota general en goodreads del libro
-	 * @param myRating Double de nota dado por yo al libro
-	 * @param dateRead String de fecha de lectura del libro
-	 * @param dateAdded String de fecha en que se anadio a mis estantes
-	 * @param shelf Instancia de la clase Shelf para el estante al que pertence
+	/** Constructor of Book
+	 * Ideally this data is extracted from a Goodreads export csv file
+	 * and modified as necessary (i.e. dates, casts ?)
+	 * @param title Title of book as a String
+	 * @param author Instance of Author class for author
+	 * @param isbn ISBN of the book as a String
+	 * @param goodreadsID Id number given by GoodReads as a long
+	 * @param numPages Page number as a double
+	 * @param yearPublished Year of (first) publication as a String
+	 * @param generalRating General rating in Goodreads as a double
+	 * @param myRating Rating I gave the book as a double
+	 * @param dateRead Date the book was read as a String
+	 * @param dateAdded Date the book was added to my shelves as a String
+	 * @param shelf Instance of class Shelf for the shelf to which it belongs
 	 */
 	public Book(String title, Author author, String isbn, long goodreadsID, double numPages, String yearPublished,
 			double generalRating, double myRating, String dateRead, String dateAdded, Shelf shelf) {
@@ -154,7 +154,7 @@ public class Book {
 	}
 
 
-	public String toStringCorto(){
+	public String toStringShort(){
 		return title + ", " + author; 
 	}
 

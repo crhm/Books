@@ -1,13 +1,13 @@
 import java.util.HashMap;
 
-public class Shelf { // todo: method return number of books
+public class Shelf {
 	
 	private String name;
-	private HashMap<String, Book> listOfBooks; //String es el isbn
+	private HashMap<String, Book> listOfBooks; //String is the isbn
 	
-	/** Constructor de estante
-	 * @param name Nombre del estante
-	 * @param listOfBooks Collection de libros en el estante
+	/** Constructor of Shelf
+	 * @param name Name of Shelf
+	 * @param listOfBooks Collection of books in the Shelf
 	 */
 	public Shelf(String name) {
 		this.name = name;
@@ -26,8 +26,8 @@ public class Shelf { // todo: method return number of books
 		this.listOfBooks = listOfBooks;
 	}
 	
-	public void addBook(Book libro){
-		this.listOfBooks.put(libro.getIsbn(), libro);
+	public void addBook(Book book){
+		this.listOfBooks.put(book.getIsbn(), book);
 	}
 	
 	public int numberOfBooks(){
@@ -39,11 +39,11 @@ public class Shelf { // todo: method return number of books
 	 */
 	@Override
 	public String toString() {
-		String lista = "";
+		String list = "";
 		for (Book b : listOfBooks.values()){
-			lista = lista.concat(b.toStringCorto() + "\n");
+			list = list.concat(b.toStringShort() + "\n");
 		}
-		return "Shelf " + name + ":\n" + lista ;
+		return "Shelf " + name + ":\n" + list ;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

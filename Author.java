@@ -5,13 +5,13 @@ public class Author {
 	private String firstName;
 	private String lastName;
 	private double goodreadsID;
-	private HashMap<String, Book> listOfBooks; //String es el isbn
+	private HashMap<String, Book> listOfBooks; //String is the isbn
 	
-	/** Constructor de Author - objeto autor para estar asociado a libros
-	 * Sacar datos de goodreads?
-	 * @param firstName Nombre del autor
-	 * @param lastName Apellido(s) del autor
-	 * @param goodreadsID Double correspondiendo a numero de identificacion goodreads
+	/** Constructor of Author - object author to be associated with books
+	 * Take data from Goodreads?
+	 * @param firstName First Name of Author
+	 * @param lastName Last Name(s) of Author
+	 * @param goodreadsID Double corresponding to a goodreads ID number
 	 */
 	public Author(String firstName, String lastName, double goodreadsID) {
 		this.firstName = firstName;
@@ -39,8 +39,8 @@ public class Author {
 		this.goodreadsID = goodreadsID;
 	}
 	
-	public void addBook(Book libro){
-		this.listOfBooks.put(libro.getIsbn(), libro);
+	public void addBook(Book book){
+		this.listOfBooks.put(book.getIsbn(), book);
 	}
 	
 	public int numberOfBooks(){
@@ -51,7 +51,7 @@ public class Author {
 		return listOfBooks;
 	}
 	
-	public String toStringLargo(){
+	public String toStringLong(){
 		return "Author [firstName=" + firstName + ", lastName=" + lastName + ", goodreadsID=" + goodreadsID + "]";
 	}
 	
@@ -79,7 +79,7 @@ public class Author {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	// Sobre la presuposicion que los ID de autores son unicos en goodreads
+	// On the assumption that goodreads IDs are unique in Goodreads
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

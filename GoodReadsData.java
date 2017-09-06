@@ -6,6 +6,8 @@
 // in the print out
 // TODO fix units of my rating and page number to be integers
 // TODO make get listaAutores to print more readably
+// TODO translate everything to english
+// TODO comment code
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,9 +21,9 @@ public class GoodReadsData {
 
 
 
-	/** Constructor del objeto Goodreads data - Inicialisa a vacio sus dos atributos
-	 * @param listaShelves Inicialisa listaShelves a un HashMap<String, Shelf> vacio
-	 * @param listaAutores Inicialisa listaAutores a un HashMap<String, Author> vacio
+	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
+	 * @param listaShelves Initialises listaShelves as an empty HashMap<String, Shelf>
+	 * @param listaAutores Initialises listaAutores as an empty HashMap<String, Author> 
 	 */
 	public GoodReadsData() {
 		this.listaShelves = new HashMap<>();
@@ -82,9 +84,8 @@ public class GoodReadsData {
 			int contador = 0;
 
 			for (String el : todo2 ){
-				if (contador!=0){ // para evitar la primera linea de cabeceras del csv
-					String[] temp = el.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); // para que se quedan las comas de dentro de ""
-
+				if (contador!=0){ // to avoid the first line of the header of the csv
+					String[] temp = el.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); // so that the comas stay within the ""
 					String[] libro = new String[19];
 
 					int cont = 0;
