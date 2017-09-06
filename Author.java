@@ -75,7 +75,8 @@ public class Author {
 	 * @return a single line containing all info of author (first Name, Last Name, goodreadsID)
 	 */
 	public String toStringLong(){
-		return "Author [firstName=" + firstName + ", lastName=" + lastName + ", goodreadsID=" + goodreadsID + "]";
+		return "Author\nFirst Name: " + firstName + "\nLast Name: " + lastName + "\nGoodreads ID: " 
+				+ goodreadsID + "\n";
 	}
 	
 	/* (non-Javadoc)

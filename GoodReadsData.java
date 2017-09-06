@@ -1,10 +1,6 @@
 // TODO pull author ID form goodreads API
 // TODO get rid of the occasional quotes in book titles to make format uniform
 // These are not originally in the csv so they get added on for some reason...
-// TODO improve shelf to string or get listShelves so that it is clearer when a new shelf starts
-// in the print out
-// TODO make get listAuthors to print more readably
-// TODO comment code
 // TODO create an output to a text file that has data; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
@@ -94,6 +90,42 @@ public class GoodReadsData {
 	
 	public void listBooksAdd(Book book) {
 		this.listBooks.put(book.getIsbn(), book);
+	}
+	
+	/** This is supposed to return a print-friendly String of all the authors, 
+	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	 * @return each author, to string, one after the other
+	 */
+	public String printableAuthors() {
+		String printableList = "";
+		for (Author au : getListAuthors().values()) {
+			printableList.concat(au + "\n");
+		}
+		return printableList;
+	}
+	
+	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
+	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	 * @return each shelf, to string, one after the other
+	 */
+	public String printableShelves() {
+		String printableList = "";
+		for (Shelf sh : getListShelves().values()) {
+			printableList.concat(sh + "\n");
+		}
+		return printableList;
+	}
+	
+	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
+	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	 * @return each book, to string, one after the other
+	 */
+	public String printableBooks() {
+		String printableList = "";
+		for (Book bo : getListBooks().values()) {
+			printableList.concat(bo + "\n");
+		}
+		return printableList;
 	}
 	
 	public void importFromGDCSV(){
@@ -224,8 +256,8 @@ public class GoodReadsData {
 		GoodReadsData obj = new GoodReadsData();
 		obj.importFromGDCSV();
 
-////		To test 	whether it worked in general by printing all shelves
-//		System.out.println(obj.getListShelves());
+//		Test printing all shelves
+		System.out.println(obj.printableShelves());
 //		
 ////		To test whether the function numberOfBooks works for each shelf		
 //		System.out.println("\nNumber of books in Read Shelf:");
@@ -234,10 +266,6 @@ public class GoodReadsData {
 //		System.out.println(obj.getListShelves().get("to-read").numberOfBooks());
 //		System.out.println("\nNumber of books in Currently Reading Shelf:");
 //		System.out.println(obj.getListShelves().get("currently-reading").numberOfBooks());
-
-//
-////		To test whether function getListAuthors works
-//		System.out.println(obj.getListAuthors());
 //
 ////		To test whether getting a single shelf works
 //		System.out.println(obj.getListShelves().get("read"));
@@ -247,7 +275,7 @@ public class GoodReadsData {
 //
 //// 	To test whether getting something like listofBooks from an author works
 //		System.out.println(obj.getListAuthors().get("Murakami").getListOfBooks());
-
+//
 ////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("1Q84"));

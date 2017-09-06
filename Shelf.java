@@ -63,7 +63,7 @@ public class Shelf {
 		for (Book b : getListOfBooks().values()){
 			list = list.concat(b.toString() + "\n");
 		}
-		return "Shelf " + name + ":\n" + list ;
+		return "\nShelf " + name + ":\n" + list ;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
