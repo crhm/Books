@@ -1,12 +1,14 @@
 // TODO pull author ID form goodreads API
-// TODO write up what the format of csv I'm using is
-// TODO write a function to go from basic csv export to usable one
 // TODO get rid of the occasional quotes in book titles to make format uniform
-// TODO improve shelf to string or get listashelves so that it is clearer when a new shelf starts
+// TODO improve shelf to string or get listShelves so that it is clearer when a new shelf starts
 // in the print out
-// TODO fix units of my rating and page number to be integers
 // TODO make get listAuthors to print more readably
 // TODO comment code
+
+/* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
+ * from the name to everything else, so no changes are needed on that end if the file is to be
+ * gotten from an api request in the future.
+ */
 
 import java.io.BufferedReader;
 import java.io.FileReader;
