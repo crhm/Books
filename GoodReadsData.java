@@ -8,12 +8,12 @@
 // TODO create an output to a text file that has data; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
-// TODO a user input option for path to csv file
 // TODO getBook function that prints detailed info about said book using book.toStringLong()
 // TODO fix doubling of names when authors don't have a first and last name but just a last name
 // like Euripides for example
 // TODO fix get book function in shelf and author
 // TODO create in main class a listBooks parameter? 
+// TODO make sure user input for file name is user-error proof
 
 /* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
  * from the name to everything else, so no changes are needed on that end if the file is to be
@@ -22,6 +22,7 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -79,13 +80,17 @@ public class GoodReadsData {
 	}
 
 	public void importFromGDCSV(){
-		BufferedReader br = null;
+		BufferedReader br1 = null;
+		BufferedReader br2 = null;
 		String line = "";
 
 		try {
-			br = new BufferedReader(new FileReader("src/goodreads_library_export.csv"));
+			br1 = new BufferedReader(new InputStreamReader(System.in));
+			System.out.println("Please input name of csv file to be imported:");
+			String path = br1.readLine();
+			br2 = new BufferedReader(new FileReader("src/" + path));
 			StringBuilder sb = new StringBuilder();
-			while ((line = br.readLine()) != null){
+			while ((line = br2.readLine()) != null){
 				sb.append(line);
 				sb.append(System.lineSeparator());
 			}
@@ -171,8 +176,9 @@ public class GoodReadsData {
 					}
 
 					// Creates the book with its parameters
-					Book livre = new Book(title, getListAuthors().get(lastName), isbn, goodreadsID, numPages, 
-							year, avRating, myRating, dateRead, dateAdded, getListShelves().get(book[18]));
+					Book livre = new Book(title, getListAuthors().get(lastName), isbn, goodreadsID, 
+							numPages, year, avRating, myRating, dateRead, dateAdded, 
+							getListShelves().get(book[18]));
 					
 					// Adds book to its shelf
 					livre.getShelf().addBook(livre);
@@ -185,9 +191,9 @@ public class GoodReadsData {
 		} catch (Exception e){
 			e.printStackTrace();
 		} finally {
-			if (br != null){
+			if (br2 != null){
 				try{
-					br.close();
+					br2.close();
 				} catch (IOException e){
 					e.printStackTrace();
 				}
@@ -209,7 +215,7 @@ public class GoodReadsData {
 //		System.out.println(obj.getListShelves().get("to-read").numberOfBooks());
 //		System.out.println("\nNumber of books in Currently Reading Shelf:");
 //		System.out.println(obj.getListShelves().get("currently-reading").numberOfBooks());
-//
+
 //
 ////		To test whether function getListAuthors works
 //		System.out.println(obj.getListAuthors());
