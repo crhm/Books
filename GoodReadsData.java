@@ -5,8 +5,7 @@
 // TODO improve shelf to string or get listashelves so that it is clearer when a new shelf starts
 // in the print out
 // TODO fix units of my rating and page number to be integers
-// TODO make get listaAutores to print more readably
-// TODO translate everything to english
+// TODO make get listAuthors to print more readably
 // TODO comment code
 
 import java.io.BufferedReader;
@@ -16,133 +15,133 @@ import java.util.HashMap;
 
 public class GoodReadsData { 
 
-	private HashMap<String, Shelf> listaShelves;
-	private HashMap<String, Author> listaAutores;
+	private HashMap<String, Shelf> listShelves;
+	private HashMap<String, Author> listAuthors;
 
 
 
 	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
-	 * @param listaShelves Initialises listaShelves as an empty HashMap<String, Shelf>
-	 * @param listaAutores Initialises listaAutores as an empty HashMap<String, Author> 
+	 * @param listShelves Initialises listShelves as an empty HashMap<String, Shelf>
+	 * @param listAuthors Initialises listAuthors as an empty HashMap<String, Author> 
 	 */
 	public GoodReadsData() {
-		this.listaShelves = new HashMap<>();
-		this.listaAutores = new HashMap<>();
+		this.listShelves = new HashMap<>();
+		this.listAuthors = new HashMap<>();
 	}
 
 	/**
-	 * @return the listaShelves
+	 * @return the listShelves
 	 */
-	public HashMap<String, Shelf> getListaShelves() {
-		return listaShelves;
+	public HashMap<String, Shelf> getListShelves() {
+		return listShelves;
 	}
 
 
 	/**
-	 * @param listaShelves the listaShelves to set
+	 * @param listShelves the listShelves to set
 	 */
-	public void setListaShelves(HashMap<String, Shelf> listaShelves) {
-		this.listaShelves = listaShelves;
+	public void setListShelves(HashMap<String, Shelf> listShelves) {
+		this.listShelves = listShelves;
 	}
 
 	/**
-	 * @return the listaAutores
+	 * @return the listAuthors
 	 */
-	public HashMap<String, Author> getListaAutores() {
-		return listaAutores;
+	public HashMap<String, Author> getListAuthors() {
+		return listAuthors;
 	}
 
 	/**
-	 * @param listaAutores the listaAutores to set
+	 * @param listAuthors the listAuthors to set
 	 */
-	public void setListaAutores(HashMap<String, Author> listaAutores) {
-		this.listaAutores = listaAutores;
+	public void setListAuthors(HashMap<String, Author> listAuthors) {
+		this.listAuthors = listAuthors;
 	}
 
-	public void listaAutoresAdd(Author autor){
-		this.listaAutores.put(autor.getLastName(), autor);
+	public void listAuthorsAdd(Author autor){
+		this.listAuthors.put(autor.getLastName(), autor);
 	}
 
-	public void listaShelvesAdd(Shelf shelf){
-		this.listaShelves.put(shelf.getName(), shelf);
+	public void listShelvesAdd(Shelf shelf){
+		this.listShelves.put(shelf.getName(), shelf);
 	}
 
 	public void importFromGDCSV(){
 		BufferedReader br = null;
-		String linea = "";
+		String line = "";
 
 		try {
 			br = new BufferedReader(new FileReader("src/goodreads_library_export.csv"));
 			StringBuilder sb = new StringBuilder();
-			while ((linea = br.readLine()) != null){
-				sb.append(linea);
+			while ((line = br.readLine()) != null){
+				sb.append(line);
 				sb.append(System.lineSeparator());
 			}
 			String todo1 = sb.toString();
 			String[] todo2 = todo1.split("\n");
 
-			int contador = 0;
+			int counter = 0;
 
 			for (String el : todo2 ){
-				if (contador!=0){ // to avoid the first line of the header of the csv
+				if (counter!=0){ // to avoid the first line of the header of the csv
 					String[] temp = el.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); // so that the comas stay within the ""
-					String[] libro = new String[19];
+					String[] book = new String[19];
 
-					int cont = 0;
+					int count = 0;
 					for (String e : temp){
-						if(cont<19){
-							libro[cont] = e.trim();
-							cont++;
+						if(count<19){
+							book[count] = e.trim();
+							count++;
 						}
 					}
 
 
-					long goodreadsID = Long.parseLong(libro[0]);
-					String title = libro[1];
-					String[] nombresAutor = libro[3].split(", ");
-					String appellido = nombresAutor[0].replace("\"", "");
-					String nombre = nombresAutor[1].replace("\"", "");
-					if (!getListaAutores().containsKey(appellido)){
-						listaAutoresAdd(new Author(nombre, appellido, 0 ));
+					long goodreadsID = Long.parseLong(book[0]);
+					String title = book[1];
+					String[] namesAuthor = book[3].split(", ");
+					String lastName = namesAuthor[0].replace("\"", "");
+					String firstName = namesAuthor[1].replace("\"", "");
+					if (!getListAuthors().containsKey(lastName)){
+						listAuthorsAdd(new Author(firstName, lastName, 0 ));
 					}
 					String isbn = "";
-					if (libro[5]!= null && libro[5].length()==17){
-						//isbn = libro[5].substring(4, 14);
-						isbn = libro[5].replaceAll("\"", "").replaceAll("=", "");
+					if (book[5]!= null && book[5].length()==17){
+						//isbn = book[5].substring(4, 14);
+						isbn = book[5].replaceAll("\"", "").replaceAll("=", "");
 
 					}
 					double myRating = -1;
-					if (libro[7]!= null && libro[7].length() >0){
-						myRating = Double.parseDouble(libro[7]);
+					if (book[7]!= null && book[7].length() >0){
+						myRating = Double.parseDouble(book[7]);
 					}
 					double avRating = -1;
-					if (libro[8]!= null && libro[8].length() >0){
-						avRating = Double.parseDouble(libro[8]);
+					if (book[8]!= null && book[8].length() >0){
+						avRating = Double.parseDouble(book[8]);
 					}
 					double numPages = -1;
-					if (libro[11]!= null && libro[11].length() >0){
-						numPages = Double.parseDouble(libro[11]); 
+					if (book[11]!= null && book[11].length() >0){
+						numPages = Double.parseDouble(book[11]); 
 					}
 					String year = "";
-					if (libro[13]!= null && libro[13].length() >0){
-						year = libro[13];
+					if (book[13]!= null && book[13].length() >0){
+						year = book[13];
 					}
 					String dateRead = "";
-					if (libro[14]!= null && libro[14].length() >0){
-						dateRead = libro[14];
+					if (book[14]!= null && book[14].length() >0){
+						dateRead = book[14];
 					}
-					String dateAdded = libro[15];
+					String dateAdded = book[15];
 
-					if (!getListaShelves().containsKey(libro[18])){
-						listaShelvesAdd(new Shelf(libro[18]));
+					if (!getListShelves().containsKey(book[18])){
+						listShelvesAdd(new Shelf(book[18]));
 					}
 
-					Book livre = new Book(title, getListaAutores().get(appellido), isbn, goodreadsID, numPages, 
-							year, avRating, myRating, dateRead, dateAdded, getListaShelves().get(libro[18]));
+					Book livre = new Book(title, getListAuthors().get(lastName), isbn, goodreadsID, numPages, 
+							year, avRating, myRating, dateRead, dateAdded, getListShelves().get(book[18]));
 					livre.getShelf().addBook(livre);
 					livre.getAuthor().addBook(livre);
 				}
-				contador++;
+				counter++;
 			}
 
 		} catch (Exception e){
@@ -162,29 +161,29 @@ public class GoodReadsData {
 		GoodReadsData obj = new GoodReadsData();
 		obj.importFromGDCSV();
 
-//		To test 	whether it worked in general by printing all shelves
-//		System.out.println(obj.getListaShelves());
-		
-//		To test whether the function numberOfBooks works for each shelf		
+////		To test 	whether it worked in general by printing all shelves
+//		System.out.println(obj.getListShelves());
+//		
+////		To test whether the function numberOfBooks works for each shelf		
 //		System.out.println("\nNumber of books in Read Shelf:");
-//		System.out.println(obj.getListaShelves().get("read").numberOfBooks());
+//		System.out.println(obj.getListShelves().get("read").numberOfBooks());
 //		System.out.println("\nNumber of books in To Read Shelf:");
-//		System.out.println(obj.getListaShelves().get("to-read").numberOfBooks());
+//		System.out.println(obj.getListShelves().get("to-read").numberOfBooks());
 //		System.out.println("\nNumber of books in Currently Reading Shelf:");
-//		System.out.println(obj.getListaShelves().get("currently-reading").numberOfBooks());
-
-
-//		To test whether function getListaAutores works
-//		System.out.println(obj.getListaAutores());
-
-//		To test whether getting a single shelf works
-//		System.out.println(obj.getListaShelves().get("read"));
-
-//		To test whether getting a single author works		
-//		System.out.println(obj.getListaAutores().get("Murakami"));
-
-// To test whether getting something like listofBooks from an author works
-//		System.out.println(obj.getListaAutores().get("Murakami").getListOfBooks());
+//		System.out.println(obj.getListShelves().get("currently-reading").numberOfBooks());
+//
+//
+////		To test whether function getListAuthors works
+//		System.out.println(obj.getListAuthors());
+//
+////		To test whether getting a single shelf works
+//		System.out.println(obj.getListShelves().get("read"));
+//
+////		To test whether getting a single author works		
+//		System.out.println(obj.getListAuthors().get("Murakami"));
+//
+//// 		To test whether getting something like listofBooks from an author works
+//		System.out.println(obj.getListAuthors().get("Murakami").getListOfBooks());
 
 
 	}
