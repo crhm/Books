@@ -34,14 +34,34 @@ public class Shelf {
 		return getListOfBooks().values().size();
 	}
 	
+	/** Returns detailed info about one of its books if it finds it, otherwise it displays
+	 * an error message
+	 * @param title String of book title
+	 * @return All info available on that book
+	 */
+	public String getBook(String title) {
+		String errorMessage = "Sorry, " + title + " was not found in this shelf";
+		double flag = 0;
+		String bookInfo = "";
+		for (Book b : getListOfBooks().values()){
+			if (b.getTitle() == title) {
+				flag++;
+				bookInfo = b.toStringLong();
+			}
+		}
+		if (flag == 0) {
+			return errorMessage;
+		} else return bookInfo;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		String list = "";
-		for (Book b : listOfBooks.values()){
-			list = list.concat(b.toStringShort() + "\n");
+		for (Book b : getListOfBooks().values()){
+			list = list.concat(b.toString() + "\n");
 		}
 		return "Shelf " + name + ":\n" + list ;
 	}

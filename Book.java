@@ -153,9 +153,15 @@ public class Book {
 		this.shelf = shelf;
 	}
 
-
-	public String toStringShort(){
-		return title + ", " + author; 
+	/** 
+	 * @return All parameters of the book, in order: title, author, isbn, goodreadsID, 
+	 * number of pages, year Published, general Rating, my Rating, date read, date added, and Shelf
+	 */
+	public String toStringLong(){
+		return "Book\nTitle: " + title + "\nAuthor: " + author + "\nISBN: " + isbn + "\nGoodreads ID: " + goodreadsID
+				+ "\nNumber of Pages: " + numPages + "\nYear Published: " + yearPublished + "\nGeneral Rating: " + generalRating
+				+ "\nMy Rating:" + myRating + "\nDate Read: " + dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName()
+				+ "\n";
 	}
 
 	/* (non-Javadoc)
@@ -163,10 +169,8 @@ public class Book {
 	 */
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", author=" + author + ", isbn=" + isbn + ", goodreadsID=" + goodreadsID
-				+ ", numPages=" + numPages + ", yearPublished=" + yearPublished + ", generalRating=" + generalRating
-				+ ", myRating=" + myRating + ", dateRead=" + dateRead + ", dateAdded=" + dateAdded + ", shelf=" + shelf.getName()
-				+ "]";
+		return title + ", " + author; 
+
 	}
 
 

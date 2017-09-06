@@ -51,6 +51,29 @@ public class Author {
 		return listOfBooks;
 	}
 	
+	/** Returns detailed info about one of its books if it finds it, otherwise it displays
+	 * an error message
+	 * @param title String of book title
+	 * @return All info available on that book
+	 */
+	public String getBook(String title) {
+		String errorMessage = "Sorry, " + title + " was not found for this author";
+		double flag = 0;
+		String bookInfo = "";
+		for (Book b : getListOfBooks().values()){
+			if (b.getTitle() == title) {
+				flag++;
+				bookInfo = b.toStringLong();
+			}
+		}
+		if (flag == 0) {
+			return errorMessage;
+		} else return bookInfo;
+	}
+	
+	/** Function that returns a detailed string containing all the information about the author
+	 * @return a single line containing all info of author (first Name, Last Name, goodreadsID)
+	 */
 	public String toStringLong(){
 		return "Author [firstName=" + firstName + ", lastName=" + lastName + ", goodreadsID=" + goodreadsID + "]";
 	}
