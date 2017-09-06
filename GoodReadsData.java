@@ -8,11 +8,9 @@
 // TODO create an output to a text file that has data; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
-// TODO getBook function that prints detailed info about said book using book.toStringLong()
 // TODO fix doubling of names when authors don't have a first and last name but just a last name
 // like Euripides for example
 // TODO fix get book function in shelf and author
-// TODO create in main class a listBooks parameter? 
 // TODO make sure user input for file name is user-error proof
 
 /* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
@@ -30,7 +28,7 @@ public class GoodReadsData {
 
 	private HashMap<String, Shelf> listShelves;
 	private HashMap<String, Author> listAuthors;
-
+	private HashMap<String, Book> listBooks;
 
 
 	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
@@ -40,6 +38,7 @@ public class GoodReadsData {
 	public GoodReadsData() {
 		this.listShelves = new HashMap<>();
 		this.listAuthors = new HashMap<>();
+		this.setListBooks(new HashMap<>());
 	}
 
 	/**
@@ -71,6 +70,20 @@ public class GoodReadsData {
 		this.listAuthors = listAuthors;
 	}
 
+	/**
+	 * @return the listBooks
+	 */
+	public HashMap<String, Book> getListBooks() {
+		return listBooks;
+	}
+
+	/**
+	 * @param listBooks the listBooks to set
+	 */
+	public void setListBooks(HashMap<String, Book> listBooks) {
+		this.listBooks = listBooks;
+	}
+
 	public void listAuthorsAdd(Author autor){
 		this.listAuthors.put(autor.getLastName(), autor);
 	}
@@ -78,7 +91,11 @@ public class GoodReadsData {
 	public void listShelvesAdd(Shelf shelf){
 		this.listShelves.put(shelf.getName(), shelf);
 	}
-
+	
+	public void listBooksAdd(Book book) {
+		this.listBooks.put(book.getIsbn(), book);
+	}
+	
 	public void importFromGDCSV(){
 		BufferedReader br1 = null;
 		BufferedReader br2 = null;
@@ -86,9 +103,9 @@ public class GoodReadsData {
 
 		try {
 			br1 = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Please input name of csv file to be imported:");
-			String path = br1.readLine();
-			br2 = new BufferedReader(new FileReader("src/" + path));
+			System.out.println("Please input name of csv file to be imported (without extension or path):");
+			String fileName = br1.readLine();
+			br2 = new BufferedReader(new FileReader("src/" + fileName + ".csv"));
 			StringBuilder sb = new StringBuilder();
 			while ((line = br2.readLine()) != null){
 				sb.append(line);
@@ -180,6 +197,8 @@ public class GoodReadsData {
 							numPages, year, avRating, myRating, dateRead, dateAdded, 
 							getListShelves().get(book[18]));
 					
+					listBooksAdd(livre);
+					
 					// Adds book to its shelf
 					livre.getShelf().addBook(livre);
 					// Adds book to its author
@@ -229,10 +248,9 @@ public class GoodReadsData {
 //// 	To test whether getting something like listofBooks from an author works
 //		System.out.println(obj.getListAuthors().get("Murakami").getListOfBooks());
 
-////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf.
+////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("1Q84"));
-
 
 	}
 
