@@ -2,11 +2,11 @@
 // TODO pull author ID form goodreads API
 // TODO create an output to a text file that has data analysis; 
 // TODO create the statistical functions, see Github. 
+// TODO create the ordering functions, see Github.
 // TODO implement try/ catch blocks and error messages
 
 // SMALL
 // TODO make sure user input for file name is user-error proof
-// TODO print list of books in shelf / author alphabetically ordered
 
 /* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
  * from the name to everything else, so no changes are needed on that end if the file is to be
@@ -18,7 +18,6 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.HashMap;
-
 
 public class GoodReadsData { 
 
@@ -314,7 +313,7 @@ public class GoodReadsData {
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 //		
 //		Testing the order by publication year
-		System.out.println(OrderBy.publicationDate(obj.getListShelves().get("read").getListOfBooks()));
+		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
 
 	}
 
