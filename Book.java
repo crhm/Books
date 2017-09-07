@@ -158,9 +158,11 @@ public class Book {
 	 * number of pages, year Published, general Rating, my Rating, date read, date added, and Shelf
 	 */
 	public String toStringLong(){
+		int pages = (int) numPages;
+		int rating = (int) myRating;
 		return "Book\nTitle: " + title + "\nAuthor: " + author + "\nISBN: " + isbn + "\nGoodreads ID: "
-				+ goodreadsID + "\nNumber of Pages: " + numPages + "\nYear Published: " + yearPublished 
-				+ "\nGeneral Rating: " + generalRating + "\nMy Rating: " + myRating + "\nDate Read: " 
+				+ goodreadsID + "\nNumber of Pages: " + pages + "\nYear Published: " + yearPublished 
+				+ "\nGeneral Rating: " + generalRating + "\nMy Rating: " + rating + "\nDate Read: " 
 				+ dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName() + "\n";
 	}
 
