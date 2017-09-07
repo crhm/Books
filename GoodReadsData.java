@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.HashMap;
 
+
 public class GoodReadsData { 
 
 	private HashMap<String, Shelf> listShelves;
@@ -140,6 +141,7 @@ public class GoodReadsData {
 		}
 		return printableList;
 	}
+	
 	
 	/** This is the crucial function of this class. It asks the name of the csv file to be inputted by the
 	 * user in console, but expects to find the file in the src folder in which the code is. 
@@ -310,6 +312,9 @@ public class GoodReadsData {
 ////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
+//		
+//		Testing the order by publication year
+		System.out.println(OrderBy.publicationDate(obj.getListShelves().get("read").getListOfBooks()));
 
 	}
 
