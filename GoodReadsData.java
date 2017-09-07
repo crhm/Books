@@ -5,8 +5,6 @@
 // TODO implement try/ catch blocks and error messages
 
 // SMALL
-// TODO fix doubling of names when authors don't have a first and last name but just a last name
-// like Euripides for example
 // TODO fix get book function in shelf and author
 // TODO make sure user input for file name is user-error proof
 // TODO fix printableShelves and printableBooks and printableAuthors
@@ -184,6 +182,11 @@ public class GoodReadsData {
 					String lastName = namesAuthor[0].replace("\"", "");
 					String firstName = namesAuthor[1].replace("\"", "");
 					
+					// To remove the doubling of names when authors go by a single name, like Colette
+					if (lastName.equals(firstName)) {
+						firstName = "";
+					}
+					
 					if (!getListAuthors().containsKey(lastName)){
 						listAuthorsAdd(new Author(firstName, lastName, 0 ));
 					}
@@ -260,7 +263,7 @@ public class GoodReadsData {
 
 ////		Test printing all shelves
 //		System.out.println(obj.printableShelves());
-		
+//		
 //		Test meanwhile printable methods don't work
 		System.out.println(obj.getListShelves());
 //		
