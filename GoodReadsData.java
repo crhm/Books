@@ -6,7 +6,7 @@
 
 // SMALL
 // TODO make sure user input for file name is user-error proof
-// TODO fix printableShelves and printableBooks and printableAuthors
+// TODO print list of books in shelf / author alphabetically ordered
 
 /* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
  * from the name to everything else, so no changes are needed on that end if the file is to be
@@ -112,7 +112,7 @@ public class GoodReadsData {
 	public String printableAuthors() {
 		String printableList = "";
 		for (Author au : getListAuthors().values()) {
-			printableList.concat(au + "\n");
+			printableList = printableList.concat(au + "\n");
 		}
 		return printableList;
 	}
@@ -124,7 +124,7 @@ public class GoodReadsData {
 	public String printableShelves() {
 		String printableList = "";
 		for (Shelf sh : getListShelves().values()) {
-			printableList.concat(sh + "\n");
+			printableList = printableList.concat(sh + "\n");
 		}
 		return printableList;
 	}
@@ -136,7 +136,7 @@ public class GoodReadsData {
 	public String printableBooks() {
 		String printableList = "";
 		for (Book bo : getListBooks().values()) {
-			printableList.concat(bo + "\n");
+			printableList = printableList.concat(bo + "\n");
 		}
 		return printableList;
 	}
@@ -307,9 +307,9 @@ public class GoodReadsData {
 //// 	To test whether getting something like listofBooks from an author works
 //		System.out.println(obj.getListAuthors().get("Murakami").getListOfBooks());
 //
-//		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
-		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
-		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
+////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
+//		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
+//		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 
 	}
 
