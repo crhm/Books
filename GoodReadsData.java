@@ -1,13 +1,15 @@
+// BIG
 // TODO pull author ID form goodreads API
-// TODO get rid of the occasional quotes in book titles to make format uniform
-// These are not originally in the csv so they get added on for some reason...
-// TODO create an output to a text file that has data; 
+// TODO create an output to a text file that has data analysis; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
+
+// SMALL
 // TODO fix doubling of names when authors don't have a first and last name but just a last name
 // like Euripides for example
 // TODO fix get book function in shelf and author
 // TODO make sure user input for file name is user-error proof
+// TODO fix printableShelves and printableBooks and printableAuthors
 
 /* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
  * from the name to everything else, so no changes are needed on that end if the file is to be
@@ -94,7 +96,7 @@ public class GoodReadsData {
 	
 	/** This is supposed to return a print-friendly String of all the authors, 
 	 * But it doesn't work because it doesn't enter the for and I don't know why.
-	 * @return each author, to string, one after the other
+	 * @return each author, to string, on a separate line
 	 */
 	public String printableAuthors() {
 		String printableList = "";
@@ -106,7 +108,7 @@ public class GoodReadsData {
 	
 	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
 	 * But it doesn't work because it doesn't enter the for and I don't know why.
-	 * @return each shelf, to string, one after the other
+	 * @return each shelf, to string, ending with a new line
 	 */
 	public String printableShelves() {
 		String printableList = "";
@@ -118,7 +120,7 @@ public class GoodReadsData {
 	
 	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
 	 * But it doesn't work because it doesn't enter the for and I don't know why.
-	 * @return each book, to string, one after the other
+	 * @return each book, to string, on a separate line
 	 */
 	public String printableBooks() {
 		String printableList = "";
@@ -177,7 +179,7 @@ public class GoodReadsData {
 					// and creating the relevant class instance if they don't already exist
 					
 					long goodreadsID = Long.parseLong(book[0]);
-					String title = book[1];
+					String title = book[1].replace("\"", "");
 					String[] namesAuthor = book[3].split(", ");
 					String lastName = namesAuthor[0].replace("\"", "");
 					String firstName = namesAuthor[1].replace("\"", "");
@@ -256,8 +258,11 @@ public class GoodReadsData {
 		GoodReadsData obj = new GoodReadsData();
 		obj.importFromGDCSV();
 
-//		Test printing all shelves
-		System.out.println(obj.printableShelves());
+////		Test printing all shelves
+//		System.out.println(obj.printableShelves());
+		
+//		Test meanwhile printable methods don't work
+		System.out.println(obj.getListShelves());
 //		
 ////		To test whether the function numberOfBooks works for each shelf		
 //		System.out.println("\nNumber of books in Read Shelf:");
