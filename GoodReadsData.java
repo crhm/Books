@@ -5,7 +5,6 @@
 // TODO implement try/ catch blocks and error messages
 
 // SMALL
-// TODO fix get book function in shelf and author
 // TODO make sure user input for file name is user-error proof
 // TODO fix printableShelves and printableBooks and printableAuthors
 
@@ -34,10 +33,11 @@ public class GoodReadsData {
 	public GoodReadsData() {
 		this.listShelves = new HashMap<>();
 		this.listAuthors = new HashMap<>();
-		this.setListBooks(new HashMap<>());
+		this.listBooks = new HashMap<>();
 	}
 
-	/**
+	/** Returns the HashMap<String, Shelf> called listShelves that contains all the shelves in the library export
+	 * and their key is their names, which goodreads seems to format "currently-reading" for "Currently Reading".
 	 * @return the listShelves
 	 */
 	public HashMap<String, Shelf> getListShelves() {
@@ -52,7 +52,9 @@ public class GoodReadsData {
 		this.listShelves = listShelves;
 	}
 
-	/**
+	/** Returns the HashMap<String, Author> called listAuthors that contains all authors in the library export
+	 * and their key is their last Names, hence why authors who go by a single name like Colette are assigned 
+	 * an empty first name rather than an empty last name.
 	 * @return the listAuthors
 	 */
 	public HashMap<String, Author> getListAuthors() {
@@ -66,7 +68,9 @@ public class GoodReadsData {
 		this.listAuthors = listAuthors;
 	}
 
-	/**
+	/** Returns the HashMap<String, Book> called listBooks that contains all of the books of the library export
+	 * and their key is their ISBN, to be consistent with the listOfBooks in Shelf and Author which also work
+	 * via ISBN as keys rather than book titles. 
 	 * @return the listBooks
 	 */
 	public HashMap<String, Book> getListBooks() {
@@ -80,14 +84,23 @@ public class GoodReadsData {
 		this.listBooks = listBooks;
 	}
 
-	public void listAuthorsAdd(Author autor){
-		this.listAuthors.put(autor.getLastName(), autor);
+	/** Adds an author to the listAuthors parameter of this class
+	 * @param author Author to be added to the listAuthors
+	 */
+	public void listAuthorsAdd(Author author){
+		this.listAuthors.put(author.getLastName(), author);
 	}
 
+	/** Adds a shelf to the listShelves parameter of this class
+	 * @param shelf Shelf to be added to the listShelves
+	 */
 	public void listShelvesAdd(Shelf shelf){
 		this.listShelves.put(shelf.getName(), shelf);
 	}
 	
+	/** Adds a book to the listBooks parameter of this class
+	 * @param book Book to be added to the listBooks
+	 */
 	public void listBooksAdd(Book book) {
 		this.listBooks.put(book.getIsbn(), book);
 	}
@@ -128,6 +141,16 @@ public class GoodReadsData {
 		return printableList;
 	}
 	
+	/** This is the crucial function of this class. It asks the name of the csv file to be inputted by the
+	 * user in console, but expects to find the file in the src folder in which the code is. 
+	 * Then it divides the input into one line per csv entry (and holds them in array todo2), 
+	 * then the first 19 components of each line (corresponding to the first 19 columns of the csv) 
+	 * are placed into an array, and the useful elements amongst those 19 are used to create an instance of Book, 
+	 * placed into an existing shelf or creating a new shelf if need be, and assigned to an existing author 
+	 * or creating a new author if need be.
+	 * The operation is repeated for each line in array todo2, effectively doing so for each line in the csv,
+	 * and loading the goodreads library into Books, Authors and Shelves.
+	 */
 	public void importFromGDCSV(){
 		BufferedReader br1 = null;
 		BufferedReader br2 = null;
@@ -264,8 +287,8 @@ public class GoodReadsData {
 ////		Test printing all shelves
 //		System.out.println(obj.printableShelves());
 //		
-//		Test meanwhile printable methods don't work
-		System.out.println(obj.getListShelves());
+////		Test meanwhile printable methods don't work
+//		System.out.println(obj.getListShelves());
 //		
 ////		To test whether the function numberOfBooks works for each shelf		
 //		System.out.println("\nNumber of books in Read Shelf:");
@@ -284,9 +307,9 @@ public class GoodReadsData {
 //// 	To test whether getting something like listofBooks from an author works
 //		System.out.println(obj.getListAuthors().get("Murakami").getListOfBooks());
 //
-////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
-//		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
-//		System.out.println(obj.getListAuthors().get("Murakami").getBook("1Q84"));
+//		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
+		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
+		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 
 	}
 

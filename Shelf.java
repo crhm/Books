@@ -13,23 +13,41 @@ public class Shelf {
 		this.name = name;
 		this.listOfBooks = new HashMap<String, Book>();
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/** Returns the HashMap<String, Book> called listOfBooks which contains all the books in the shelf, 
+	 * and their key is their ISBN.
+	 * @return
+	 */
 	public HashMap<String, Book> getListOfBooks() {
 		return listOfBooks;
 	}
+	
+	/** Sets the list of books that the shelf contains, 
+	 * @param listOfBooks A HashMap with book ISBNs as keys and Book instances as values that will be the list
+	 * of books that the shelf contains
+	 */
 	public void setListOfBooks(HashMap<String, Book> listOfBooks) {
 		this.listOfBooks = listOfBooks;
 	}
 	
+	/** Adds a book to the Shelf by putting it in its listOfBooks
+	 * @param book Book to add to shelf
+	 */
 	public void addBook(Book book){
 		this.listOfBooks.put(book.getIsbn(), book);
 	}
 	
+	/** Returns the number of books in the shelf as an int
+	 * @return An int, the number of books in the shelf
+	 */
 	public int numberOfBooks(){
 		return getListOfBooks().values().size();
 	}
@@ -44,7 +62,7 @@ public class Shelf {
 		double flag = 0;
 		String bookInfo = "";
 		for (Book b : getListOfBooks().values()){
-			if (b.getTitle() == title) {
+			if (b.getTitle().equals(title)) {
 				flag++;
 				bookInfo = b.toStringLong();
 			}

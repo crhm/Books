@@ -61,7 +61,7 @@ public class Author {
 		double flag = 0;
 		String bookInfo = "";
 		for (Book b : getListOfBooks().values()){
-			if (b.getTitle() == title) {
+			if (b.getTitle().equals(title)) {
 				flag++;
 				bookInfo = b.toStringLong();
 			}

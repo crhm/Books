@@ -19,7 +19,7 @@ public class Book {
 	 * @param title Title of book as a String
 	 * @param author Instance of Author class for author
 	 * @param isbn ISBN of the book as a String
-	 * @param goodreadsID Id number given by GoodReads as a long
+	 * @param goodreadsID ID number given by GoodReads as a long
 	 * @param numPages Page number as a double
 	 * @param yearPublished Year of (first) publication as a String
 	 * @param generalRating General rating in Goodreads as a double
@@ -160,7 +160,7 @@ public class Book {
 	public String toStringLong(){
 		return "Book\nTitle: " + title + "\nAuthor: " + author + "\nISBN: " + isbn + "\nGoodreads ID: "
 				+ goodreadsID + "\nNumber of Pages: " + numPages + "\nYear Published: " + yearPublished 
-				+ "\nGeneral Rating: " + generalRating + "\nMy Rating:" + myRating + "\nDate Read: " 
+				+ "\nGeneral Rating: " + generalRating + "\nMy Rating: " + myRating + "\nDate Read: " 
 				+ dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName() + "\n";
 	}
 
