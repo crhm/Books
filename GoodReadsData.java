@@ -2,7 +2,6 @@
 // TODO pull author ID form goodreads API
 // TODO create an output to a text file that has data analysis; 
 // TODO create the statistical functions, see Github. 
-// TODO create the ordering functions, see Github.
 // TODO implement try/ catch blocks and error messages
 
 // SMALL

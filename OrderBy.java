@@ -7,6 +7,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
+//TODO clean this up with try/catch, error handling etc...
+
+// This class holds methods that, given a Hashmap<String, Book>, output a String listing books ordered 
+// according to a certain criteria (made explicit by the method name)
+// Each method's order can be reversed using the second argument it is passed, the boolean. 
+// Methods so far are: 
+// Order by Publication year
+// Order by Book title
+// Order by Author's last name
+// Order by Number of Pages
+// Order by date added
+// Order by date read
+// Order by general rating
+// Order by my rating
+
 public class OrderBy {
 
 	// TODO figure out if I want to exclude the books without a year of publication...
