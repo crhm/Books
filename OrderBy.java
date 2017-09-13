@@ -253,4 +253,36 @@ public class OrderBy {
 		return toPrint;
 	}
 	
+//	TODO decide if I want to do something for the "no ratings" books instead of counting as 0.0	
+	/** This returns a print friendly string of books passed in listOfBooks ordered by the rating the user
+	 * gave to them, from lowest to highest if flag = true and the opposite if flag = false.
+	 * Books that the user has not rated are excluded.
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
+	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis
+	 */
+	public static String myRating(HashMap<String, Book> listOfBooks, Boolean flag) {
+		ArrayList<Book> ratedBooks = new ArrayList<Book>();
+		for (Book b : listOfBooks.values()) {
+			if (b.getMyRating() > 0) {
+				ratedBooks.add(b);
+			}
+		}
+		List<Book> orderedList = ratedBooks;
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare (Book b1, Book b2) {
+				if (flag == true) {
+					return (int) (b1.getMyRating() - b2.getMyRating());
+				} else {
+					return (int) (b2.getMyRating() - b1.getMyRating());
+				}
+			}
+		});
+		String toPrint = "Books rated by user, ordered by user rating:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + " /5)\n");
+		}
+		return toPrint;
+	}
+	
 }
