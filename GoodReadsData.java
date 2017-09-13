@@ -1,5 +1,5 @@
 // BIG
-// TODO pull author ID form goodreads API
+// TODO pull csv and data not in csv and stuff from goodreads API
 // TODO create an output to a text file that has data analysis; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
@@ -309,14 +309,6 @@ public class GoodReadsData {
 //		
 ////		Test meanwhile printable methods don't work
 //		System.out.println(obj.getListShelves());
-//		
-////		To test whether the function numberOfBooks works for each shelf		
-//		System.out.println("\nNumber of books in Read Shelf:");
-//		System.out.println(obj.getListShelves().get("read").numberOfBooks());
-//		System.out.println("\nNumber of books in To Read Shelf:");
-//		System.out.println(obj.getListShelves().get("to-read").numberOfBooks());
-//		System.out.println("\nNumber of books in Currently Reading Shelf:");
-//		System.out.println(obj.getListShelves().get("currently-reading").numberOfBooks());
 //
 ////		To test whether getting a single shelf works
 //		System.out.println(obj.getListShelves().get("read"));
@@ -352,8 +344,15 @@ public class GoodReadsData {
 ////		Testing the order by general Rating:
 //		System.out.println(OrderBy.generalRating(obj.getListBooks(), true));
 //		
-//		Testing the order by my Rating:
-		System.out.println(OrderBy.myRating(obj.getListBooks(), true));
+////		Testing the order by my Rating:
+//		System.out.println(OrderBy.myRating(obj.getListBooks(), true));
+//		
+////		Testing whether the new GetData.numberOfBooks works:
+//		System.out.println(GetData.numberOfBooks(obj.getListBooks()));
+//		System.out.println(GetData.numberOfBooks(obj.getListShelves().get("read").getListOfBooks()));
+//		
+//		Testing whether the new GetData.numberOfAuthors works:
+		System.out.println(GetData.numberOfAuthors(obj.getListBooks()));
 	}
 
 }

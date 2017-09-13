@@ -45,13 +45,6 @@ public class Shelf {
 		this.listOfBooks.put(book.getIsbn(), book);
 	}
 	
-	/** Returns the number of books in the shelf as an int
-	 * @return An int, the number of books in the shelf
-	 */
-	public int numberOfBooks(){
-		return getListOfBooks().values().size();
-	}
-	
 	/** Returns detailed info about one of its books if it finds it, otherwise it displays
 	 * an error message
 	 * @param title String of book title

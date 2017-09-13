@@ -43,10 +43,6 @@ public class Author {
 		this.listOfBooks.put(book.getIsbn(), book);
 	}
 	
-	public int numberOfBooks(){
-		return getListOfBooks().values().size();
-	}
-	
 	public HashMap<String, Book> getListOfBooks() {
 		return listOfBooks;
 	}
