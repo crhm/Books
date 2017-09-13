@@ -116,4 +116,48 @@ public class GetData {
 		BigDecimal bd = sum1.divide(totalNumber1, 3, RoundingMode.HALF_UP);
 		return bd.doubleValue(); 
 	}
+
+	/** This method returns a string containing the name of the author with the largest number of books in the
+	 * HashMap and in parenthesis, the number of books he or she has written that are in the HashMap.
+	 * If the HashMap is empty, then a mere error message is displayed
+	 * @param listOfBooks HashMap<String, Book> containing the books whose authors will be checked
+	 * @return a string of the format "Author Name (X books)"
+	 */
+	public static String authorMostBooks(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
+			return "No books found here, sorry! Check argument.";
+		} else {
+			// Creating a HashMap (to avoid duplicates) of authors
+			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			for (Book b : listOfBooks.values()) {
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+			
+			// Converting the HashMap to an array to be able to use indexes in order to check
+			// Value of current author's number of books against that of the next one.
+			Author[] authorArray = new Author[(listAuthors.values().size())];
+			int counter1 = 0;
+			for (Author a : listAuthors.values()) {
+				authorArray[counter1] = a;
+				counter1++;
+			}
+			
+			// Comparing all authors in the array in succession by their number of books, 
+			// Starting outside the while with the first author in the array
+			int counter2 = 0;
+			int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks());
+			Author largestAuthor = authorArray[counter2];
+			while (counter2 < (listAuthors.values().size() - 1)) {
+				if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks())) {
+					bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks());
+					largestAuthor = authorArray[counter2 + 1];
+					counter2 = counter2 + 1;
+				} else {
+					counter2 = counter2 + 1;
+				}
+			}
+			return largestAuthor + " (" + bookNumber + " books)\n";
+		}
+	}
+	
 }
