@@ -368,8 +368,11 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.averageMyRating works:
 //		System.out.println(GetData.averageMyRating(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.authorsMultipleBooks works
-		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
+////		Testing whether the new GetData.authorsMultipleBooks works:
+//		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
+//
+//		Testing whether the new GetData.averageMultipleBooks works:
+		System.out.println(GetData.averageMultipleBooks(obj.getListBooks()));
 	}
 
 }

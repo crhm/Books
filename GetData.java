@@ -74,7 +74,7 @@ public class GetData {
 	}
 	
 	/** This method returns the number of Authors with more than one book in listOfBooks as an int
-	 * @param listOfBooks ashMap<String, Book> That contains the books whose authors with more than one books
+	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books
 	 * are to be counted
 	 * @return int - the number of authors with more than one book in the listOfBooks
 	 */
@@ -86,5 +86,34 @@ public class GetData {
 			}
 		}
 		return listAuthors.values().size();
+	}
+	
+	
+	/** Returns the average number of books amongst authors who have more than one book in listOfBooks
+	 * as a double, rounded to nearest 3rd decimal
+	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books's 
+	 * number of books is to be averaged
+	 * @return a double of the rounded average of number of books by Authors with more than 1 book
+	 */
+	public static double averageMultipleBooks(HashMap<String, Book> listOfBooks) {
+		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+		for (Book b : listOfBooks.values()) {
+			if (b.getAuthor().getListOfBooks().values().size() > 1) {
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+		}
+		int totalNumber = listAuthors.size();
+		int sum = 0;
+		for (Author a : listAuthors.values()) {
+			sum = sum + numberOfBooks(a.getListOfBooks());
+		}
+
+		// For the rounding:
+		// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
+		// Otherwise it was always giving me a result of two because of the innacuracies of double and int
+		BigDecimal sum1 = new BigDecimal(sum);
+		BigDecimal totalNumber1 = new BigDecimal(totalNumber);
+		BigDecimal bd = sum1.divide(totalNumber1, 3, RoundingMode.HALF_UP);
+		return bd.doubleValue(); 
 	}
 }
