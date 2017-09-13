@@ -223,4 +223,34 @@ public class OrderBy {
 		}
 		return toPrint;
 	}
+	
+//	TODO decide if I want to do something for the "no ratings" books instead of counting as 0.0	
+	/** This returns a print friendly string of books passed in listOfBooks ordered by their general, collective
+	 * Goodreads rating, from lowest to highest if flag = true and the opposite if flag = false.
+	 * So far, if a book has no ratings it is counted and displayed as zero.
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
+	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis
+	 */
+	public static String generalRating(HashMap<String, Book> listOfBooks, Boolean flag) {
+		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare (Book b1, Book b2) {
+				if (flag == true) {
+					// The * 100 is because it needs to be cast to int, and if I don't do that the value
+					// behind the coma get truncated by the cast and the ordering is meaningless
+					// This does not impact the actual general rating value which get displayed as normal below
+					return (int) ((b1.getGeneralRating() * 100) - (b2.getGeneralRating() * 100));
+				} else {
+					return (int) ((b2.getGeneralRating() * 100) - (b1.getGeneralRating() * 100));
+				}
+			}
+		});
+		String toPrint = "Books ordered by general rating:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + " (" + b.getGeneralRating() + " /5)\n");
+		}
+		return toPrint;
+	}
+	
 }
