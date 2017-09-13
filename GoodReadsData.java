@@ -312,8 +312,11 @@ public class GoodReadsData {
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 //		
-//		Testing the order by publication year
-		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
+////		Testing the order by publication year
+//		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
+//		
+//		Testing the order by book title
+		System.out.println(OrderBy.title(obj.getListBooks(), false));
 
 	}
 

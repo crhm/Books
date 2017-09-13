@@ -11,7 +11,8 @@ public class OrderBy {
 	 * of first publication (increasing or decreasing depending on parameter flag). 
 	 * Each book is on one line, with the year in parenthesis.
 	 * Note: some books are in the goodreads database as having no year of first publication, so for those
-	 * the year ends up being zero, which could be excluded if I decided so...
+	 * the year ends up being zero, which could be excluded if I decided so... In the meantime, they get 
+	 * displayed as empty parenthises, but compared as 0s.
 	 * @param listOfBooks 
 	 * @param flag if true, order is increasing, if false, order is decreasing
 	 */
@@ -35,9 +36,34 @@ public class OrderBy {
 				
 			}
 		});
-		String toPrint = "Ordered by year of first publication:\n";
+		String toPrint = "Ordered by year of first publication:\n\n";
 		for (Book b : orderedList) {
 			toPrint = toPrint.concat(b + " (" + b.getYearPublished() + ")\n");
+		}
+		return toPrint;
+	}
+	
+	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by book
+	 * title, alphabetically if flag = true and reverse-alphabetically if flag=false. Books with titles starting
+	 * with numbers go before A, and books starting with "the" are under "T".
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean that determines whether order is normal or inverted.
+	 * @return A string with one book per line, in their toString format, in the order specified by the flag
+	 */
+	public static String title(HashMap<String, Book> listOfBooks, Boolean flag) {
+		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare(Book b1, Book b2) {
+				if (flag == true) {
+					return b1.getTitle().compareTo(b2.getTitle());
+				} else {
+					return b2.getTitle().compareTo(b1.getTitle());
+				}
+			}
+		});
+		String toPrint = "Ordered by book title:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + "\n");
 		}
 		return toPrint;
 	}
