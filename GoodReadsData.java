@@ -324,8 +324,11 @@ public class GoodReadsData {
 ////		Testing the order by number of pages:
 //		System.out.println(OrderBy.numberOfPages(obj.getListBooks(), true));
 //		
-//		Testing the order by Date added:
-		System.out.println(OrderBy.dateAdded(obj.getListBooks(), true));
+////		Testing the order by Date added:
+//		System.out.println(OrderBy.dateAdded(obj.getListBooks(), true));
+//		
+//		Testing the order by Date read:
+		System.out.println(OrderBy.dateRead(obj.getListBooks(), true));		
 	}
 
 }

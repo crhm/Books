@@ -174,4 +174,53 @@ public class OrderBy {
 		}
 		return toPrint;
 	}
+	
+//	TODO Fix this ugly try catch	
+	/** This returns a print friendly string of ONLY the books passed in listOfBooks that have a "read"
+	 * date, (SO BOOKS READ BUT NOT GIVEN A READ DATE WILL NOT APPEAR) ordered by date read, 
+	 * from earliest to latest if flag = true and the opposite if flag = false. 
+	 * At this stage the try catch is terrible terrible temporary fix but it works
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean. If true, order is earliest to latest, if false, order is latest to earliest
+	 * @return A string with one book per line in its toString form, followed by the date it was read
+	 * in parenthesis
+	 */
+	public static String dateRead(HashMap<String, Book> listOfBooks, Boolean flag) {
+		ArrayList<Book> readBooks = new ArrayList<Book>();
+		for (Book b : listOfBooks.values()) {
+			if (b.getDateRead()!= null && b.getDateRead().length() >0) {
+				readBooks.add(b);
+			}
+		}
+		List<Book> orderedList = readBooks;
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare (Book b1, Book b2) {
+				String[] temp1 = b1.getDateRead().split("/");
+				String[] temp2 = b2.getDateRead().split("/");
+				
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				
+				try {
+					Date d1 = sdf1.parse(temp1[0] + "-" + temp1[1] + "-" + temp1[2]);
+					Date d2 = sdf2.parse(temp2[0] + "-" + temp2[1] + "-" + temp2[2]);
+					if (flag == true) {
+						return d1.compareTo(d2);
+					} else {
+						return d2.compareTo(d1);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return  0;
+				}
+
+			}
+		});
+		String toPrint = "Books read, ordered by date read:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + " (" + b.getDateRead() + ")\n");
+		}
+		return toPrint;
+	}
 }
