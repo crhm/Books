@@ -42,7 +42,11 @@ public class OrderBy {
 		}
 		return toPrint;
 	}
-	
+
+//	TODO Figure out if I want to avoid special characters such as accents to be counted with their actual 
+//	Unicode or that of the equivalent non special character (i.e. É to E)
+//	TODO Figure out if this is affected by capitalisation
+//	TODO Figure out if you want to put books that start with The to be ordered by their second word or not
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by book
 	 * title, alphabetically if flag = true and reverse-alphabetically if flag=false. Books with titles starting
 	 * with numbers go before A, and books starting with "the" are under "T".
@@ -62,6 +66,35 @@ public class OrderBy {
 			}
 		});
 		String toPrint = "Ordered by book title:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + "\n");
+		}
+		return toPrint;
+	}
+	
+//	TODO Figure out if I want to avoid special characters such as accents to be counted with their actual 
+//	Unicode or that of the equivalent non special character (i.e. É to E)
+//	TODO Figure out if this is affected by capitalisation
+//	TODO Figure out if you the returned string to not be the normal book.toString and place the author's name
+//	first rather than the book title, so that it is more clear that it is ordered	
+	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by authors'
+	 * last names, alphabetically if flag = true and reverse-alphabetically if flag=false.
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean that determines whether order is normal or inverted.
+	 * @return A string with one book per line, in their toString format, in the order specified by the flag
+	 */
+	public static String lastName(HashMap<String, Book> listOfBooks, Boolean flag) {
+		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare(Book b1, Book b2) {
+				if (flag == true) {
+					return b1.getAuthor().getLastName().compareTo(b2.getAuthor().getLastName());
+				} else {
+					return b2.getAuthor().getLastName().compareTo(b1.getAuthor().getLastName());
+				}
+			}
+		});
+		String toPrint = "Ordered by authors last names:\n\n";
 		for (Book b : orderedList) {
 			toPrint = toPrint.concat(b + "\n");
 		}
