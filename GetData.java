@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetData {
@@ -37,7 +38,7 @@ public class GetData {
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
 	 * @return double - the average general rating of books in this HashMap
 	 */
-	public static double averageRatingGen(HashMap<String, Book> listOfBooks) {
+	public static double averageGenRating(HashMap<String, Book> listOfBooks) {
 		int totalNumber = numberOfBooks(listOfBooks);
 		double sum = 0;
 		for (Book b : listOfBooks.values()) {
@@ -48,4 +49,28 @@ public class GetData {
 		bd = bd.setScale(3, RoundingMode.HALF_UP);
 		return bd.doubleValue();
 	}
+	
+	/** This method returns a double that is the average rating the user has given to books the user has 
+	 * rated in the HashMap listOfBooks, rounded to the 3rd decimal (the nearest one, or up if it's 5).
+	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
+	 * @return double - the average user rating of books rater by the user in this HashMap
+	 */
+	public static double averageMyRating(HashMap<String, Book> listOfBooks) {
+		ArrayList<Book> ratedBooks = new ArrayList<Book>();
+		for (Book b : listOfBooks.values()) {
+			if (b.getMyRating() > 0) {
+				ratedBooks.add(b);
+			}
+		}
+		int totalNumber = ratedBooks.size();
+		double sum = 0;
+		for (Book b : ratedBooks) {
+			sum = sum + b.getMyRating();
+		}
+		// For the rounding:
+		BigDecimal bd = new BigDecimal(sum / totalNumber);
+		bd = bd.setScale(3, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
+	
 }
