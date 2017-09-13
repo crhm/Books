@@ -73,4 +73,18 @@ public class GetData {
 		return bd.doubleValue();
 	}
 	
+	/** This method returns the number of Authors with more than one book in listOfBooks as an int
+	 * @param listOfBooks ashMap<String, Book> That contains the books whose authors with more than one books
+	 * are to be counted
+	 * @return int - the number of authors with more than one book in the listOfBooks
+	 */
+	public static int authorsMultipleBooks(HashMap<String, Book> listOfBooks) {
+		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+		for (Book b : listOfBooks.values()) {
+			if (b.getAuthor().getListOfBooks().values().size() > 1) {
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+		}
+		return listAuthors.values().size();
+	}
 }
