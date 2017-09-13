@@ -1,8 +1,11 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Date;
 
 public class OrderBy {
 
@@ -108,8 +111,8 @@ public class OrderBy {
 	 * Note: some books are in the goodreads database as having no number of pages, so for those
 	 * the number ends up being zero, which could be excluded if I decided so... In the meantime, they get 
 	 * displayed and compared as -1s.
-	 * @param listOfBooks 
-	 * @param flag if true, order is increasing, if false, order is decreasing
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean. If true, order is increasing, if false, order is decreasing
 	 */
 	public static String numberOfPages(HashMap<String, Book> listOfBooks, Boolean flag) {
 		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
@@ -125,6 +128,49 @@ public class OrderBy {
 		String toPrint = "Ordered by number of pages:\n\n";
 		for (Book b : orderedList) {
 			toPrint = toPrint.concat(b + " (" + (int) b.getNumPages() + " pages)\n");
+		}
+		return toPrint;
+	}
+	
+	
+//	TODO Fix this ugly try catch	
+	/** This returns a print friendly string of the books passed in listOfBooks order by date added to the
+	 * library, from earliest to latest if flag = true and the opposite if flag = false. 
+	 * At this stage the try catch is terrible terrible temporary fix but it works
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean. If true, order is earliest to latest, if false, order is latest to earliest
+	 * @return A string with one book per line in its toString form, followed by the date it was added
+	 * in parenthesis
+	 */
+	public static String dateAdded(HashMap<String, Book> listOfBooks, Boolean flag) {
+		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare (Book b1, Book b2) {
+				String[] temp1 = b1.getDateAdded().split("/");
+				String[] temp2 = b2.getDateAdded().split("/");
+				
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				
+				try {
+					Date d1 = sdf1.parse(temp1[0] + "-" + temp1[1] + "-" + temp1[2]);
+					Date d2 = sdf2.parse(temp2[0] + "-" + temp2[1] + "-" + temp2[2]);
+					if (flag == true) {
+						return d1.compareTo(d2);
+					} else {
+						return d2.compareTo(d1);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return  0;
+				}
+
+			}
+		});
+		String toPrint = "Ordered by date it was added to Shelves:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + " (" + b.getDateAdded() + ")\n");
 		}
 		return toPrint;
 	}
