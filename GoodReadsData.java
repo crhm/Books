@@ -316,11 +316,13 @@ public class GoodReadsData {
 //		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
 //		
 ////		Testing the order by book title
-//		System.out.println(OrderBy.title(obj.getListBooks(), false));
+//		System.out.println(OrderBy.title(obj.getListBooks(), true));
 //		
-//		Testing the order by authors' last names:
-		System.out.println(OrderBy.lastName(obj.getListBooks(), false));
-
+////		Testing the order by authors' last names:
+//		System.out.println(OrderBy.lastName(obj.getListBooks(), true));
+//
+////		Testing the order by number of pages:
+//		System.out.println(OrderBy.numberOfPages(obj.getListBooks(), true));
 	}
 
 }

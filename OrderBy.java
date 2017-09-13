@@ -101,4 +101,31 @@ public class OrderBy {
 		return toPrint;
 	}
 	
+	// TODO figure out if I want to exclude the books without a number of pages...
+	/** This returns a print friendly string consisting of the books in the HashMap listOfBooks ordered by
+	 * number of pages (increasing or decreasing depending on parameter flag). 
+	 * Each book is on one line, with the number of pages in parenthesis.
+	 * Note: some books are in the goodreads database as having no number of pages, so for those
+	 * the number ends up being zero, which could be excluded if I decided so... In the meantime, they get 
+	 * displayed and compared as -1s.
+	 * @param listOfBooks 
+	 * @param flag if true, order is increasing, if false, order is decreasing
+	 */
+	public static String numberOfPages(HashMap<String, Book> listOfBooks, Boolean flag) {
+		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+		Collections.sort(orderedList, new Comparator<Book>() {
+			public int compare(Book b1, Book b2) {
+				if (flag == true) {
+					return (int) (b1.getNumPages() - b2.getNumPages());
+				} else {
+					return (int) (b2.getNumPages() - b1.getNumPages());
+				}
+			}
+		});
+		String toPrint = "Ordered by number of pages:\n\n";
+		for (Book b : orderedList) {
+			toPrint = toPrint.concat(b + " (" + (int) b.getNumPages() + " pages)\n");
+		}
+		return toPrint;
+	}
 }
