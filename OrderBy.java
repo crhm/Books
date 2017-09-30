@@ -1,3 +1,4 @@
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,13 +91,9 @@ public class OrderBy {
 		return toPrint;
 	}
 	
-//	TODO Figure out if I want to avoid special characters such as accents to be counted with their actual 
-//	Unicode or that of the equivalent non special character (i.e. É to E)
-//	TODO Figure out if this is affected by capitalisation
-//	TODO Figure out if you the returned string to not be the normal book.toString and place the author's name
-//	first rather than the book title, so that it is more clear that it is ordered	
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by authors'
 	 * last names, alphabetically if flag = true and reverse-alphabetically if flag=false.
+	 * It ignores capitalisation and treats accents (diacritic characters) like their non-accented version.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean that determines whether order is normal or inverted.
 	 * @return A string with one book per line, in their toString format, in the order specified by the flag
@@ -105,16 +102,24 @@ public class OrderBy {
 		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
 		Collections.sort(orderedList, new Comparator<Book>() {
 			public int compare(Book b1, Book b2) {
+				// This allows the comparison to treat accented characters (diacritical ones) like normal ones
+				// And not place them in the sort according to their true unicode value
+				String temp1 = Normalizer.normalize(b1.getAuthor().getLastName(), Normalizer.Form.NFD);
+				String temp2 = Normalizer.normalize(b2.getAuthor().getLastName(), Normalizer.Form.NFD);
+				// This is to make sure that comparisons will disregard capitalisation, which impacts unicode value
+				temp1 = temp1.toLowerCase();
+				temp2 = temp2.toLowerCase();
 				if (flag == true) {
-					return b1.getAuthor().getLastName().compareTo(b2.getAuthor().getLastName());
+					return temp1.compareTo(temp2);
 				} else {
-					return b2.getAuthor().getLastName().compareTo(b1.getAuthor().getLastName());
+					return temp2.compareTo(temp1);
 				}
 			}
 		});
 		String toPrint = "Ordered by authors last names:\n\n";
 		for (Book b : orderedList) {
-			toPrint = toPrint.concat(b + "\n");
+			toPrint = toPrint.concat(b.getAuthor().getLastName() + ", " + b.getAuthor().getFirstName() 
+					+ ", " + b.getTitle() + "\n");
 		}
 		return toPrint;
 	}
