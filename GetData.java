@@ -3,6 +3,27 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/** This class holds methods that return interesting data, indicated by their name. So far they are 
+ * intended to be printer-friendly and hence most often return strings formatted for printing in console.
+ * <br>Ideally in the future this would be used to display lists in a window graphically.
+ * <br>Methods created so far:
+ * <br>Number of books
+ * <br>Number of authors
+ * <br>Average General Goodreads ratings of Books
+ * <br>Average User Ratings of books
+ * <br>Number of authors with more than one book
+ * <br>Average number of books amongst authors with more than one book
+ * <br>Author with most books
+ * <br>Shortest book
+ * <br>Longest Book
+ * <br>Average page number
+ * <br>List of books with a specific general rating
+ * <br>List of books with a specific user rating
+ * <br>Book with worst general rating
+ * <br>Book with best general rating
+ * <br>Difference between user rating average and general rating average
+ * @author Laurene
+ */
 public class GetData {
 
 	/** Returns the number of books in the passed HashMap listOfBooks, as an int
@@ -34,7 +55,7 @@ public class GetData {
 	}
 	
 	/** Returns a double that is the average general Goodreads rating of books in the HashMap listOfBooks
-	 * Rounded to the 3rd decimal (the nearest one, or the one up from the number if it is 5).
+	 * rounded to the 3rd decimal (the nearest one, or the one up from the number if it is 5).
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
 	 * @return double - the average general rating of books in this HashMap
 	 */
@@ -119,7 +140,7 @@ public class GetData {
 
 	/** This method returns a string containing the name of the author with the largest number of books in the
 	 * HashMap and in parenthesis, the number of books he or she has written that are in the HashMap.
-	 * If the HashMap is empty, then a mere error message is displayed
+	 * <br>If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose authors will be checked
 	 * @return a string of the format "Author Name (X books)"
 	 */
@@ -162,8 +183,8 @@ public class GetData {
 	
 	/** This method returns a string detailing which book in the listOfBooks passed as argument is the shortest
 	 *  in number of pages, and includes the number of pages in parenthesis.
-	 *  It excludes from its count books with a page number equal to or smaller than 0.
-	 *  	If the HashMap is empty, then a mere error message is displayed
+	 *  <br>It excludes from its count books with a page number equal to or smaller than 0.
+	 *  	<br>If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
 	 * @return String following the format "The shortest book in that list is Title, by Author (x pages)"
 	 */
@@ -199,7 +220,7 @@ public class GetData {
 	
 	/** This method returns a string detailing which book in the listOfBooks passed as argument is the longest
 	 *  in number of pages, and includes the number of pages in parenthesis.
-	 *  	If the HashMap is empty, then a mere error message is displayed
+	 *  <br>	If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
 	 * @return String following the format "The longest book in that list is Title, by Author (x pages)"
 	 */
@@ -234,7 +255,7 @@ public class GetData {
 	}
 	
 	/** This method returns a string detailing the average length (in pages) of books in the HashMap 
-	 * passed as argument. It ignores books that have a number of pages lower than 1.
+	 * passed as argument. <br>It ignores books that have a number of pages lower than 1.
 	 * @param listOfBooks HashMap<String, Book> of books whose length is to be averaged
 	 * @return String of format "The average length of books in this list is x pages."
 	 */
@@ -289,9 +310,11 @@ public class GetData {
 	/**This method is dependent on the number of arguments; there must be either 2 or 3. If the user 
 	 * passes only one int, it returns all books with that exact star rating, and if the user passes two int, 
 	 * it returns all the books with ratings between those values (including both boundary values).
-	 * @param listOfBooks
-	 * @param ratings
-	 * @return
+	 * @param listOfBooks HashMap of books whose user rating is to be used
+	 * @param ratings int Varargs: can be 1 or 2 arguments; if only 1 is given, books with that star rating are
+	 * returned, and if 2 are given, books with a rating comprised between those 2 int boundaries (inlcuding
+	 * them) are returned.
+	 * @return String listing books according to parameters, with a header giving their number and criteria
 	 */
 	public static String userRatingSpecificList(HashMap<String, Book> listOfBooks, int... ratings) {
 		

@@ -8,25 +8,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
-// This class holds methods that, given a Hashmap<String, Book>, output a String listing books ordered 
-// according to a certain criteria (made explicit by the method name)
-// Each method's order can be reversed using the second argument it is passed, the boolean. 
-// Methods so far are: 
-// Order by Publication year
-// Order by Book title
-// Order by Author's last name
-// Order by Number of Pages
-// Order by date added
-// Order by date read
-// Order by general rating
-// Order by user rating
 
+
+/** This class holds methods that, given a Hashmap<String, Book>, output a String listing books ordered 
+ * according to a certain criteria (made explicit by the method name)
+ * <br>Each method's order can be reversed using the second argument it is passed, the boolean. 
+ * <br><br>Methods so far are: 
+ * <br>Order by Publication year, 
+ * <br>Order by Book title, 
+ * <br>Order by Author's last name (not first name since some authors do not have one), 
+ * <br>Order by Number of Pages, 
+ * <br>Order by date added, 
+ * <br>Order by date read, 
+ * <br>Order by general rating, 
+ * <br>Order by user rating
+ * @author Laurene
+ */
 public class OrderBy {
 
 	/** This returns a print friendly string consisting of the books in the HashMap listOfBooks ordered by year
 	 * of first publication (increasing or decreasing depending on parameter flag). 
-	 * Each book is on one line, with the year in parenthesis.
-	 * Note: some books are in the goodreads database as having no year of first publication, so they are not
+	 * <br>Each book is on one line, with the year in parenthesis.
+	 * <br>Note: some books are in the goodreads database as having no year of first publication, so they are not
 	 * ordered with the others but listed at the end, separately.
 	 * @param listOfBooks HashMap containing the books to be ordered
 	 * @param flag if true, order is increasing, if false, order is decreasing
@@ -73,9 +76,9 @@ public class OrderBy {
 	}
 
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by book
-	 * title, alphabetically if flag = true and reverse-alphabetically if flag=false. Books with titles starting
-	 * with numbers go before A, and books starting with "the" are under "T".
-	 * Sorting disregards capitalization and accents.
+	 * title, alphabetically if flag = true and reverse-alphabetically if flag=false. 
+	 * <br>Books with titles starting with numbers go before A, and books starting with "the" are under "T".
+	 * <br>Sorting disregards capitalization and accents.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean that determines whether order is normal or inverted.
 	 * @return A string with one book per line, in their toString format, in the order specified by the flag
@@ -106,7 +109,7 @@ public class OrderBy {
 	
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by authors'
 	 * last names, alphabetically if flag = true and reverse-alphabetically if flag=false.
-	 * It ignores capitalisation and treats accents (diacritic characters) like their non-accented version.
+	 * <br>It ignores capitalisation and treats accents (diacritic characters) like their non-accented version.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean that determines whether order is normal or inverted.
 	 * @return A string with one book per line, in their toString format, in the order specified by the flag
@@ -139,8 +142,8 @@ public class OrderBy {
 	
 	/** This returns a print friendly string consisting of the books in the HashMap listOfBooks ordered by
 	 * number of pages (increasing or decreasing depending on parameter flag). 
-	 * Each book is on one line, with the number of pages in parenthesis.
-	 * Note: some books are in the goodreads database as having no number of pages, so those are not ordered
+	 * <br>Each book is on one line, with the number of pages in parenthesis.
+	 * <br>Note: some books are in the goodreads database as having no number of pages, so those are not ordered
 	 * with the others but listed separately at the end.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean. If true, order is increasing, if false, order is decreasing
@@ -182,7 +185,7 @@ public class OrderBy {
 //	TODO Fix this ugly try catch	
 	/** This returns a print friendly string of the books passed in listOfBooks order by date added to the
 	 * library, from earliest to latest if flag = true and the opposite if flag = false. 
-	 * At this stage the try catch is terrible terrible temporary fix but it works
+	 * <br>At this stage the try catch is terrible terrible temporary fix but it works
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean. If true, order is earliest to latest, if false, order is latest to earliest
 	 * @return A string with one book per line in its toString form, followed by the date it was added
@@ -224,7 +227,7 @@ public class OrderBy {
 	/** This returns a print friendly string of ONLY the books passed in listOfBooks that have a "read"
 	 * date, (SO BOOKS READ BUT NOT GIVEN A READ DATE WILL NOT APPEAR) ordered by date read, 
 	 * from earliest to latest if flag = true and the opposite if flag = false. 
-	 * At this stage the try catch is terrible terrible temporary fix but it works
+	 * <br>At this stage the try catch is terrible terrible temporary fix but it works
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean. If true, order is earliest to latest, if false, order is latest to earliest
 	 * @return A string with one book per line in its toString form, followed by the date it was read
@@ -270,7 +273,7 @@ public class OrderBy {
 	
 	/** This returns a print friendly string of books passed in listOfBooks ordered by their general, collective
 	 * Goodreads rating, from lowest to highest if flag = true and the opposite if flag = false.
-	 * Books with no ratings (aka where rating !> 0) are listed separately, after the sorted list.
+	 * <br>Books with no ratings (aka where rating !> 0) are listed separately, after the sorted list.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
 	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis
@@ -311,7 +314,7 @@ public class OrderBy {
 	
 	/** This returns a print friendly string of books passed in listOfBooks ordered by the rating the user
 	 * gave to them, from lowest to highest if flag = true and the opposite if flag = false.
-	 * Books that the user has not rated are excluded.
+	 * <br>Books that the user has not rated are excluded.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
 	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis

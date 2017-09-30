@@ -6,11 +6,6 @@
 
 // SMALL
 
-/* The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
- * from the name to everything else, so no changes are needed on that end if the file is to be
- * gotten from an api request in the future.
- */
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -18,6 +13,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.io.FileNotFoundException;
 
+/** The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
+ * from the name to everything else, so no changes are needed on that end if the file is to be
+ * gotten from an api request in the future.
+ * @author Laurene
+ */
 public class GoodReadsData { 
 
 	private HashMap<String, Shelf> listShelves;
