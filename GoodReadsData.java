@@ -1,7 +1,6 @@
 // BIG
 // TODO pull csv and data not in csv and stuff from goodreads API
 // TODO create an output to a text file that has data analysis; 
-// TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
 // TODO look into "throws IncorrectArgumentException" to make it clean when passed HashMaps can't be empty?
 

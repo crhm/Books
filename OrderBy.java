@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Date;
 
-//TODO clean this up with try/catch, error handling etc...
-
 // This class holds methods that, given a Hashmap<String, Book>, output a String listing books ordered 
 // according to a certain criteria (made explicit by the method name)
 // Each method's order can be reversed using the second argument it is passed, the boolean. 
@@ -21,23 +19,31 @@ import java.util.Date;
 // Order by date added
 // Order by date read
 // Order by general rating
-// Order by my rating
+// Order by user rating
 
 public class OrderBy {
 
-	// TODO figure out if I want to exclude the books without a year of publication...
 	/** This returns a print friendly string consisting of the books in the HashMap listOfBooks ordered by year
 	 * of first publication (increasing or decreasing depending on parameter flag). 
 	 * Each book is on one line, with the year in parenthesis.
-	 * Note: some books are in the goodreads database as having no year of first publication, so for those
-	 * the year ends up being zero, which could be excluded if I decided so... In the meantime, they get 
-	 * displayed as empty parenthises, but compared as 0s.
-	 * @param listOfBooks 
+	 * Note: some books are in the goodreads database as having no year of first publication, so they are not
+	 * ordered with the others but listed at the end, separately.
+	 * @param listOfBooks HashMap containing the books to be ordered
 	 * @param flag if true, order is increasing, if false, order is decreasing
 	 */
 	public static String publicationDate(HashMap<String, Book> listOfBooks, Boolean flag) {
-		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
-		Collections.sort(orderedList, new Comparator<Book>() {
+		List<Book> withPubDate = new ArrayList<Book>();
+		List<Book> withoutPubDate = new ArrayList<Book>();
+		
+		for (Book b : listOfBooks.values()) {
+			if (b.getYearPublished().isEmpty()) {
+				withoutPubDate.add(b);
+			} else {
+				withPubDate.add(b);
+			}
+		}
+		
+		Collections.sort(withPubDate, new Comparator<Book>() {
 			public int compare(Book b1, Book b2) {
 				double age1 = 0;
 				double age2 = 0;
@@ -55,20 +61,21 @@ public class OrderBy {
 				
 			}
 		});
-		String toPrint = "Ordered by year of first publication:\n\n";
-		for (Book b : orderedList) {
+		String toPrint = "\nOrdered by year of first publication:\n\n";
+		for (Book b : withPubDate) {
 			toPrint = toPrint.concat(b + " (" + b.getYearPublished() + ")\n");
+		}
+		toPrint = toPrint.concat("\nBooks with no recorded year of first publication:\n");
+		for (Book b : withoutPubDate) {
+			toPrint = toPrint.concat(b + "\n");
 		}
 		return toPrint;
 	}
 
-//	TODO Figure out if I want to avoid special characters such as accents to be counted with their actual 
-//	Unicode or that of the equivalent non special character (i.e. É to E)
-//	TODO Figure out if this is affected by capitalisation
-//	TODO Figure out if you want to put books that start with The to be ordered by their second word or not
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by book
 	 * title, alphabetically if flag = true and reverse-alphabetically if flag=false. Books with titles starting
 	 * with numbers go before A, and books starting with "the" are under "T".
+	 * Sorting disregards capitalization and accents.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean that determines whether order is normal or inverted.
 	 * @return A string with one book per line, in their toString format, in the order specified by the flag
@@ -77,10 +84,16 @@ public class OrderBy {
 		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
 		Collections.sort(orderedList, new Comparator<Book>() {
 			public int compare(Book b1, Book b2) {
+				// To make sort insensitive to capitalisation (since unicode value is different)
+				String temp1 = b1.getTitle().toLowerCase();
+				String temp2 = b2.getTitle().toLowerCase();
+				// To treat accented characters like non-accented ones (diacritic characters)
+				temp1 = Normalizer.normalize(temp1, Normalizer.Form.NFD);
+				temp2 = Normalizer.normalize(temp2, Normalizer.Form.NFD);
 				if (flag == true) {
-					return b1.getTitle().compareTo(b2.getTitle());
+					return temp1.compareTo(temp2);
 				} else {
-					return b2.getTitle().compareTo(b1.getTitle());
+					return temp2.compareTo(temp1);
 				}
 			}
 		});
