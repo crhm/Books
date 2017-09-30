@@ -285,42 +285,68 @@ public class GetData {
 			return toPrint;
 		}
 	}
-	
-// TODO make this dependent on the number of arguments, which must be flexible between 2 and 3. If
-// the user passes only one it, it returns all books with that star rating, and if the user passes two, it
-// returns all the books with ratings between those values and including both!!
-	
-//	/** This method returns a string listing all the books whose user rating is between 
-//	 * the lower and higher boundaries passed as argument, including the lower but EXCLUDING the upper one, 
-//	 * and how many there are. Boundaries have to be integer between 0 and 5.
-//	 * This excludes books that have a no user rating by excluding books that have a user rating of 0,
-//	 * since goodreads does not allow user ratings to be lower than 1 star.
-//	 * @param listOfBooks HashMap<String, Book> of books whose rating is to be checked
-//	 * @param lowerBoundary int that has to be either 1, 2, 3 or 4 and has to be smaller than lowerBoundary
-//	 * @param upperBoundary int that has to be either 2, 3, 4 or 5 and has to be greater than lowerBoundary
-//	 * @return String with a header, then each book on one line followed by its gen rating in parenthesis
-//	 */
-//	public static String myRatingSpecificList(HashMap<String, Book> listOfBooks, int lowerBoundary, int upperBoundary) {
-//		if (lowerBoundary < 1 || lowerBoundary >= upperBoundary || upperBoundary > 5) {
-//			return "Argument error; please check boundary values are valid";
-//		} else {
-//			// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
-//			// because I anticipate it will be useful in later versions of this when I'm not printing
-//			// to console all the time.
-//			HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
-//			for (Book b : listOfBooks.values()) {
-//				if (b.getMyRating() >= lowerBoundary && b.getMyRating() < upperBoundary) {
-//					ratingSpecific.put(b.getIsbn(), b);
-//				}
-//			}
-//			
-//			String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-//					+ "rating between " + lowerBoundary + " and " + upperBoundary + " stars:\n";
-//			for (Book b : ratingSpecific.values()) {
-//				toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + ")\n");
-//			}
-//			return toPrint;
-//		}
-//	}
+		
+	/**This method is dependent on the number of arguments; there must be either 2 or 3. If the user 
+	 * passes only one int, it returns all books with that exact star rating, and if the user passes two int, 
+	 * it returns all the books with ratings between those values (including both boundary values).
+	 * @param listOfBooks
+	 * @param ratings
+	 * @return
+	 */
+	public static String myRatingSpecificList(HashMap<String, Book> listOfBooks, int... ratings) {
+		
+		if (ratings.length > 1) { // If there are two int passed as arguments, then they are boundaries:
+			
+			if (ratings[0] < 1 || ratings[0] >= ratings[1] || ratings[1] > 5) {
+				
+				return "Argument error; please check boundary values are valid";
+			
+			} else {
+				
+				// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
+				// because I anticipate it will be useful in later versions of this when I'm not printing
+				// to console all the time.
+				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
+				for (Book b : listOfBooks.values()) {
+					if (b.getMyRating() >= ratings[0] && b.getMyRating() <= ratings[1]) {
+						ratingSpecific.put(b.getIsbn(), b);
+					}
+				}
+				
+				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
+						+ "rating between " + ratings[0] + " and " + ratings[1] + " stars:\n";
+				for (Book b : ratingSpecific.values()) {
+					toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + ")\n");
+				}
+				return toPrint;
+			}
+			
+		} else { // If there is only one int passed as argument, then it is the exact number of stars required:
+			
+			// Checking parameter is valid and excluding zero because goodreads puts minimum user rating at 1
+			if (ratings[0] > 5 || ratings[0] < 1) {  
+				return "Sorry, the argument passed was not valid.";
+			
+			} else {
+				
+				// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
+				// because I anticipate it will be useful in later versions of this when I'm not printing
+				// to console all the time.
+				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
+				for (Book b : listOfBooks.values()) {
+					if (b.getMyRating() == ratings[0]) {
+						ratingSpecific.put(b.getIsbn(), b);
+					}
+				}
+				
+				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
+						+ "rating of " + ratings[0] + " stars:\n";
+				for (Book b : ratingSpecific.values()) {
+					toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + ")\n");
+				}
+				return toPrint;
+			}	
+		}	
+	}
 	
 }
