@@ -346,10 +346,10 @@ public class GoodReadsData {
 ////		Testing the order by Date read:
 //		System.out.println(OrderBy.dateRead(obj.getListBooks(), true));
 //		
-//		Testing the order by general Rating:
-		System.out.println(OrderBy.genRating(obj.getListBooks(), true));
+////		Testing the order by general Rating:
+//		System.out.println(OrderBy.genRating(obj.getListBooks(), true));
 //		
-////		Testing the order by my Rating:
+////		Testing the order by user Rating:
 //		System.out.println(OrderBy.userRating(obj.getListBooks(), true));
 		
 		
