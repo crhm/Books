@@ -237,9 +237,9 @@ public class GoodReadsData {
 							isbn = book[5].replaceAll("\"", "").replaceAll("=", "");
 						}
 						
-						double myRating = -1;
+						double userRating = -1;
 						if (book[7]!= null && book[7].length() >0){
-							myRating = Double.parseDouble(book[7]);
+							userRating = Double.parseDouble(book[7]);
 						}
 						
 						double avRating = -1;
@@ -270,7 +270,7 @@ public class GoodReadsData {
 
 						// Creates the book with its parameters
 						Book livre = new Book(title, getListAuthors().get(lastName), isbn, goodreadsID, 
-								numPages, year, avRating, myRating, dateRead, dateAdded, 
+								numPages, year, avRating, userRating, dateRead, dateAdded, 
 								getListShelves().get(book[18]));
 						
 						listBooksAdd(livre);
@@ -350,7 +350,7 @@ public class GoodReadsData {
 //		System.out.println(OrderBy.generalRating(obj.getListBooks(), true));
 //		
 ////		Testing the order by my Rating:
-//		System.out.println(OrderBy.myRating(obj.getListBooks(), true));
+//		System.out.println(OrderBy.userRating(obj.getListBooks(), true));
 		
 		
 //		TESTING GetData		
@@ -390,8 +390,8 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.genRatingSpecificList works:
 //		System.out.println(GetData.genRatingSpecificList(obj.getListBooks(), 0, 3));
 //		
-////		Testing whether the new GetData.myRatingSpecificList works:
-//		System.out.println(GetData.myRatingSpecificList(obj.getListBooks(), 5));
+////		Testing whether the new GetData.userRatingSpecificList works:
+//		System.out.println(GetData.userRatingSpecificList(obj.getListBooks(), 5));
 //		
 ////		Testing whether the new GetData.worstGenRating works:
 //		System.out.println(GetData.worstGenRating(obj.getListBooks()));

@@ -42,7 +42,7 @@ public class GetData {
 		int totalNumber = numberOfBooks(listOfBooks);
 		double sum = 0;
 		for (Book b : listOfBooks.values()) {
-			sum = sum + b.getGeneralRating();
+			sum = sum + b.getGenRating();
 		}
 		// For the rounding:
 		BigDecimal bd = new BigDecimal(sum / totalNumber);
@@ -55,17 +55,17 @@ public class GetData {
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
 	 * @return double - the average user rating of books rater by the user in this HashMap
 	 */
-	public static double avgMyRating(HashMap<String, Book> listOfBooks) {
+	public static double avgUserRating(HashMap<String, Book> listOfBooks) {
 		ArrayList<Book> ratedBooks = new ArrayList<Book>();
 		for (Book b : listOfBooks.values()) {
-			if (b.getMyRating() > 0) {
+			if (b.getUserRating() > 0) {
 				ratedBooks.add(b);
 			}
 		}
 		int totalNumber = ratedBooks.size();
 		double sum = 0;
 		for (Book b : ratedBooks) {
-			sum = sum + b.getMyRating();
+			sum = sum + b.getUserRating();
 		}
 		// For the rounding:
 		BigDecimal bd = new BigDecimal(sum / totalNumber);
@@ -272,7 +272,7 @@ public class GetData {
 			// to console all the time.
 			HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
 			for (Book b : listOfBooks.values()) {
-				if (b.getGeneralRating() >= lowerBoundary && b.getGeneralRating() < upperBoundary) {
+				if (b.getGenRating() >= lowerBoundary && b.getGenRating() < upperBoundary) {
 					ratingSpecific.put(b.getIsbn(), b);
 				}
 			}
@@ -280,7 +280,7 @@ public class GetData {
 			String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a general Goodreads "
 					+ "rating between " + lowerBoundary + " and " + upperBoundary + " stars:\n";
 			for (Book b : ratingSpecific.values()) {
-				toPrint = toPrint.concat(b + " (" + b.getGeneralRating() + ")\n");
+				toPrint = toPrint.concat(b + " (" + b.getGenRating() + ")\n");
 			}
 			return toPrint;
 		}
@@ -293,7 +293,7 @@ public class GetData {
 	 * @param ratings
 	 * @return
 	 */
-	public static String myRatingSpecificList(HashMap<String, Book> listOfBooks, int... ratings) {
+	public static String userRatingSpecificList(HashMap<String, Book> listOfBooks, int... ratings) {
 		
 		if (ratings.length > 1) { // If there are two int passed as arguments, then they are boundaries:
 			
@@ -308,7 +308,7 @@ public class GetData {
 				// to console all the time.
 				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
 				for (Book b : listOfBooks.values()) {
-					if (b.getMyRating() >= ratings[0] && b.getMyRating() <= ratings[1]) {
+					if (b.getUserRating() >= ratings[0] && b.getUserRating() <= ratings[1]) {
 						ratingSpecific.put(b.getIsbn(), b);
 					}
 				}
@@ -316,7 +316,7 @@ public class GetData {
 				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
 						+ "rating between " + ratings[0] + " and " + ratings[1] + " stars:\n";
 				for (Book b : ratingSpecific.values()) {
-					toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + ")\n");
+					toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
 				}
 				return toPrint;
 			}
@@ -334,7 +334,7 @@ public class GetData {
 				// to console all the time.
 				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
 				for (Book b : listOfBooks.values()) {
-					if (b.getMyRating() == ratings[0]) {
+					if (b.getUserRating() == ratings[0]) {
 						ratingSpecific.put(b.getIsbn(), b);
 					}
 				}
@@ -342,7 +342,7 @@ public class GetData {
 				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
 						+ "rating of " + ratings[0] + " stars:\n";
 				for (Book b : ratingSpecific.values()) {
-					toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + ")\n");
+					toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
 				}
 				return toPrint;
 			}	
@@ -372,8 +372,8 @@ public class GetData {
 			int counter2 = 0;
 			Book worstBook = bookArray[counter2];
 			while (counter2 < (listOfBooks.values().size() - 1)) {
-				if (worstBook.getGeneralRating() > (bookArray[counter2 + 1].getGeneralRating()) 
-						&& (bookArray[counter2 + 1].getGeneralRating()) > 0) {
+				if (worstBook.getGenRating() > (bookArray[counter2 + 1].getGenRating()) 
+						&& (bookArray[counter2 + 1].getGenRating()) > 0) {
 					worstBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
 				} else {
@@ -381,7 +381,7 @@ public class GetData {
 				}
 			}
 			return "The worst-rated book in that list is " + worstBook.getTitle() + ", by " 
-				+ worstBook.getAuthor() + " (" + worstBook.getGeneralRating() + ")";
+				+ worstBook.getAuthor() + " (" + worstBook.getGenRating() + ")";
 		}
 	}
 	
@@ -408,7 +408,7 @@ public class GetData {
 			int counter2 = 0;
 			Book bestBook = bookArray[counter2];
 			while (counter2 < (listOfBooks.values().size() - 1)) {
-				if (bestBook.getGeneralRating() < (bookArray[counter2 + 1].getGeneralRating())) {
+				if (bestBook.getGenRating() < (bookArray[counter2 + 1].getGenRating())) {
 					bestBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
 				} else {
@@ -416,7 +416,7 @@ public class GetData {
 				}
 			}
 			return "The best-rated book in that list is " + bestBook.getTitle() + ", by " 
-				+ bestBook.getAuthor() + " (" + bestBook.getGeneralRating() + ")";
+				+ bestBook.getAuthor() + " (" + bestBook.getGenRating() + ")";
 		}
 	}
 	
@@ -430,15 +430,15 @@ public class GetData {
 	public static String avgRatingDiff(HashMap<String, Book> listOfBooks) {
 		HashMap<String, Book> userRatedBooks = new HashMap<String, Book>();
 		for (Book b : listOfBooks.values()) {
-			if(b.getMyRating() > 0) {
+			if(b.getUserRating() > 0) {
 				userRatedBooks.put(b.getIsbn(), b);
 			}
 		}
 		double genSum = 0;
 		double userSum = 0;
 		for (Book b : userRatedBooks.values()) {
-			genSum = genSum + b.getGeneralRating();
-			userSum = userSum + b.getMyRating();
+			genSum = genSum + b.getGenRating();
+			userSum = userSum + b.getUserRating();
 		}
 		
 		BigDecimal genSumBD = new BigDecimal(genSum);
@@ -452,4 +452,5 @@ public class GetData {
 				+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
 				+ diffBD.doubleValue() + ".";
 	}
+	
 }

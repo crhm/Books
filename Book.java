@@ -6,8 +6,8 @@ public class Book {
 	private long goodreadsID;
 	private double numPages;
 	private String yearPublished;
-	private double generalRating;
-	private double myRating;
+	private double genRating;
+	private double userRating;
 	private String dateRead;
 	private String dateAdded;
 	private Shelf shelf;
@@ -22,22 +22,22 @@ public class Book {
 	 * @param goodreadsID ID number given by GoodReads as a long
 	 * @param numPages Page number as a double
 	 * @param yearPublished Year of (first) publication as a String
-	 * @param generalRating General rating in Goodreads as a double
-	 * @param myRating Rating I gave the book as a double
+	 * @param genRating General rating in Goodreads as a double
+	 * @param userRating Rating user gave the book as a double
 	 * @param dateRead Date the book was read as a String
 	 * @param dateAdded Date the book was added to my shelves as a String
 	 * @param shelf Instance of class Shelf for the shelf to which it belongs
 	 */
 	public Book(String title, Author author, String isbn, long goodreadsID, double numPages, String yearPublished,
-			double generalRating, double myRating, String dateRead, String dateAdded, Shelf shelf) {
+			double genRating, double userRating, String dateRead, String dateAdded, Shelf shelf) {
 		this.title = title;
 		this.author = author;
 		this.isbn = isbn;
 		this.goodreadsID = goodreadsID;
 		this.numPages = numPages;
 		this.yearPublished = yearPublished;
-		this.generalRating = generalRating;
-		this.myRating = myRating;
+		this.genRating = genRating;
+		this.userRating = userRating;
 		this.dateRead = dateRead;
 		this.dateAdded = dateAdded;
 		this.shelf = shelf;
@@ -104,23 +104,23 @@ public class Book {
 	}
 
 
-	public double getGeneralRating() {
-		return generalRating;
+	public double getGenRating() {
+		return genRating;
 	}
 
 
-	public void setGeneralRating(double generalRating) {
-		this.generalRating = generalRating;
+	public void setGenRating(double genRating) {
+		this.genRating = genRating;
 	}
 
 
-	public double getMyRating() {
-		return myRating;
+	public double getUserRating() {
+		return userRating;
 	}
 
 
-	public void setMyRating(double myRating) {
-		this.myRating = myRating;
+	public void setUserRating(double userRating) {
+		this.userRating = userRating;
 	}
 
 
@@ -159,10 +159,10 @@ public class Book {
 	 */
 	public String toStringLong(){
 		int pages = (int) numPages;
-		int rating = (int) myRating;
+		int rating = (int) userRating;
 		return "Book\nTitle: " + title + "\nAuthor: " + author + "\nISBN: " + isbn + "\nGoodreads ID: "
 				+ goodreadsID + "\nNumber of Pages: " + pages + "\nYear Published: " + yearPublished 
-				+ "\nGeneral Rating: " + generalRating + "\nMy Rating: " + rating + "\nDate Read: " 
+				+ "\nGeneral Rating: " + genRating + "\nMy Rating: " + rating + "\nDate Read: " 
 				+ dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName() + "\n";
 	}
 

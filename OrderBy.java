@@ -247,7 +247,7 @@ public class OrderBy {
 	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
 	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis
 	 */
-	public static String generalRating(HashMap<String, Book> listOfBooks, Boolean flag) {
+	public static String genRating(HashMap<String, Book> listOfBooks, Boolean flag) {
 		List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
 		Collections.sort(orderedList, new Comparator<Book>() {
 			public int compare (Book b1, Book b2) {
@@ -255,15 +255,15 @@ public class OrderBy {
 					// The * 100 is because it needs to be cast to int, and if I don't do that the value
 					// behind the coma get truncated by the cast and the ordering is meaningless
 					// This does not impact the actual general rating value which get displayed as normal below
-					return (int) ((b1.getGeneralRating() * 100) - (b2.getGeneralRating() * 100));
+					return (int) ((b1.getGenRating() * 100) - (b2.getGenRating() * 100));
 				} else {
-					return (int) ((b2.getGeneralRating() * 100) - (b1.getGeneralRating() * 100));
+					return (int) ((b2.getGenRating() * 100) - (b1.getGenRating() * 100));
 				}
 			}
 		});
 		String toPrint = "Books ordered by general rating:\n\n";
 		for (Book b : orderedList) {
-			toPrint = toPrint.concat(b + " (" + b.getGeneralRating() + " /5)\n");
+			toPrint = toPrint.concat(b + " (" + b.getGenRating() + " /5)\n");
 		}
 		return toPrint;
 	}
@@ -276,10 +276,10 @@ public class OrderBy {
 	 * @param flag Boolean. If true, order is lowest to highest, if false, order is highest to lowest
 	 * @return a string with one book per line in its toString form, followed by their rating in parenthesis
 	 */
-	public static String myRating(HashMap<String, Book> listOfBooks, Boolean flag) {
+	public static String userRating(HashMap<String, Book> listOfBooks, Boolean flag) {
 		ArrayList<Book> ratedBooks = new ArrayList<Book>();
 		for (Book b : listOfBooks.values()) {
-			if (b.getMyRating() > 0) {
+			if (b.getUserRating() > 0) {
 				ratedBooks.add(b);
 			}
 		}
@@ -287,15 +287,15 @@ public class OrderBy {
 		Collections.sort(orderedList, new Comparator<Book>() {
 			public int compare (Book b1, Book b2) {
 				if (flag == true) {
-					return (int) (b1.getMyRating() - b2.getMyRating());
+					return (int) (b1.getUserRating() - b2.getUserRating());
 				} else {
-					return (int) (b2.getMyRating() - b1.getMyRating());
+					return (int) (b2.getUserRating() - b1.getUserRating());
 				}
 			}
 		});
 		String toPrint = "Books rated by user, ordered by user rating:\n\n";
 		for (Book b : orderedList) {
-			toPrint = toPrint.concat(b + " (" + (int) b.getMyRating() + " /5)\n");
+			toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + " /5)\n");
 		}
 		return toPrint;
 	}
