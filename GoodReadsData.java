@@ -346,8 +346,8 @@ public class GoodReadsData {
 ////		Testing the order by Date read:
 //		System.out.println(OrderBy.dateRead(obj.getListBooks(), true));
 //		
-////		Testing the order by general Rating:
-//		System.out.println(OrderBy.generalRating(obj.getListBooks(), true));
+//		Testing the order by general Rating:
+		System.out.println(OrderBy.genRating(obj.getListBooks(), true));
 //		
 ////		Testing the order by my Rating:
 //		System.out.println(OrderBy.userRating(obj.getListBooks(), true));
@@ -399,8 +399,8 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.bestGenRating works:
 //		System.out.println(GetData.bestGenRating(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.avgRatingDiff works:
-		System.out.println(GetData.avgRatingDiff(obj.getListBooks()));
+////		Testing whether the new GetData.avgRatingDiff works:
+//		System.out.println(GetData.avgRatingDiff(obj.getListBooks()));
 	}
 
 }
