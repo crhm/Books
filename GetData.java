@@ -38,7 +38,7 @@ public class GetData {
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
 	 * @return double - the average general rating of books in this HashMap
 	 */
-	public static double averageGenRating(HashMap<String, Book> listOfBooks) {
+	public static double avgGenRating(HashMap<String, Book> listOfBooks) {
 		int totalNumber = numberOfBooks(listOfBooks);
 		double sum = 0;
 		for (Book b : listOfBooks.values()) {
@@ -55,7 +55,7 @@ public class GetData {
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
 	 * @return double - the average user rating of books rater by the user in this HashMap
 	 */
-	public static double averageMyRating(HashMap<String, Book> listOfBooks) {
+	public static double avgMyRating(HashMap<String, Book> listOfBooks) {
 		ArrayList<Book> ratedBooks = new ArrayList<Book>();
 		for (Book b : listOfBooks.values()) {
 			if (b.getMyRating() > 0) {
@@ -95,7 +95,7 @@ public class GetData {
 	 * number of books is to be averaged
 	 * @return a double of the rounded average of number of books by Authors with more than 1 book
 	 */
-	public static double averageMultipleBooks(HashMap<String, Book> listOfBooks) {
+	public static double avgMultipleBooks(HashMap<String, Book> listOfBooks) {
 		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
 		for (Book b : listOfBooks.values()) {
 			if (b.getAuthor().getListOfBooks().values().size() > 1) {
@@ -233,4 +233,25 @@ public class GetData {
 		}
 	}
 	
+	/** This method returns a string detailing the average length (in pages) of books in the HashMap 
+	 * passed as argument. It ignores books that have a number of pages lower than 1.
+	 * @param listOfBooks HashMap<String, Book> of books whose length is to be averaged
+	 * @return String of format "The average length of books in this list is x pages."
+	 */
+	public static String avgPageNum(HashMap<String, Book> listOfBooks){
+		double totalPages = 0;
+		for (Book b : listOfBooks.values()) {
+			if (b.getNumPages() > 0) {
+				totalPages = totalPages + b.getNumPages();
+			}
+		}
+		//double average = (totalPages / listOfBooks.values().size());
+		// For the rounding:
+		// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
+		// Otherwise it was always giving me a result of two because of the innacuracies of double and int
+		BigDecimal sum = new BigDecimal(totalPages);
+		BigDecimal totalNumber = new BigDecimal(listOfBooks.values().size());
+		BigDecimal average = sum.divide(totalNumber, 3, RoundingMode.HALF_UP);
+		return "The average length of books in this list is " + average.doubleValue() + " pages.";
+	}
 }

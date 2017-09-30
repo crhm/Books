@@ -363,17 +363,17 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.numberOfAuthors works:
 //		System.out.println(GetData.numberOfAuthors(obj.getListBooks()));
 //		
-////		Testing whether the new GetData.averageGenRating works:
-//		System.out.println(GetData.averageGenRating(obj.getListBooks()));
+////		Testing whether the new GetData.avgGenRating works:
+//		System.out.println(GetData.avgGenRating(obj.getListBooks()));
 //		
-////		Testing whether the new GetData.averageMyRating works:
-//		System.out.println(GetData.averageMyRating(obj.getListBooks()));
+////		Testing whether the new GetData.avgMyRating works:
+//		System.out.println(GetData.avgMyRating(obj.getListBooks()));
 //		
 ////		Testing whether the new GetData.authorsMultipleBooks works:
 //		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
 //
-////		Testing whether the new GetData.averageMultipleBooks works:
-//		System.out.println(GetData.averageMultipleBooks(obj.getListBooks()));
+////		Testing whether the new GetData.avgMultipleBooks works:
+//		System.out.println(GetData.avgMultipleBooks(obj.getListBooks()));
 //		
 ////		Testing whether the new GetData.authorMostBooks works:
 //		System.out.println(GetData.authorMostBooks(obj.getListBooks()));
@@ -381,8 +381,11 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.shortestBook works:
 //		System.out.println(GetData.shortestBook(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.longestBook works:
-		System.out.println(GetData.longestBook(obj.getListBooks()));
+////		Testing whether the new GetData.longestBook works:
+//		System.out.println(GetData.longestBook(obj.getListBooks()));
+//		
+//		Testing whether the new GetData.avgPageNum works:
+		System.out.println(GetData.avgPageNum(obj.getListBooks()));
 	}
 
 }
