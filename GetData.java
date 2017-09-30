@@ -160,4 +160,77 @@ public class GetData {
 		}
 	}
 	
+	/** This method returns a string detailing which book in the listOfBooks passed as argument is the shortest
+	 *  in number of pages, and includes the number of pages in parenthesis.
+	 *  It excludes from its count books with a page number equal to or smaller than 0.
+	 *  	If the HashMap is empty, then a mere error message is displayed
+	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
+	 * @return String following the format "The shortest book in that list is Title, by Author (x pages)"
+	 */
+	public static String shortestBook(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
+			return "No books found here, sorry! Check argument.";
+		} else {		
+			// Converting the HashMap to an array to be able to use indexes in order to check
+			// number of pages of current book against that of the next one.
+			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			int counter1 = 0;
+			for (Book b : listOfBooks.values()) {
+				bookArray[counter1] = b;
+				counter1++;
+			}
+			
+			// Comparing all books in the array in succession by their number of pages, 
+			// Starting outside the while with the first author in the array
+			int counter2 = 0;
+			Book shortestBook = bookArray[counter2];
+			while (counter2 < (listOfBooks.values().size() - 1)) {
+				if (shortestBook.getNumPages() > (bookArray[counter2 + 1].getNumPages()) && (bookArray[counter2 + 1].getNumPages()) > 0) {
+					shortestBook = bookArray[counter2 + 1];
+					counter2 = counter2 + 1;
+				} else {
+					counter2 = counter2 + 1;
+				}
+			}
+			return "The shortest book in that list is " + shortestBook.getTitle() + ", by " 
+				+ shortestBook.getAuthor() + " (" + (int) shortestBook.getNumPages() + " pages)";
+		}
+	}
+	
+	/** This method returns a string detailing which book in the listOfBooks passed as argument is the longest
+	 *  in number of pages, and includes the number of pages in parenthesis.
+	 *  	If the HashMap is empty, then a mere error message is displayed
+	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
+	 * @return String following the format "The longest book in that list is Title, by Author (x pages)"
+	 */
+	public static String longestBook(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
+			return "No books found here, sorry! Check argument.";
+		} else {		
+			// Converting the HashMap to an array to be able to use indexes in order to check
+			// number of pages of current book against that of the next one.
+			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			int counter1 = 0;
+			for (Book b : listOfBooks.values()) {
+				bookArray[counter1] = b;
+				counter1++;
+			}
+			
+			// Comparing all books in the array in succession by their number of pages, 
+			// Starting outside the while with the first author in the array
+			int counter2 = 0;
+			Book longestBook = bookArray[counter2];
+			while (counter2 < (listOfBooks.values().size() - 1)) {
+				if (longestBook.getNumPages() < (bookArray[counter2 + 1].getNumPages())) {
+					longestBook = bookArray[counter2 + 1];
+					counter2 = counter2 + 1;
+				} else {
+					counter2 = counter2 + 1;
+				}
+			}
+			return "The longest book in that list is " + longestBook.getTitle() + ", by " 
+				+ longestBook.getAuthor() + " (" + (int) longestBook.getNumPages() + " pages)";
+		}
+	}
+	
 }

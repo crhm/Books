@@ -3,6 +3,7 @@
 // TODO create an output to a text file that has data analysis; 
 // TODO create the statistical functions, see Github. 
 // TODO implement try/ catch blocks and error messages
+// TODO look into "throws IncorrectArgumentException" to make it clean when passed HashMaps can't be empty?
 
 // SMALL
 
@@ -374,8 +375,14 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.averageMultipleBooks works:
 //		System.out.println(GetData.averageMultipleBooks(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.authorMostBooks works:
-		System.out.println(GetData.authorMostBooks(obj.getListBooks()));
+////		Testing whether the new GetData.authorMostBooks works:
+//		System.out.println(GetData.authorMostBooks(obj.getListBooks()));
+//		
+////		Testing whether the new GetData.shortestBook works:
+//		System.out.println(GetData.shortestBook(obj.getListBooks()));
+//		
+//		Testing whether the new GetData.longestBook works:
+		System.out.println(GetData.longestBook(obj.getListBooks()));
 	}
 
 }
