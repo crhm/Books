@@ -349,4 +349,74 @@ public class GetData {
 		}	
 	}
 	
+	/** This method returns a string detailing which is the book with the worst general Goodreads rating in the 
+	 * HashMap listOfBooks, excluding books that have a rating of 0 or lower. 
+	 * @param listOfBooks HashMap<String, Book> whose books are to be evaluated for worst rated
+	 * @return String of the format "The worst-rated book in that list is Title, by Author (rating)"
+	 */
+	public static String worstGenRating(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
+			return "No books found here, sorry! Check argument.";
+		} else {		
+			// Converting the HashMap to an array to be able to use indexes in order to check
+			// rating of current book against that of the next one.
+			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			int counter1 = 0;
+			for (Book b : listOfBooks.values()) {
+				bookArray[counter1] = b;
+				counter1++;
+			}
+			
+			// Comparing all books in the array in succession by their rating of pages, 
+			// Starting outside the while with the first author in the array
+			int counter2 = 0;
+			Book worstBook = bookArray[counter2];
+			while (counter2 < (listOfBooks.values().size() - 1)) {
+				if (worstBook.getGeneralRating() > (bookArray[counter2 + 1].getGeneralRating()) 
+						&& (bookArray[counter2 + 1].getGeneralRating()) > 0) {
+					worstBook = bookArray[counter2 + 1];
+					counter2 = counter2 + 1;
+				} else {
+					counter2 = counter2 + 1;
+				}
+			}
+			return "The worst-rated book in that list is " + worstBook.getTitle() + ", by " 
+				+ worstBook.getAuthor() + " (" + worstBook.getGeneralRating() + ")";
+		}
+	}
+	
+	/** This method returns a string detailing which is the book with the best general Goodreads rating in the 
+	 * HashMap listOfBooks. 
+	 * @param listOfBooks HashMap<String, Book> whose books are to be evaluated for best rated
+	 * @return String of the format "The best-rated book in that list is Title, by Author (rating)"
+	 */
+	public static String bestGenRating(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
+			return "No books found here, sorry! Check argument.";
+		} else {		
+			// Converting the HashMap to an array to be able to use indexes in order to check
+			// rating of current book against that of the next one.
+			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			int counter1 = 0;
+			for (Book b : listOfBooks.values()) {
+				bookArray[counter1] = b;
+				counter1++;
+			}
+			
+			// Comparing all books in the array in succession by their rating of pages, 
+			// Starting outside the while with the first author in the array
+			int counter2 = 0;
+			Book bestBook = bookArray[counter2];
+			while (counter2 < (listOfBooks.values().size() - 1)) {
+				if (bestBook.getGeneralRating() < (bookArray[counter2 + 1].getGeneralRating())) {
+					bestBook = bookArray[counter2 + 1];
+					counter2 = counter2 + 1;
+				} else {
+					counter2 = counter2 + 1;
+				}
+			}
+			return "The best-rated book in that list is " + bestBook.getTitle() + ", by " 
+				+ bestBook.getAuthor() + " (" + bestBook.getGeneralRating() + ")";
+		}
+	}
 }

@@ -390,8 +390,14 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.genRatingSpecificList works:
 //		System.out.println(GetData.genRatingSpecificList(obj.getListBooks(), 0, 3));
 //		
-//		Testing whether the new GetData.myRatingSpecificList works:
-		System.out.println(GetData.myRatingSpecificList(obj.getListBooks(), 5));
+////		Testing whether the new GetData.myRatingSpecificList works:
+//		System.out.println(GetData.myRatingSpecificList(obj.getListBooks(), 5));
+//		
+////		Testing whether the new GetData.worstGenRating works:
+//		System.out.println(GetData.worstGenRating(obj.getListBooks()));
+//
+//		Testing whether the new GetData.bestGenRating works:
+		System.out.println(GetData.bestGenRating(obj.getListBooks()));
 	}
 
 }
