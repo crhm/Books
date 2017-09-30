@@ -384,8 +384,14 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.longestBook works:
 //		System.out.println(GetData.longestBook(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.avgPageNum works:
-		System.out.println(GetData.avgPageNum(obj.getListBooks()));
+////		Testing whether the new GetData.avgPageNum works:
+//		System.out.println(GetData.avgPageNum(obj.getListBooks()));
+//		
+//		Testing whether the new GetData.genRatingSpecificList works:
+		System.out.println(GetData.genRatingSpecificList(obj.getListBooks(), 0, 3));
+		
+////		Testing whether the new GetData.myRatingSpecificList works:
+//		System.out.println(GetData.myRatingSpecificList(obj.getListBooks(), 3, 4));
 	}
 
 }
