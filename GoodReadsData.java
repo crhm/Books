@@ -396,8 +396,11 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.worstGenRating works:
 //		System.out.println(GetData.worstGenRating(obj.getListBooks()));
 //
-//		Testing whether the new GetData.bestGenRating works:
-		System.out.println(GetData.bestGenRating(obj.getListBooks()));
+////		Testing whether the new GetData.bestGenRating works:
+//		System.out.println(GetData.bestGenRating(obj.getListBooks()));
+//		
+//		Testing whether the new GetData.avgRatingDiff works:
+		System.out.println(GetData.avgRatingDiff(obj.getListBooks()));
 	}
 
 }

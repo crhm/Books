@@ -419,4 +419,37 @@ public class GetData {
 				+ bestBook.getAuthor() + " (" + bestBook.getGeneralRating() + ")";
 		}
 	}
+	
+	/** This method returns a String comparing (on books that have a user rating, aka where the user rating
+	 * is greater than zero) the average user rating to the average general Goodreads rating, and their 
+	 * difference.
+	 * @param listOfBooks HashMap<String, Book> that contains the books to be averaged and compared
+	 * @return String of the format " The average User Rating is x, whereas the average General 
+	 * Goodreads Rating (for those same books) is y, representing a difference of z."
+	 */
+	public static String avgRatingDiff(HashMap<String, Book> listOfBooks) {
+		HashMap<String, Book> userRatedBooks = new HashMap<String, Book>();
+		for (Book b : listOfBooks.values()) {
+			if(b.getMyRating() > 0) {
+				userRatedBooks.put(b.getIsbn(), b);
+			}
+		}
+		double genSum = 0;
+		double userSum = 0;
+		for (Book b : userRatedBooks.values()) {
+			genSum = genSum + b.getGeneralRating();
+			userSum = userSum + b.getMyRating();
+		}
+		
+		BigDecimal genSumBD = new BigDecimal(genSum);
+		BigDecimal userSumBD = new BigDecimal(userSum);
+		BigDecimal totalDB = new BigDecimal(userRatedBooks.values().size());
+		BigDecimal genAvgBD = genSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+		BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+		BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
+		
+		return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
+				+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
+				+ diffBD.doubleValue() + ".";
+	}
 }
