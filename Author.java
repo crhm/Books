@@ -9,8 +9,8 @@ public class Author {
 	
 	/** Constructor of Author - object author to be associated with books
 	 * Take data from Goodreads?
-	 * @param firstName First Name of Author
-	 * @param lastName Last Name(s) of Author
+	 * @param firstName First Name of Author (May be empty)
+	 * @param lastName Last Name(s) of Author (Required)
 	 * @param goodreadsID Double corresponding to a goodreads ID number
 	 */
 	public Author(String firstName, String lastName, double goodreadsID) {

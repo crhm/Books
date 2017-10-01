@@ -75,7 +75,7 @@ public class OrderBy {
 					toPrint = toPrint.concat(b + " (" + b.getYearPublished() + ")\n");
 				}
 			} else {
-				toPrint = toPrint.concat("Sorry, no books with recorded year of first publication were found.");
+				toPrint = toPrint.concat("\nSorry, no books with recorded year of first publication were found.\n\n");
 			}
 			
 			if (!withoutPubDate.isEmpty()) {
@@ -182,6 +182,7 @@ public class OrderBy {
 		} else {
 			List<Book> withNumPage = new ArrayList<Book>();
 			List<Book> withoutNumPage = new ArrayList<Book>();
+			String toPrint = "";
 			
 			for (Book b : listOfBooks.values()) {
 				if (b.getNumPages() > 0) {
@@ -191,23 +192,30 @@ public class OrderBy {
 				}
 			}
 			
-			Collections.sort(withNumPage, new Comparator<Book>() {
-				public int compare(Book b1, Book b2) {
-					if (flag == true) {
-						return (int) (b1.getNumPages() - b2.getNumPages());
-					} else {
-						return (int) (b2.getNumPages() - b1.getNumPages());
+			if (!withNumPage.isEmpty()) {
+				Collections.sort(withNumPage, new Comparator<Book>() {
+					public int compare(Book b1, Book b2) {
+						if (flag == true) {
+							return (int) (b1.getNumPages() - b2.getNumPages());
+						} else {
+							return (int) (b2.getNumPages() - b1.getNumPages());
+						}
 					}
+				});
+				toPrint = toPrint.concat("\nOrdered by number of pages:\n\n");
+				for (Book b : withNumPage) {
+					toPrint = toPrint.concat(b + " (" + (int) b.getNumPages() + " pages)\n");
 				}
-			});
-			String toPrint = "\nOrdered by number of pages:\n\n";
-			for (Book b : withNumPage) {
-				toPrint = toPrint.concat(b + " (" + (int) b.getNumPages() + " pages)\n");
+			} else {
+				toPrint = toPrint.concat("\nSorry, no books with recorded number of pages were found.\n\n");
 			}
-			toPrint = toPrint.concat("\nBooks with no recorded number of pages:\n\n");
-			for (Book b : withoutNumPage) {
-				toPrint = toPrint.concat(b + "\n");
-			}
+			
+			if (!withoutNumPage.isEmpty()) {
+				toPrint = toPrint.concat("\nBooks with no recorded number of pages:\n\n");
+				for (Book b : withoutNumPage) {
+					toPrint = toPrint.concat(b + "\n");
+				}
+			}			
 			return toPrint;
 		}
 	}
