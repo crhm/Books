@@ -406,25 +406,33 @@ public class OrderBy {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
 			ArrayList<Book> ratedBooks = new ArrayList<Book>();
+			String toPrint = "";
+			
 			for (Book b : listOfBooks.values()) {
 				if (b.getUserRating() > 0) {
 					ratedBooks.add(b);
 				}
 			}
-			List<Book> orderedList = ratedBooks;
-			Collections.sort(orderedList, new Comparator<Book>() {
-				public int compare (Book b1, Book b2) {
-					if (flag == true) {
-						return (int) (b1.getUserRating() - b2.getUserRating());
-					} else {
-						return (int) (b2.getUserRating() - b1.getUserRating());
+			
+			if (!ratedBooks.isEmpty()) {
+				List<Book> orderedList = ratedBooks;
+				Collections.sort(orderedList, new Comparator<Book>() {
+					public int compare (Book b1, Book b2) {
+						if (flag == true) {
+							return (int) (b1.getUserRating() - b2.getUserRating());
+						} else {
+							return (int) (b2.getUserRating() - b1.getUserRating());
+						}
 					}
+				});
+				toPrint = toPrint.concat("\nBooks rated by user, ordered by user rating:\n\n");
+				for (Book b : orderedList) {
+					toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + " /5)\n");
 				}
-			});
-			String toPrint = "Books rated by user, ordered by user rating:\n\n";
-			for (Book b : orderedList) {
-				toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + " /5)\n");
+			} else {
+				toPrint = toPrint.concat("\nSorry, no books with user ratings were found.\n\n");
 			}
+			
 			return toPrint;
 		}
 	}
