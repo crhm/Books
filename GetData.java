@@ -209,8 +209,9 @@ public class GetData {
 			
 			// Checking whether listOfBooks is a shelf or the entire library;
 			// behavior needs to be different depending on it.
-			// Because author.getListOfBooks returns all books he has written, not just
-			// Books he has written that are this in this HashMap
+			// Neither behavior works in the other case:
+			// Because author.getListOfBooks returns all books the author has written, not just
+			// Books they have written that are this in this HashMap,
 			// And because if it is the whole library then the checking implemented
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
