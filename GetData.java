@@ -143,7 +143,8 @@ public class GetData {
 	
 	
 	/** Returns the average number of books amongst authors who have more than one book in listOfBooks
-	 * as a double, rounded to nearest 3rd decimal
+	 * as a double, rounded to nearest 3rd decimal.
+	 * <br>If no authors have more than one book, it returns 0.
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books's 
 	 * number of books is to be averaged
 	 * @return a double of the rounded average of number of books by Authors with more than 1 book
@@ -160,19 +161,22 @@ public class GetData {
 					listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
 				}
 			}
-			int totalNumber = listAuthors.size();
-			int sum = 0;
-			for (Author a : listAuthors.values()) {
-				sum = sum + numberOfBooks(a.getListOfBooks());
-			}
+			if (!listAuthors.isEmpty()) {
+				int sum = 0;
+				for (Author a : listAuthors.values()) {
+					sum = sum + numberOfBooks(a.getListOfBooks());
+				}
 
-			// For the rounding and the calculation of the average:
-			// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
-			// Otherwise it was always giving me a result of two because of the innacuracies of double and int
-			BigDecimal sum1 = new BigDecimal(sum);
-			BigDecimal totalNumber1 = new BigDecimal(totalNumber);
-			BigDecimal bd = sum1.divide(totalNumber1, 3, RoundingMode.HALF_UP);
-			return bd.doubleValue(); 	
+				// For the rounding and the calculation of the average:
+				// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
+				// Otherwise it was always giving me a result of two because of the innacuracies of double and int
+				BigDecimal sum1 = new BigDecimal(sum);
+				BigDecimal totalNumber = new BigDecimal(listAuthors.size());
+				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
+				return bd.doubleValue(); 	
+			} else {
+				return 0;
+			}
 		}
 	}
 
