@@ -42,6 +42,7 @@ public class OrderBy {
 		} else {
 			List<Book> withPubDate = new ArrayList<Book>();
 			List<Book> withoutPubDate = new ArrayList<Book>();
+			String toPrint = "";
 			
 			for (Book b : listOfBooks.values()) {
 				if (b.getYearPublished().isEmpty()) {
@@ -50,36 +51,41 @@ public class OrderBy {
 					withPubDate.add(b);
 				}
 			}
-			
-			Collections.sort(withPubDate, new Comparator<Book>() {
-				public int compare(Book b1, Book b2) {
-					double age1 = 0;
-					double age2 = 0;
-					if (b1.getYearPublished()!= null && b1.getYearPublished().length() >0){
-						age1 = Double.parseDouble(b1.getYearPublished());
+			if (!withPubDate.isEmpty()) {
+				Collections.sort(withPubDate, new Comparator<Book>() {
+					public int compare(Book b1, Book b2) {
+						double age1 = 0;
+						double age2 = 0;
+						if (b1.getYearPublished()!= null && b1.getYearPublished().length() >0){
+							age1 = Double.parseDouble(b1.getYearPublished());
+						}
+						if (b2.getYearPublished()!= null && b2.getYearPublished().length() >0){
+							age2 = Double.parseDouble(b2.getYearPublished());
+						}
+						if (flag == true) {
+							return (int) age1  - (int) age2;
+						} else {
+							return (int) age2  - (int) age1;
+						}
+						
 					}
-					if (b2.getYearPublished()!= null && b2.getYearPublished().length() >0){
-						age2 = Double.parseDouble(b2.getYearPublished());
-					}
-					if (flag == true) {
-						return (int) age1  - (int) age2;
-					} else {
-						return (int) age2  - (int) age1;
-					}
-					
+				});
+				toPrint = toPrint.concat("\nOrdered by year of first publication:\n\n");
+				for (Book b : withPubDate) {
+					toPrint = toPrint.concat(b + " (" + b.getYearPublished() + ")\n");
 				}
-			});
-			String toPrint = "\nOrdered by year of first publication:\n\n";
-			for (Book b : withPubDate) {
-				toPrint = toPrint.concat(b + " (" + b.getYearPublished() + ")\n");
+			} else {
+				toPrint = toPrint.concat("Sorry, no books with recorded year of first publication were found.");
 			}
-			toPrint = toPrint.concat("\nBooks with no recorded year of first publication:\n");
-			for (Book b : withoutPubDate) {
-				toPrint = toPrint.concat(b + "\n");
-			}
+			
+			if (!withoutPubDate.isEmpty()) {
+				toPrint = toPrint.concat("\nBooks with no recorded year of first publication:\n");
+				for (Book b : withoutPubDate) {
+					toPrint = toPrint.concat(b + "\n");
+				}
+			}	
 			return toPrint;
 		}
-
 	}
 
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by book
