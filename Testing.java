@@ -78,8 +78,8 @@ public class Testing {
 ////		Testing whether the new GetData.avgUserRating works:
 //		System.out.println(GetData.avgUserRating(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.authorsMultipleBooks works:
-		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
+////		Testing whether the new GetData.authorsMultipleBooks works:
+//		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
 //
 ////		Testing whether the new GetData.avgMultipleBooks works:
 //		System.out.println(GetData.avgMultipleBooks(obj.getListBooks()));

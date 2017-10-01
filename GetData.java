@@ -200,33 +200,79 @@ public class GetData {
 	 * @return a double of the rounded average of number of books by Authors with more than 1 book
 	 */
 	public static double avgMultipleBooks(HashMap<String, Book> listOfBooks) {
-		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
 		} else if (listOfBooks.isEmpty()) {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
+			// Initializing variables
+			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			double numAuthorsMB = 0;
 			for (Book b : listOfBooks.values()) {
-				if (b.getAuthor().getListOfBooks().values().size() > 1) {
-					listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+			double sum = 0;
+			
+			// Checking whether listOfBooks is a shelf or the entire library;
+			// behavior needs to be different depending on it.
+			// Neither behavior works in the other case:
+			// Because author.getListOfBooks returns all books the author has written, not just
+			// Books they have written that are this in this HashMap,
+			// And because if it is the whole library then the checking implemented
+			// to make sure the book is in the right shelf does not work because the
+			// HashMap is not a shelf.
+			// Flag = true for listOfBooks being one single shelf
+			// Flag = false for listOfBooks being the whole library
+			Boolean flag = null;
+			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
+			
+			for (Book b : listOfBooks.values()) {
+				listOfShelves.put(b.getShelf().getName(), b.getShelf());
+			}
+			
+			if (listOfShelves.values().size() > 1) {
+				flag = false;
+			} else {
+				flag = true;
+			}
+			
+			if (flag) { // This behavior is for when the listOfBooks is a single shelf
+				
+				for (Author a : listAuthors.values()) {
+					int temp1 = 0; //counter of books in the shelf
+					for (Book b : a.getListOfBooks().values()) {
+						if (b.getShelf().getListOfBooks() == listOfBooks) {
+							temp1++;
+						}
+					}
+					if (temp1 > 1) {
+						numAuthorsMB++;
+						sum = sum + temp1;
+					}
+				}
+				
+			} else { // This behavior is for when the listOfBooks is the whole library
+				
+				for (Author a : listAuthors.values()) {
+					if (a.getListOfBooks().values().size() > 1) {
+						numAuthorsMB++;
+						sum = sum + a.getListOfBooks().values().size();
+					}
 				}
 			}
-			if (!listAuthors.isEmpty()) {
-				int sum = 0;
-				for (Author a : listAuthors.values()) {
-					sum = sum + numberOfBooks(a.getListOfBooks());
-				}
-
+			
+			if (numAuthorsMB > 0) { // to avoid dividing by zero
 				// For the rounding and the calculation of the average:
 				// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
 				// Otherwise it was always giving me a result of two because of the innacuracies of double and int
 				BigDecimal sum1 = new BigDecimal(sum);
-				BigDecimal totalNumber = new BigDecimal(listAuthors.size());
+				BigDecimal totalNumber = new BigDecimal(numAuthorsMB);
 				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
-				return bd.doubleValue(); 	
+				return bd.doubleValue(); 
 			} else {
 				return 0;
 			}
+			
 		}
 	}
 
