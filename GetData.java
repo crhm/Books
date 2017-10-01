@@ -87,6 +87,7 @@ public class GetData {
 	
 	/** This method returns a double that is the average rating the user has given to books the user has 
 	 * rated in the HashMap listOfBooks, rounded to the 3rd decimal (the nearest one, or up if it's 5).
+	 * <br>If no user rating has been found, then it returns zero.
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
 	 * @return double - the average user rating of books rater by the user in this HashMap
 	 */
@@ -102,15 +103,20 @@ public class GetData {
 					ratedBooks.add(b);
 				}
 			}
-			int totalNumber = ratedBooks.size();
-			double sum = 0;
-			for (Book b : ratedBooks) {
-				sum = sum + b.getUserRating();
+			if (!ratedBooks.isEmpty()) {
+				double sum = 0;
+				for (Book b : ratedBooks) {
+					sum = sum + b.getUserRating();
+				}
+				// For the rounding:
+				BigDecimal totalNumber = new BigDecimal(ratedBooks.size());
+				BigDecimal sum1 = new BigDecimal(sum);
+				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
+				return bd.doubleValue();	
+			} else {
+				return 0;
 			}
-			// For the rounding:
-			BigDecimal bd = new BigDecimal(sum / totalNumber);
-			bd = bd.setScale(3, RoundingMode.HALF_UP);
-			return bd.doubleValue();	
+			
 		}
 	}
 	
