@@ -351,6 +351,8 @@ public class OrderBy {
 		} else {
 			List<Book> noRating = new ArrayList<Book>();
 			List<Book> withRating = new ArrayList<Book>();
+			String toPrint = "";
+			
 			for (Book b : listOfBooks.values()) {
 				if (b.getGenRating() > 0) {
 					withRating.add(b);
@@ -359,25 +361,32 @@ public class OrderBy {
 				}
 			}
 			
-			Collections.sort(withRating, new Comparator<Book>() {
-				public int compare (Book b1, Book b2) {
-					if (flag == true) {
-						// The * 100 is because it needs to be cast to int, and if I don't do that the value
-						// behind the coma get truncated by the cast and the ordering is meaningless
-						// This does not impact the actual general rating value which get displayed as normal below
-						return (int) ((b1.getGenRating() * 100) - (b2.getGenRating() * 100));
-					} else {
-						return (int) ((b2.getGenRating() * 100) - (b1.getGenRating() * 100));
+			if (!withRating.isEmpty()) {
+				Collections.sort(withRating, new Comparator<Book>() {
+					public int compare (Book b1, Book b2) {
+						if (flag == true) {
+							// The * 100 is because it needs to be cast to int, and if I don't do that the value
+							// behind the coma get truncated by the cast and the ordering is meaningless
+							// This does not impact the actual general rating value which get displayed as normal below
+							return (int) ((b1.getGenRating() * 100) - (b2.getGenRating() * 100));
+						} else {
+							return (int) ((b2.getGenRating() * 100) - (b1.getGenRating() * 100));
+						}
 					}
+				});
+				toPrint = toPrint.concat("\nBooks ordered by general rating:\n\n");
+				for (Book b : withRating) {
+					toPrint = toPrint.concat(b + " (" + b.getGenRating() + " /5)\n");
 				}
-			});
-			String toPrint = "\nBooks ordered by general rating:\n\n";
-			for (Book b : withRating) {
-				toPrint = toPrint.concat(b + " (" + b.getGenRating() + " /5)\n");
+			} else {
+				toPrint = toPrint.concat("\nSorry, no books with a general goodreads rating were found.\n\n");
 			}
-			toPrint = toPrint.concat("\nBooks with no general goodreads rating:\n\n");
-			for (Book b : noRating) {
-				toPrint = toPrint.concat(b + "\n");
+			
+			if (!noRating.isEmpty()) {
+				toPrint = toPrint.concat("\nBooks with no general goodreads rating:\n\n");
+				for (Book b : noRating) {
+					toPrint = toPrint.concat(b + "\n");
+				}
 			}
 			return toPrint;
 		}
