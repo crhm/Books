@@ -3,10 +3,9 @@
 // TODO create an output to a text file that has data analysis; 
 // TODO implement try/ catch blocks and error messages
 // TODO order authors (See github issue) (separate file from order books?)
+// TODO create GetData function that outputs everything (appropriate) for each shelf
 
 // SMALL
-// TODO figure out if methods other than authorMostBooks are affected by the single shelf vs. library
-// problem too and fix it if so.
 
 public class Testing {
 
@@ -67,7 +66,6 @@ public class Testing {
 //		
 ////		Testing whether the new GetData.numberOfBooks works:
 //		System.out.println(GetData.numberOfBooks(obj.getListBooks()));
-//		System.out.println(GetData.numberOfBooks(obj.getListShelves().get("read").getListOfBooks()));
 //		
 ////		Testing whether the new GetData.numberOfAuthors works:
 //		System.out.println(GetData.numberOfAuthors(obj.getListBooks()));

@@ -67,7 +67,7 @@ public class GetData {
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
 	 * @return double - the average general rating of books in this HashMap
 	 */
-	public static double avgGenRating(HashMap<String, Book> listOfBooks) {
+	public static String avgGenRating(HashMap<String, Book> listOfBooks) {
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
 		} else if (listOfBooks.isEmpty()) {
@@ -81,17 +81,18 @@ public class GetData {
 			BigDecimal sumBD = new BigDecimal(sum);
 			BigDecimal totalNumber = new BigDecimal(numberOfBooks(listOfBooks));
 			BigDecimal bd = sumBD.divide(totalNumber, 3, RoundingMode.HALF_UP);
-			return bd.doubleValue();	
+			return "The average Goodreads rating of these " + totalNumber.intValue() + " books is " 
+					+ bd.doubleValue() + "/5 stars.";	
 		}
 	}
 	
-	/** This method returns a double that is the average rating the user has given to books the user has 
+	/** This method returns what is the average rating the user has given to books the user has 
 	 * rated in the HashMap listOfBooks, rounded to the 3rd decimal (the nearest one, or up if it's 5).
 	 * <br>If no user rating has been found, then it returns zero.
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
 	 * @return double - the average user rating of books rater by the user in this HashMap
 	 */
-	public static double avgUserRating(HashMap<String, Book> listOfBooks) {
+	public static String avgUserRating(HashMap<String, Book> listOfBooks) {
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
 		} else if (listOfBooks.isEmpty()) {
@@ -112,15 +113,16 @@ public class GetData {
 				BigDecimal totalNumber = new BigDecimal(ratedBooks.size());
 				BigDecimal sum1 = new BigDecimal(sum);
 				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
-				return bd.doubleValue();	
+				return "For the " +  totalNumber.intValue() + " books which have one, the average User rating is " 
+						+ bd.doubleValue() + "/5 stars.";
 			} else {
-				return 0;
+				return "Sorry, no books with user ratings were found.";
 			}
 			
 		}
 	}
 	
-	/** This method returns the number of Authors with more than one book in listOfBooks as an int
+	/** This method returns the number of Authors with more than one book in listOfBooks in a string
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books
 	 * are to be counted
 	 * @return int - the number of authors with more than one book in the listOfBooks
@@ -174,7 +176,7 @@ public class GetData {
 						numAuthorsMB++;
 					}
 				}
-				return numAuthorsMB + " authors have multiple books out of " + listAuthors.values().size() 
+				return numAuthorsMB + " authors have multiple books, out of " + listAuthors.values().size() 
 						+ " authors in total.";	
 			
 			} else { // This behavior is for when the listOfBooks is the whole library
@@ -193,13 +195,13 @@ public class GetData {
 	
 	
 	/** Returns the average number of books amongst authors who have more than one book in listOfBooks
-	 * as a double, rounded to nearest 3rd decimal.
-	 * <br>If no authors have more than one book, it returns 0.
+	 * , rounded to nearest 3rd decimal, in a string.
+	 * <br>If no authors have more than one book, it returns a message saying so.
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books's 
 	 * number of books is to be averaged
 	 * @return a double of the rounded average of number of books by Authors with more than 1 book
 	 */
-	public static double avgMultipleBooks(HashMap<String, Book> listOfBooks) {
+	public static String avgMultipleBooks(HashMap<String, Book> listOfBooks) {
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
 		} else if (listOfBooks.isEmpty()) {
@@ -268,9 +270,10 @@ public class GetData {
 				BigDecimal sum1 = new BigDecimal(sum);
 				BigDecimal totalNumber = new BigDecimal(numAuthorsMB);
 				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
-				return bd.doubleValue(); 
+				return "Amongst the " + totalNumber.intValue() + " authors with more than one book, "
+						+ "the average number of books is " + bd.doubleValue(); 
 			} else {
-				return 0;
+				return "Sorry, no authors with more than one book were found.";
 			}
 			
 		}
@@ -358,8 +361,8 @@ public class GetData {
 						counter2++;
 					}
 				}
-				return largestAuthor + " (Books: " + bookNumber + ", out of a total of "
-						+ numberOfBooks(listOfBooks) + ")\n";
+				return "The author with most books is " + largestAuthor + " (Books: " + bookNumber 
+						+ ", out of a total of " + numberOfBooks(listOfBooks) + ").";
 			
 			} else { // Behavior for listOfBooks being the whole library
 				
@@ -379,8 +382,8 @@ public class GetData {
 						counter2++;
 					}
 				}
-				return largestAuthor + " (Books: " + bookNumber + ", out of a total of "
-						+ numberOfBooks(listOfBooks) + ")\n";	
+				return "The author with most books is " + largestAuthor + " (Books: " + bookNumber 
+						+ ", out of a total of " + numberOfBooks(listOfBooks) + ").";	
 			}
 		}
 	}
@@ -418,8 +421,8 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "The shortest book in that list is " + shortestBook.getTitle() + ", by " 
-				+ shortestBook.getAuthor() + " (" + (int) shortestBook.getNumPages() + " pages)";
+			return "The shortest book of these " + numberOfBooks(listOfBooks) + " is " + shortestBook.getTitle() 
+				+ ", by " + shortestBook.getAuthor() + " (" + (int) shortestBook.getNumPages() + " pages)";
 		}
 	}
 	
@@ -455,8 +458,9 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "The longest book in that list is " + longestBook.getTitle() + ", by " 
-				+ longestBook.getAuthor() + " (" + (int) longestBook.getNumPages() + " pages)";
+			return "The longest book of these " + numberOfBooks(listOfBooks) + " is " 
+				+ longestBook.getTitle() + ", by " + longestBook.getAuthor() + " (" 
+				+ (int) longestBook.getNumPages() + " pages)";
 		}
 	}
 	
@@ -484,7 +488,8 @@ public class GetData {
 			BigDecimal sum = new BigDecimal(totalPages);
 			BigDecimal totalNumber = new BigDecimal(numberOfBooks(listOfBooks));
 			BigDecimal average = sum.divide(totalNumber, 3, RoundingMode.HALF_UP);
-			return "The average length of books in this list is " + average.doubleValue() + " pages.";
+			return "These " + totalNumber.intValue() + " books have an average length of " 
+					+ average.doubleValue() + " pages.";
 		}
 	}
 	
@@ -516,7 +521,8 @@ public class GetData {
 			}
 			
 			String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a general Goodreads "
-					+ "rating between " + lowerBoundary + " and " + upperBoundary + " stars:\n";
+					+ "rating between " + lowerBoundary + " and " + upperBoundary + " stars out of " 
+					+ numberOfBooks(listOfBooks) + " books:\n";
 			for (Book b : ratingSpecific.values()) {
 				toPrint = toPrint.concat(b + " (" + b.getGenRating() + ")\n");
 			}
@@ -557,7 +563,8 @@ public class GetData {
 					}
 					
 					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-							+ "rating between " + ratings[0] + " and " + ratings[1] + " stars:\n";
+							+ "rating between " + ratings[0] + " and " + ratings[1] + " stars out of " 
+							+ numberOfBooks(listOfBooks) + " books:\n";
 					for (Book b : ratingSpecific.values()) {
 						toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
 					}
@@ -584,9 +591,9 @@ public class GetData {
 					}
 					
 					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-							+ "rating of " + ratings[0] + " stars:\n";
+							+ "rating of " + ratings[0] + " stars out of " + numberOfBooks(listOfBooks) + " books:\n";
 					for (Book b : ratingSpecific.values()) {
-						toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
+						toPrint = toPrint.concat(b + "\n");
 					}
 					return toPrint;
 				}	
@@ -627,8 +634,8 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "The worst-rated book in that list is " + worstBook.getTitle() + ", by " 
-				+ worstBook.getAuthor() + " (" + worstBook.getGenRating() + ")";
+			return "Out of " + numberOfBooks(listOfBooks) + " books, the worst-rated book is " 
+				+ worstBook.getTitle() + ", by " + worstBook.getAuthor() + " (" + worstBook.getGenRating() + ")";
 		}
 	}
 	
@@ -652,7 +659,7 @@ public class GetData {
 				counter1++;
 			}
 			
-			// Comparing all books in the array in succession by their rating of pages, 
+			// Comparing all books in the array in succession by their rating, 
 			// Starting outside the while with the first book in the array
 			int counter2 = 0;
 			Book bestBook = bookArray[counter2];
@@ -664,8 +671,8 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "The best-rated book in that list is " + bestBook.getTitle() + ", by " 
-				+ bestBook.getAuthor() + " (" + bestBook.getGenRating() + ")";
+			return "Out of " + numberOfBooks(listOfBooks) + " books, the best-rated book is " 
+				+ bestBook.getTitle() + ", by " + bestBook.getAuthor() + " (" + bestBook.getGenRating() + ")";
 		}
 	}
 	
@@ -704,8 +711,12 @@ public class GetData {
 				BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
 				BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
 				
-				return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
-						+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
+				return totalDB + " books, out of " + numberOfBooks(listOfBooks) 
+					+ ", were found to have both a user rating and a general goodreads rating.\n"
+						+ "For those books:\nThe average User Rating is " + userAvgBD.doubleValue() 
+						+ ",\nThe average General Goodreads"
+						+ " Rating is " + genAvgBD.doubleValue() 
+						+ ",\nRepresenting a difference of "
 						+ diffBD.doubleValue() + ".";
 			} else {
 				return "Sorry, there were no books with user ratings found, so no comparison can be made.";
