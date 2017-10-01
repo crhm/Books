@@ -370,8 +370,8 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.avgMultipleBooks works:
 //		System.out.println(GetData.avgMultipleBooks(obj.getListBooks()));
 //		
-//		Testing whether the new GetData.authorMostBooks works:
-		System.out.println(GetData.authorMostBooks(obj.getListShelves().get("currently-reading").getListOfBooks()));
+////		Testing whether the new GetData.authorMostBooks works:
+//		System.out.println(GetData.authorMostBooks(obj.getListBooks()));
 //		
 ////		Testing whether the new GetData.shortestBook works:
 //		System.out.println(GetData.shortestBook(obj.getListBooks()));

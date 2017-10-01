@@ -181,7 +181,8 @@ public class GetData {
 	}
 
 	/** This method returns a string containing the name of the author with the largest number of books in the
-	 * HashMap and in parenthesis, the number of books he or she has written that are in the HashMap.
+	 * HashMap and in parenthesis, the number of books he or she has written that are in the HashMap
+	 * followed by the number of books in total in the HashMap.
 	 * @param listOfBooks HashMap<String, Book> containing the books whose authors will be checked
 	 * @return a string of the format "Author Name (X books)"
 	 */
@@ -206,10 +207,70 @@ public class GetData {
 				counter1++;
 			}
 			
-			if (counter1 > 1) { // To avoid running into problems if there is only one author
+			// Checking whether listOfBooks is a shelf or the entire library;
+			// behavior needs to be different depending on it.
+			// Because author.getListOfBooks returns all books he has written, not just
+			// Books he has written that are this in this HashMap
+			// And because if it is the whole library then the checking implemented
+			// to make sure the book is in the right shelf does not work because the
+			// HashMap is not a shelf.
+			// Flag = true for listOfBooks being one single shelf
+			// Flag = false for listOfBooks being the whole library
+			
+			Boolean flag = null;
+			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
+			
+			for (Book b : listOfBooks.values()) {
+				listOfShelves.put(b.getShelf().getName(), b.getShelf());
+			}
+			
+			if (listOfShelves.values().size() > 1) {
+				flag = false;
+			} else {
+				flag = true;
+			}
+			
+			if (flag) { // Behavior for listOfBooks being a single shelf
+				
+				// Initializing variables
+				int counter2 = 0;
+				int bookNumber = 0;
+				Author largestAuthor = authorArray[counter2];	
+				// To make sure the books counted are the books in that specific shelf, not all
+				// of the author's books regardless of shelf.
+				for (Book b : largestAuthor.getListOfBooks().values()) {  
+					if (b.getShelf().getListOfBooks() == listOfBooks) {
+						bookNumber++;
+					}
+				}
+				
+				// Moving on to compare with next author's num of books in this shelf only, using temp,
+				// Assigning them as the largestAuthor if their number is higher than previously
+				// Highest number, and trying the next author if not.
+				while (counter2 < (listAuthors.values().size() - 1)) {
+					int temp = 0;
+					for (Book b : authorArray[counter2 + 1].getListOfBooks().values()) {  
+						if (b.getShelf().getListOfBooks() == listOfBooks) {
+							temp++;
+						}
+					}
+					if (temp > bookNumber) {
+						bookNumber = temp;
+						largestAuthor = authorArray[counter2 + 1];
+						counter2++;
+					} else {
+						counter2++;
+					}
+				}
+				return largestAuthor + " (Books: " + bookNumber + ", out of a total of "
+						+ numberOfBooks(listOfBooks) + ")\n";
+			
+			} else { // Behavior for listOfBooks being the whole library
 				
 				// Comparing all authors in the array in succession by their number of books, 
 				// Starting outside the while with the first author in the array
+				// This works even when there is only one author; does not cause
+				// Out Of Index errors for the array, because it does not enter the if.
 				int counter2 = 0;
 				int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks());
 				Author largestAuthor = authorArray[counter2];
@@ -217,15 +278,13 @@ public class GetData {
 					if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks())) {
 						bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks());
 						largestAuthor = authorArray[counter2 + 1];
-						counter2 = counter2 + 1;
+						counter2++;
 					} else {
-						counter2 = counter2 + 1;
+						counter2++;
 					}
 				}
-				return largestAuthor + " (" + bookNumber + " books)\n";
-			} else {
-				return authorArray[0] + " (" + numberOfBooks(authorArray[0].getListOfBooks()) 
-				+ " book)\n(Note: There was only one author to be found in the list)";
+				return largestAuthor + " (Books: " + bookNumber + ", out of a total of "
+						+ numberOfBooks(listOfBooks) + ")\n";	
 			}
 		}
 	}
