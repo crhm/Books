@@ -26,6 +26,25 @@ import java.util.HashMap;
  */
 public class GetData {
 
+	/** This method is for internal use at this point, but made it public just in case, 
+	 * and is meant to distinguish between a HashMap being a library or being a shelf.
+	 * @param listOfBooks HashMap whose nature is to be elucidated
+	 * @return Boolean true if listOfBooks is a single shelf, false if it is not
+	 */
+	public static Boolean isShelf(HashMap<String, Book> listOfBooks) {
+		HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
+		
+		for (Book b : listOfBooks.values()) {
+			listOfShelves.put(b.getShelf().getName(), b.getShelf());
+		}
+		
+		if (listOfShelves.values().size() > 1) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	/** Returns the number of books in the passed HashMap listOfBooks, as an int
 	 * @param listOfBooks HashMap<String, Book> containing the books to be counted
 	 * @return int number of books
@@ -148,22 +167,8 @@ public class GetData {
 			// And because if it is the whole library then the checking implemented
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
-			// Flag = true for listOfBooks being one single shelf
-			// Flag = false for listOfBooks being the whole library
-			Boolean flag = null;
-			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 			
-			for (Book b : listOfBooks.values()) {
-				listOfShelves.put(b.getShelf().getName(), b.getShelf());
-			}
-			
-			if (listOfShelves.values().size() > 1) {
-				flag = false;
-			} else {
-				flag = true;
-			}
-			
-			if (flag) { // This behavior is for when the listOfBooks is a single shelf
+			if (isShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
@@ -223,22 +228,8 @@ public class GetData {
 			// And because if it is the whole library then the checking implemented
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
-			// Flag = true for listOfBooks being one single shelf
-			// Flag = false for listOfBooks being the whole library
-			Boolean flag = null;
-			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 			
-			for (Book b : listOfBooks.values()) {
-				listOfShelves.put(b.getShelf().getName(), b.getShelf());
-			}
-			
-			if (listOfShelves.values().size() > 1) {
-				flag = false;
-			} else {
-				flag = true;
-			}
-			
-			if (flag) { // This behavior is for when the listOfBooks is a single shelf
+			if (isShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
@@ -314,22 +305,8 @@ public class GetData {
 			// And because if it is the whole library then the checking implemented
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
-			// Flag = true for listOfBooks being one single shelf
-			// Flag = false for listOfBooks being the whole library
-			Boolean flag = null;
-			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 			
-			for (Book b : listOfBooks.values()) {
-				listOfShelves.put(b.getShelf().getName(), b.getShelf());
-			}
-			
-			if (listOfShelves.values().size() > 1) {
-				flag = false;
-			} else {
-				flag = true;
-			}
-			
-			if (flag) { // Behavior for listOfBooks being a single shelf
+			if (isShelf(listOfBooks)) { // Behavior for listOfBooks being a single shelf
 				
 				// Initializing variables
 				int counter2 = 0;
@@ -724,4 +701,34 @@ public class GetData {
 		}
 	}
 	
+	public static String allData(HashMap<String, Book> listOfBooks) {
+		String toPrint = "";
+		if (!isShelf(listOfBooks)) {
+			toPrint = toPrint.concat("Data analysis for this library of several shelves:");
+			// TODO fill here
+		} else {
+			String shelfName = "";
+			for (Book b : listOfBooks.values()) {
+				shelfName = b.getShelf().getName();
+			}
+			if (shelfName.equals("read")) {
+				toPrint = toPrint.concat("Data analysis for shelf Read:");
+				// TODO fill here
+			} else if (shelfName.equals("currently-reading")) {
+				toPrint = toPrint.concat("Data analysis for shelf Currently Reading:");
+				// TODO fill here
+			} else if (shelfName.equals("want-to-read")) {
+				toPrint = toPrint.concat("Data analysis for shelf Want to Read:");
+				// TODO fill here
+			} else {
+				toPrint = toPrint.concat("Data analysis for shelf " + shelfName + ":");
+				// TODO fill here
+			}
+		}
+		return toPrint;
+	}
+	
+	public static void exportToTxt() {
+		// TODO
+	}
 }
