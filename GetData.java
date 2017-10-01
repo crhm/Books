@@ -73,14 +73,14 @@ public class GetData {
 		} else if (listOfBooks.isEmpty()) {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
-			int totalNumber = numberOfBooks(listOfBooks);
 			double sum = 0;
 			for (Book b : listOfBooks.values()) {
 				sum = sum + b.getGenRating();
 			}
 			// For the rounding:
-			BigDecimal bd = new BigDecimal(sum / totalNumber);
-			bd = bd.setScale(3, RoundingMode.HALF_UP);
+			BigDecimal sumBD = new BigDecimal(sum);
+			BigDecimal totalNumber = new BigDecimal(numberOfBooks(listOfBooks));
+			BigDecimal bd = sumBD.divide(totalNumber, 3, RoundingMode.HALF_UP);
 			return bd.doubleValue();	
 		}
 	}
@@ -228,7 +228,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// number of pages of current book against that of the next one.
-			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -239,7 +239,7 @@ public class GetData {
 			// Starting outside the while with the first author in the array
 			int counter2 = 0;
 			Book shortestBook = bookArray[counter2];
-			while (counter2 < (listOfBooks.values().size() - 1)) {
+			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
 				if (shortestBook.getNumPages() > (bookArray[counter2 + 1].getNumPages()) && (bookArray[counter2 + 1].getNumPages()) > 0) {
 					shortestBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
@@ -265,7 +265,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// number of pages of current book against that of the next one.
-			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -276,7 +276,7 @@ public class GetData {
 			// Starting outside the while with the first author in the array
 			int counter2 = 0;
 			Book longestBook = bookArray[counter2];
-			while (counter2 < (listOfBooks.values().size() - 1)) {
+			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
 				if (longestBook.getNumPages() < (bookArray[counter2 + 1].getNumPages())) {
 					longestBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
@@ -311,7 +311,7 @@ public class GetData {
 			// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
 			// otherwise the result is innacurate.
 			BigDecimal sum = new BigDecimal(totalPages);
-			BigDecimal totalNumber = new BigDecimal(listOfBooks.values().size());
+			BigDecimal totalNumber = new BigDecimal(numberOfBooks(listOfBooks));
 			BigDecimal average = sum.divide(totalNumber, 3, RoundingMode.HALF_UP);
 			return "The average length of books in this list is " + average.doubleValue() + " pages.";
 		}
@@ -435,7 +435,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
-			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -446,7 +446,7 @@ public class GetData {
 			// Starting outside the while with the first author in the array
 			int counter2 = 0;
 			Book worstBook = bookArray[counter2];
-			while (counter2 < (listOfBooks.values().size() - 1)) {
+			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
 				if (worstBook.getGenRating() > (bookArray[counter2 + 1].getGenRating()) 
 						&& (bookArray[counter2 + 1].getGenRating()) > 0) {
 					worstBook = bookArray[counter2 + 1];
@@ -473,7 +473,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
-			Book[] bookArray = new Book[(listOfBooks.values().size())];
+			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -484,7 +484,7 @@ public class GetData {
 			// Starting outside the while with the first author in the array
 			int counter2 = 0;
 			Book bestBook = bookArray[counter2];
-			while (counter2 < (listOfBooks.values().size() - 1)) {
+			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
 				if (bestBook.getGenRating() < (bookArray[counter2 + 1].getGenRating())) {
 					bestBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
