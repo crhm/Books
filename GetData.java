@@ -206,21 +206,27 @@ public class GetData {
 				counter1++;
 			}
 			
-			// Comparing all authors in the array in succession by their number of books, 
-			// Starting outside the while with the first author in the array
-			int counter2 = 0;
-			int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks());
-			Author largestAuthor = authorArray[counter2];
-			while (counter2 < (listAuthors.values().size() - 1)) {
-				if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks())) {
-					bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks());
-					largestAuthor = authorArray[counter2 + 1];
-					counter2 = counter2 + 1;
-				} else {
-					counter2 = counter2 + 1;
+			if (counter1 > 1) { // To avoid running into problems if there is only one author
+				
+				// Comparing all authors in the array in succession by their number of books, 
+				// Starting outside the while with the first author in the array
+				int counter2 = 0;
+				int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks());
+				Author largestAuthor = authorArray[counter2];
+				while (counter2 < (listAuthors.values().size() - 1)) {
+					if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks())) {
+						bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks());
+						largestAuthor = authorArray[counter2 + 1];
+						counter2 = counter2 + 1;
+					} else {
+						counter2 = counter2 + 1;
+					}
 				}
+				return largestAuthor + " (" + bookNumber + " books)\n";
+			} else {
+				return authorArray[0] + " (" + numberOfBooks(authorArray[0].getListOfBooks()) 
+				+ " book)\n(Note: There was only one author to be found in the list)";
 			}
-			return largestAuthor + " (" + bookNumber + " books)\n";
 		}
 	}
 	
