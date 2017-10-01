@@ -31,7 +31,13 @@ public class GetData {
 	 * @return int number of books
 	 */
 	public static int numberOfBooks(HashMap<String, Book> listOfBooks) {
-		return listOfBooks.values().size();
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			return listOfBooks.values().size();
+		}
 	}
 	
 	
@@ -41,8 +47,10 @@ public class GetData {
 	 */
 	public static int numberOfAuthors(HashMap<String, Book> listOfBooks) {
 		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
-		if (listOfBooks.isEmpty()) {
-			return 0;
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
 			for (Book b : listOfBooks.values()) {
 				// Not even checking that it doesn't exist in the HashMap yet because Maps don't allow
@@ -60,15 +68,21 @@ public class GetData {
 	 * @return double - the average general rating of books in this HashMap
 	 */
 	public static double avgGenRating(HashMap<String, Book> listOfBooks) {
-		int totalNumber = numberOfBooks(listOfBooks);
-		double sum = 0;
-		for (Book b : listOfBooks.values()) {
-			sum = sum + b.getGenRating();
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			int totalNumber = numberOfBooks(listOfBooks);
+			double sum = 0;
+			for (Book b : listOfBooks.values()) {
+				sum = sum + b.getGenRating();
+			}
+			// For the rounding:
+			BigDecimal bd = new BigDecimal(sum / totalNumber);
+			bd = bd.setScale(3, RoundingMode.HALF_UP);
+			return bd.doubleValue();	
 		}
-		// For the rounding:
-		BigDecimal bd = new BigDecimal(sum / totalNumber);
-		bd = bd.setScale(3, RoundingMode.HALF_UP);
-		return bd.doubleValue();
 	}
 	
 	/** This method returns a double that is the average rating the user has given to books the user has 
@@ -77,21 +91,27 @@ public class GetData {
 	 * @return double - the average user rating of books rater by the user in this HashMap
 	 */
 	public static double avgUserRating(HashMap<String, Book> listOfBooks) {
-		ArrayList<Book> ratedBooks = new ArrayList<Book>();
-		for (Book b : listOfBooks.values()) {
-			if (b.getUserRating() > 0) {
-				ratedBooks.add(b);
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			ArrayList<Book> ratedBooks = new ArrayList<Book>();
+			for (Book b : listOfBooks.values()) {
+				if (b.getUserRating() > 0) {
+					ratedBooks.add(b);
+				}
 			}
+			int totalNumber = ratedBooks.size();
+			double sum = 0;
+			for (Book b : ratedBooks) {
+				sum = sum + b.getUserRating();
+			}
+			// For the rounding:
+			BigDecimal bd = new BigDecimal(sum / totalNumber);
+			bd = bd.setScale(3, RoundingMode.HALF_UP);
+			return bd.doubleValue();	
 		}
-		int totalNumber = ratedBooks.size();
-		double sum = 0;
-		for (Book b : ratedBooks) {
-			sum = sum + b.getUserRating();
-		}
-		// For the rounding:
-		BigDecimal bd = new BigDecimal(sum / totalNumber);
-		bd = bd.setScale(3, RoundingMode.HALF_UP);
-		return bd.doubleValue();
 	}
 	
 	/** This method returns the number of Authors with more than one book in listOfBooks as an int
@@ -100,13 +120,19 @@ public class GetData {
 	 * @return int - the number of authors with more than one book in the listOfBooks
 	 */
 	public static int authorsMultipleBooks(HashMap<String, Book> listOfBooks) {
-		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
-		for (Book b : listOfBooks.values()) {
-			if (b.getAuthor().getListOfBooks().values().size() > 1) {
-				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			for (Book b : listOfBooks.values()) {
+				if (b.getAuthor().getListOfBooks().values().size() > 1) {
+					listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+				}
 			}
+			return listAuthors.values().size();	
 		}
-		return listAuthors.values().size();
 	}
 	
 	
@@ -118,35 +144,42 @@ public class GetData {
 	 */
 	public static double avgMultipleBooks(HashMap<String, Book> listOfBooks) {
 		HashMap<String, Author> listAuthors = new HashMap<String, Author>();
-		for (Book b : listOfBooks.values()) {
-			if (b.getAuthor().getListOfBooks().values().size() > 1) {
-				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			for (Book b : listOfBooks.values()) {
+				if (b.getAuthor().getListOfBooks().values().size() > 1) {
+					listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+				}
 			}
-		}
-		int totalNumber = listAuthors.size();
-		int sum = 0;
-		for (Author a : listAuthors.values()) {
-			sum = sum + numberOfBooks(a.getListOfBooks());
-		}
+			int totalNumber = listAuthors.size();
+			int sum = 0;
+			for (Author a : listAuthors.values()) {
+				sum = sum + numberOfBooks(a.getListOfBooks());
+			}
 
-		// For the rounding and the calculation of the average:
-		// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
-		// Otherwise it was always giving me a result of two because of the innacuracies of double and int
-		BigDecimal sum1 = new BigDecimal(sum);
-		BigDecimal totalNumber1 = new BigDecimal(totalNumber);
-		BigDecimal bd = sum1.divide(totalNumber1, 3, RoundingMode.HALF_UP);
-		return bd.doubleValue(); 
+			// For the rounding and the calculation of the average:
+			// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
+			// Otherwise it was always giving me a result of two because of the innacuracies of double and int
+			BigDecimal sum1 = new BigDecimal(sum);
+			BigDecimal totalNumber1 = new BigDecimal(totalNumber);
+			BigDecimal bd = sum1.divide(totalNumber1, 3, RoundingMode.HALF_UP);
+			return bd.doubleValue(); 	
+		}
 	}
 
 	/** This method returns a string containing the name of the author with the largest number of books in the
 	 * HashMap and in parenthesis, the number of books he or she has written that are in the HashMap.
-	 * <br>If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose authors will be checked
 	 * @return a string of the format "Author Name (X books)"
 	 */
 	public static String authorMostBooks(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
-			return "No books found here, sorry! Check argument.";
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
 			// Creating a HashMap (to avoid duplicates) of authors
 			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
@@ -184,13 +217,14 @@ public class GetData {
 	/** This method returns a string detailing which book in the listOfBooks passed as argument is the shortest
 	 *  in number of pages, and includes the number of pages in parenthesis.
 	 *  <br>It excludes from its count books with a page number equal to or smaller than 0.
-	 *  	<br>If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
 	 * @return String following the format "The shortest book in that list is Title, by Author (x pages)"
 	 */
 	public static String shortestBook(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
-			return "No books found here, sorry! Check argument.";
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// number of pages of current book against that of the next one.
@@ -220,13 +254,14 @@ public class GetData {
 	
 	/** This method returns a string detailing which book in the listOfBooks passed as argument is the longest
 	 *  in number of pages, and includes the number of pages in parenthesis.
-	 *  <br>	If the HashMap is empty, then a mere error message is displayed
 	 * @param listOfBooks HashMap<String, Book> containing the books whose length will be checked
 	 * @return String following the format "The longest book in that list is Title, by Author (x pages)"
 	 */
 	public static String longestBook(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
-			return "No books found here, sorry! Check argument.";
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// number of pages of current book against that of the next one.
@@ -260,20 +295,26 @@ public class GetData {
 	 * @return String of format "The average length of books in this list is x pages."
 	 */
 	public static String avgPageNum(HashMap<String, Book> listOfBooks){
-		double totalPages = 0;
-		for (Book b : listOfBooks.values()) {
-			if (b.getNumPages() > 0) {
-				totalPages = totalPages + b.getNumPages();
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			double totalPages = 0;
+			for (Book b : listOfBooks.values()) {
+				if (b.getNumPages() > 0) {
+					totalPages = totalPages + b.getNumPages();
+				}
 			}
+	
+			// For the rounding and the calculation of the average itself:
+			// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
+			// otherwise the result is innacurate.
+			BigDecimal sum = new BigDecimal(totalPages);
+			BigDecimal totalNumber = new BigDecimal(listOfBooks.values().size());
+			BigDecimal average = sum.divide(totalNumber, 3, RoundingMode.HALF_UP);
+			return "The average length of books in this list is " + average.doubleValue() + " pages.";
 		}
-
-		// For the rounding and the calculation of the average itself:
-		// Had to convert sum and total number to BigDecimal so that I could divide them as BigDecimals,
-		// otherwise the result is innacurate.
-		BigDecimal sum = new BigDecimal(totalPages);
-		BigDecimal totalNumber = new BigDecimal(listOfBooks.values().size());
-		BigDecimal average = sum.divide(totalNumber, 3, RoundingMode.HALF_UP);
-		return "The average length of books in this list is " + average.doubleValue() + " pages.";
 	}
 	
 	/** This method returns a string listing all the books whose general Goodreads rating is between 
@@ -286,7 +327,12 @@ public class GetData {
 	 */
 	public static String genRatingSpecificList(HashMap<String, Book> listOfBooks, int lowerBoundary, int upperBoundary) {
 		if (lowerBoundary < 0 || lowerBoundary >= upperBoundary || upperBoundary > 5) {
-			return "Argument error; please check boundary values are valid";
+			throw new IllegalArgumentException("Sorry, there was a mistake with your rating-boundaries passed"
+					+ " as arguments to the method. Check method docs for information.");
+		} else if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
 			// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
 			// because I anticipate it will be useful in later versions of this when I'm not printing
@@ -317,59 +363,63 @@ public class GetData {
 	 * @return String listing books according to parameters, with a header giving their number and criteria
 	 */
 	public static String userRatingSpecificList(HashMap<String, Book> listOfBooks, int... ratings) {
-		
-		if (ratings.length > 1) { // If there are two int passed as arguments, then they are boundaries:
-			
-			if (ratings[0] < 1 || ratings[0] >= ratings[1] || ratings[1] > 5) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			if (ratings.length > 1) { // If there are two int passed as arguments, then they are boundaries:
 				
-				return "Argument error; please check boundary values are valid";
-			
-			} else {
-				
-				// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
-				// because I anticipate it will be useful in later versions of this when I'm not printing
-				// to console all the time.
-				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
-				for (Book b : listOfBooks.values()) {
-					if (b.getUserRating() >= ratings[0] && b.getUserRating() <= ratings[1]) {
-						ratingSpecific.put(b.getIsbn(), b);
+				if (ratings[0] < 1 || ratings[0] >= ratings[1] || ratings[1] > 5) {				
+					throw new IllegalArgumentException("Sorry, there was a mistake with your rating-boundaries passed"
+							+ " as arguments to the method. Check method docs for information.");
+				} else {
+					
+					// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
+					// because I anticipate it will be useful in later versions of this when I'm not printing
+					// to console all the time.
+					HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
+					for (Book b : listOfBooks.values()) {
+						if (b.getUserRating() >= ratings[0] && b.getUserRating() <= ratings[1]) {
+							ratingSpecific.put(b.getIsbn(), b);
+						}
 					}
-				}
-				
-				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-						+ "rating between " + ratings[0] + " and " + ratings[1] + " stars:\n";
-				for (Book b : ratingSpecific.values()) {
-					toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
-				}
-				return toPrint;
-			}
-			
-		} else { // If there is only one int passed as argument, then it is the exact number of stars required:
-			
-			// Checking parameter is valid and excluding zero because goodreads puts minimum user rating at 1
-			if (ratings[0] > 5 || ratings[0] < 1) {  
-				return "Sorry, the argument passed was not valid.";
-			
-			} else {
-				
-				// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
-				// because I anticipate it will be useful in later versions of this when I'm not printing
-				// to console all the time.
-				HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
-				for (Book b : listOfBooks.values()) {
-					if (b.getUserRating() == ratings[0]) {
-						ratingSpecific.put(b.getIsbn(), b);
+					
+					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
+							+ "rating between " + ratings[0] + " and " + ratings[1] + " stars:\n";
+					for (Book b : ratingSpecific.values()) {
+						toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
 					}
+					return toPrint;
 				}
 				
-				String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-						+ "rating of " + ratings[0] + " stars:\n";
-				for (Book b : ratingSpecific.values()) {
-					toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
-				}
-				return toPrint;
+			} else { // If there is only one int passed as argument, then it is the exact number of stars required:
+				
+				// Checking parameter is valid and excluding zero because goodreads puts minimum user rating at 1
+				if (ratings[0] > 5 || ratings[0] < 1) {  
+					return "Sorry, the argument passed was not valid.";
+				
+				} else {
+					
+					// I've put it in a new HashMap instead of adding it to toPrint directly in the for loop 
+					// because I anticipate it will be useful in later versions of this when I'm not printing
+					// to console all the time.
+					HashMap<String, Book> ratingSpecific = new HashMap<String, Book>();
+					for (Book b : listOfBooks.values()) {
+						if (b.getUserRating() == ratings[0]) {
+							ratingSpecific.put(b.getIsbn(), b);
+						}
+					}
+					
+					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
+							+ "rating of " + ratings[0] + " stars:\n";
+					for (Book b : ratingSpecific.values()) {
+						toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
+					}
+					return toPrint;
+				}	
 			}	
-		}	
+		}
 	}
 	
 	/** This method returns a string detailing which is the book with the worst general Goodreads rating in the 
@@ -378,8 +428,10 @@ public class GetData {
 	 * @return String of the format "The worst-rated book in that list is Title, by Author (rating)"
 	 */
 	public static String worstGenRating(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
-			return "No books found here, sorry! Check argument.";
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
@@ -414,8 +466,10 @@ public class GetData {
 	 * @return String of the format "The best-rated book in that list is Title, by Author (rating)"
 	 */
 	public static String bestGenRating(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks.isEmpty()) { // Initial check to see that the argument passed is not empty
-			return "No books found here, sorry! Check argument.";
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
@@ -451,29 +505,35 @@ public class GetData {
 	 * Goodreads Rating (for those same books) is y, representing a difference of z."
 	 */
 	public static String avgRatingDiff(HashMap<String, Book> listOfBooks) {
-		HashMap<String, Book> userRatedBooks = new HashMap<String, Book>();
-		for (Book b : listOfBooks.values()) {
-			if(b.getUserRating() > 0) {
-				userRatedBooks.put(b.getIsbn(), b);
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			HashMap<String, Book> userRatedBooks = new HashMap<String, Book>();
+			for (Book b : listOfBooks.values()) {
+				if(b.getUserRating() > 0) {
+					userRatedBooks.put(b.getIsbn(), b);
+				}
 			}
+			double genSum = 0;
+			double userSum = 0;
+			for (Book b : userRatedBooks.values()) {
+				genSum = genSum + b.getGenRating();
+				userSum = userSum + b.getUserRating();
+			}
+			
+			BigDecimal genSumBD = new BigDecimal(genSum);
+			BigDecimal userSumBD = new BigDecimal(userSum);
+			BigDecimal totalDB = new BigDecimal(userRatedBooks.values().size());
+			BigDecimal genAvgBD = genSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+			BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+			BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
+			
+			return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
+					+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
+					+ diffBD.doubleValue() + ".";	
 		}
-		double genSum = 0;
-		double userSum = 0;
-		for (Book b : userRatedBooks.values()) {
-			genSum = genSum + b.getGenRating();
-			userSum = userSum + b.getUserRating();
-		}
-		
-		BigDecimal genSumBD = new BigDecimal(genSum);
-		BigDecimal userSumBD = new BigDecimal(userSum);
-		BigDecimal totalDB = new BigDecimal(userRatedBooks.values().size());
-		BigDecimal genAvgBD = genSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
-		BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
-		BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
-		
-		return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
-				+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
-				+ diffBD.doubleValue() + ".";
 	}
 	
 }

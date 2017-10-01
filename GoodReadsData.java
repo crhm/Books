@@ -2,7 +2,6 @@
 // TODO pull csv and data not in csv and stuff from goodreads API
 // TODO create an output to a text file that has data analysis; 
 // TODO implement try/ catch blocks and error messages
-// TODO look into "throws IncorrectArgumentException" to make it clean when passed HashMaps can't be empty?
 
 // SMALL
 
@@ -104,8 +103,7 @@ public class GoodReadsData {
 		this.listBooks.put(book.getIsbn(), book);
 	}
 	
-	/** This is supposed to return a print-friendly String of all the authors, 
-	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	/** This returns a print-friendly String of all the authors, 
 	 * @return each author, to string, on a separate line
 	 */
 	public String printableAuthors() {
@@ -116,8 +114,7 @@ public class GoodReadsData {
 		return printableList;
 	}
 	
-	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
-	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	/** This returns a print-friendly String of all the contents of each shelf, 
 	 * @return each shelf, to string, ending with a new line
 	 */
 	public String printableShelves() {
@@ -128,8 +125,7 @@ public class GoodReadsData {
 		return printableList;
 	}
 	
-	/** This is supposed to return a print-friendly String of all the contents of each shelf, 
-	 * But it doesn't work because it doesn't enter the for and I don't know why.
+	/** This returns a print-friendly String of all the contents of each shelf, 
 	 * @return each book, to string, on a separate line
 	 */
 	public String printableBooks() {
@@ -307,7 +303,7 @@ public class GoodReadsData {
 ////		Test printing all shelves
 //		System.out.println(obj.printableShelves());
 //		
-////		Test meanwhile printable methods don't work
+////		Other test to print shelves
 //		System.out.println(obj.getListShelves());
 //
 ////		To test whether getting a single shelf works
@@ -322,11 +318,11 @@ public class GoodReadsData {
 ////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
-		
-		
-//		TESTING OrderBy		
-		
-		
+//		
+//		
+////		TESTING OrderBy		
+//		
+//		
 ////		Testing the order by publication year
 //		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
 //		
@@ -350,11 +346,11 @@ public class GoodReadsData {
 //		
 ////		Testing the order by user Rating:
 //		System.out.println(OrderBy.userRating(obj.getListBooks(), true));
-		
-		
-//		TESTING GetData		
-		
-		
+//		
+//		
+////		TESTING GetData		
+//		
+//		
 ////		Testing whether the new GetData.numberOfBooks works:
 //		System.out.println(GetData.numberOfBooks(obj.getListBooks()));
 //		System.out.println(GetData.numberOfBooks(obj.getListShelves().get("read").getListOfBooks()));
@@ -365,8 +361,8 @@ public class GoodReadsData {
 ////		Testing whether the new GetData.avgGenRating works:
 //		System.out.println(GetData.avgGenRating(obj.getListBooks()));
 //		
-////		Testing whether the new GetData.avgMyRating works:
-//		System.out.println(GetData.avgMyRating(obj.getListBooks()));
+////		Testing whether the new GetData.avgUserRating works:
+//		System.out.println(GetData.avgUserRating(obj.getListBooks()));
 //		
 ////		Testing whether the new GetData.authorsMultipleBooks works:
 //		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
@@ -400,6 +396,10 @@ public class GoodReadsData {
 //		
 ////		Testing whether the new GetData.avgRatingDiff works:
 //		System.out.println(GetData.avgRatingDiff(obj.getListBooks()));
+		
+		
+//		I want to test whether the checking if (HashMap.isEmpty()) is included in if (HashMap == null),
+//		because I have a feeling it isn't. 
 	}
 
 }
