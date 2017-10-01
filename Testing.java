@@ -2,8 +2,11 @@
 // TODO pull csv and data not in csv and stuff from goodreads API
 // TODO create an output to a text file that has data analysis; 
 // TODO implement try/ catch blocks and error messages
+// TODO order authors (See github issue) (separate file from order books?)
 
 // SMALL
+// TODO figure out if methods other than authorMostBooks are affected by the single shelf vs. library
+// problem too and fix it if so.
 
 public class Testing {
 
@@ -11,9 +14,9 @@ public class Testing {
 		GoodReadsData obj = new GoodReadsData();
 		obj.importFromGDCSV();
 
-//		Test printing all shelves
-		System.out.println(obj.printableShelves());
-		
+////		Test printing all shelves
+//		System.out.println(obj.printableShelves());
+//		
 ////		Other test to print shelves
 //		System.out.println(obj.getListShelves());
 //
@@ -75,8 +78,8 @@ public class Testing {
 ////		Testing whether the new GetData.avgUserRating works:
 //		System.out.println(GetData.avgUserRating(obj.getListBooks()));
 //		
-////		Testing whether the new GetData.authorsMultipleBooks works:
-//		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
+//		Testing whether the new GetData.authorsMultipleBooks works:
+		System.out.println(GetData.authorsMultipleBooks(obj.getListBooks()));
 //
 ////		Testing whether the new GetData.avgMultipleBooks works:
 //		System.out.println(GetData.avgMultipleBooks(obj.getListBooks()));

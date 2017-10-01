@@ -125,19 +125,69 @@ public class GetData {
 	 * are to be counted
 	 * @return int - the number of authors with more than one book in the listOfBooks
 	 */
-	public static int authorsMultipleBooks(HashMap<String, Book> listOfBooks) {
+	public static String authorsMultipleBooks(HashMap<String, Book> listOfBooks) {
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
 		} else if (listOfBooks.isEmpty()) {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
+			// Initializing variables
 			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			int numAuthorsMB = 0;
 			for (Book b : listOfBooks.values()) {
-				if (b.getAuthor().getListOfBooks().values().size() > 1) {
-					listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
-				}
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
 			}
-			return listAuthors.values().size();	
+			
+			// Checking whether listOfBooks is a shelf or the entire library;
+			// behavior needs to be different depending on it.
+			// Neither behavior works in the other case:
+			// Because author.getListOfBooks returns all books the author has written, not just
+			// Books they have written that are this in this HashMap,
+			// And because if it is the whole library then the checking implemented
+			// to make sure the book is in the right shelf does not work because the
+			// HashMap is not a shelf.
+			// Flag = true for listOfBooks being one single shelf
+			// Flag = false for listOfBooks being the whole library
+			Boolean flag = null;
+			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
+			
+			for (Book b : listOfBooks.values()) {
+				listOfShelves.put(b.getShelf().getName(), b.getShelf());
+			}
+			
+			if (listOfShelves.values().size() > 1) {
+				flag = false;
+			} else {
+				flag = true;
+			}
+			
+			if (flag) { // This behavior is for when the listOfBooks is a single shelf
+				
+				for (Author a : listAuthors.values()) {
+					int temp1 = 0; //counter of books in the shelf
+					for (Book b : a.getListOfBooks().values()) {
+						if (b.getShelf().getListOfBooks() == listOfBooks) {
+							temp1++;
+						}
+					}
+					if (temp1 > 1) {
+						numAuthorsMB++;
+					}
+				}
+				return numAuthorsMB + " authors have multiple books out of " + listAuthors.values().size() 
+						+ " authors in total.";	
+			
+			} else { // This behavior is for when the listOfBooks is the whole library
+				
+				for (Author a : listAuthors.values()) {
+					if (a.getListOfBooks().values().size() > 1) {
+						numAuthorsMB++;
+					}
+				}
+				
+				return numAuthorsMB + " authors have multiple books out of " + listAuthors.values().size() 
+						+ " authors in total.";
+			}
 		}
 	}
 	
@@ -217,7 +267,6 @@ public class GetData {
 			// HashMap is not a shelf.
 			// Flag = true for listOfBooks being one single shelf
 			// Flag = false for listOfBooks being the whole library
-			
 			Boolean flag = null;
 			HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 			
