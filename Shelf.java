@@ -6,8 +6,8 @@ public class Shelf {
 	private HashMap<String, Book> listOfBooks; //String is the isbn
 	
 	/** Constructor of Shelf
-	 * @param name Name of Shelf
-	 * @param listOfBooks Collection of books in the Shelf
+	 * @param name Name of Shelf (required)
+	 * @param listOfBooks Collection of books in the Shelf (may be empty?)
 	 */
 	public Shelf(String name) {
 		this.name = name;

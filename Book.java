@@ -16,17 +16,17 @@ public class Book {
 	/** Constructor of Book
 	 * Ideally this data is extracted from a Goodreads export csv file
 	 * and modified as necessary (i.e. dates, casts ?)
-	 * @param title Title of book as a String
-	 * @param author Instance of Author class for author
-	 * @param isbn ISBN of the book as a String
-	 * @param goodreadsID ID number given by GoodReads as a long
-	 * @param numPages Page number as a double
-	 * @param yearPublished Year of (first) publication as a String
-	 * @param genRating General rating in Goodreads as a double
-	 * @param userRating Rating user gave the book as a double
-	 * @param dateRead Date the book was read as a String
-	 * @param dateAdded Date the book was added to my shelves as a String
-	 * @param shelf Instance of class Shelf for the shelf to which it belongs
+	 * @param title Title of book as a String (required)
+	 * @param author Instance of Author class for author (required)
+	 * @param isbn ISBN of the book as a String (required)
+	 * @param goodreadsID ID number given by GoodReads as a long (required)
+	 * @param numPages Page number as a double (may be empty)
+	 * @param yearPublished Year of (first) publication as a String (may be empty)
+	 * @param genRating General rating in Goodreads as a double (may be empty)
+	 * @param userRating Rating user gave the book as a double (may be empty)
+	 * @param dateRead Date the book was read as a String (may be empty)
+	 * @param dateAdded Date the book was added to my shelves as a String (required)
+	 * @param shelf Instance of class Shelf for the shelf to which it belongs (required)
 	 */
 	public Book(String title, Author author, String isbn, long goodreadsID, double numPages, String yearPublished,
 			double genRating, double userRating, String dateRead, String dateAdded, Shelf shelf) {

@@ -11,7 +11,7 @@ public class Author {
 	 * Take data from Goodreads?
 	 * @param firstName First Name of Author (May be empty)
 	 * @param lastName Last Name(s) of Author (Required)
-	 * @param goodreadsID Double corresponding to a goodreads ID number
+	 * @param goodreadsID Double corresponding to a goodreads ID number (required)
 	 */
 	public Author(String firstName, String lastName, double goodreadsID) {
 		this.firstName = firstName;
