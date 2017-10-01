@@ -542,7 +542,7 @@ public class GetData {
 			if (ratings.length > 1) { // If there are two int passed as arguments, then they are boundaries:
 				
 				if (ratings[0] < 1 || ratings[0] >= ratings[1] || ratings[1] > 5) {				
-					throw new IllegalArgumentException("Sorry, there was a mistake with your rating-boundaries passed"
+					throw new IllegalArgumentException("Sorry, there was a mistake with the rating-boundaries passed"
 							+ " as arguments to the method. Check method docs for information.");
 				} else {
 					
@@ -568,7 +568,8 @@ public class GetData {
 				
 				// Checking parameter is valid and excluding zero because goodreads puts minimum user rating at 1
 				if (ratings[0] > 5 || ratings[0] < 1) {  
-					return "Sorry, the argument passed was not valid.";
+					throw new IllegalArgumentException("Sorry, the rating passed as a method argument is "
+							+ "invalid. Please follow rules laid out in method docs.");
 				
 				} else {
 					
@@ -614,7 +615,7 @@ public class GetData {
 			}
 			
 			// Comparing all books in the array in succession by their rating of pages, 
-			// Starting outside the while with the first author in the array
+			// Starting outside the while with the first book in the array
 			int counter2 = 0;
 			Book worstBook = bookArray[counter2];
 			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
@@ -652,7 +653,7 @@ public class GetData {
 			}
 			
 			// Comparing all books in the array in succession by their rating of pages, 
-			// Starting outside the while with the first author in the array
+			// Starting outside the while with the first book in the array
 			int counter2 = 0;
 			Book bestBook = bookArray[counter2];
 			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
@@ -687,23 +688,28 @@ public class GetData {
 					userRatedBooks.put(b.getIsbn(), b);
 				}
 			}
-			double genSum = 0;
-			double userSum = 0;
-			for (Book b : userRatedBooks.values()) {
-				genSum = genSum + b.getGenRating();
-				userSum = userSum + b.getUserRating();
+			
+			if (!userRatedBooks.isEmpty()) {
+				double genSum = 0;
+				double userSum = 0;
+				for (Book b : userRatedBooks.values()) {
+					genSum = genSum + b.getGenRating();
+					userSum = userSum + b.getUserRating();
+				}
+				
+				BigDecimal genSumBD = new BigDecimal(genSum);
+				BigDecimal userSumBD = new BigDecimal(userSum);
+				BigDecimal totalDB = new BigDecimal(userRatedBooks.values().size());
+				BigDecimal genAvgBD = genSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+				BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
+				BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
+				
+				return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
+						+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
+						+ diffBD.doubleValue() + ".";
+			} else {
+				return "Sorry, there were no books with user ratings found, so no comparison can be made.";
 			}
-			
-			BigDecimal genSumBD = new BigDecimal(genSum);
-			BigDecimal userSumBD = new BigDecimal(userSum);
-			BigDecimal totalDB = new BigDecimal(userRatedBooks.values().size());
-			BigDecimal genAvgBD = genSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
-			BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
-			BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
-			
-			return "The average User Rating is " + userAvgBD.doubleValue() + ", whereas the average General Goodreads"
-					+ " Rating (for those same books) is " + genAvgBD.doubleValue() + ", representing a difference of "
-					+ diffBD.doubleValue() + ".";	
 		}
 	}
 	
