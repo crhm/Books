@@ -221,7 +221,7 @@ public class OrderBy {
 	}
 	
 	
-//	TODO Fix this ugly try catch	
+//	TODO Fix this ugly try catch	?
 	/** This returns a print friendly string of the books passed in listOfBooks order by date added to the
 	 * library, from earliest to latest if flag = true and the opposite if flag = false. 
 	 * <br>At this stage the try catch is terrible terrible temporary fix but it works
@@ -237,29 +237,37 @@ public class OrderBy {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {
 			List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
-			Collections.sort(orderedList, new Comparator<Book>() {
-				public int compare (Book b1, Book b2) {
-					String[] temp1 = b1.getDateAdded().split("/");
-					String[] temp2 = b2.getDateAdded().split("/");
-					
-					SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-					
-					try {
-						Date d1 = sdf1.parse(temp1[0] + "-" + temp1[1] + "-" + temp1[2]);
-						Date d2 = sdf2.parse(temp2[0] + "-" + temp2[1] + "-" + temp2[2]);
-						if (flag == true) {
-							return d1.compareTo(d2);
-						} else {
-							return d2.compareTo(d1);
-						}
-					} catch (ParseException e) {
-						e.printStackTrace();
-						return  0;
-					}
 
-				}
-			});
+			Collections.sort(orderedList, new Comparator<Book>() {
+					public int compare (Book b1, Book b2) {
+						String[] temp1 = b1.getDateAdded().split("/");
+						String[] temp2 = b2.getDateAdded().split("/");
+						
+						SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+						SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+						
+						try {
+							Date d1 = sdf1.parse(temp1[0] + "-" + temp1[1] + "-" + temp1[2]);
+							Date d2 = sdf2.parse(temp2[0] + "-" + temp2[1] + "-" + temp2[2]);
+							if (flag == true) {
+								return d1.compareTo(d2);
+							} else {
+								return d2.compareTo(d1);
+							}
+						} catch (ParseException e) {
+							e.printStackTrace();
+							System.out.println("An error occured when trying to parse the string of the date of either " 
+								+ b1 + " or " + b2 + "to convert them into SimpleDateFormat in order to compare them for the "
+								+ "ordering. Check that the string in the csv is the same format as other books'.");
+							return  0; // This is the ugly part; because the try catch is inside the comparator, 
+							// I have to return an int though this is an error that should stop the process...
+							// Don't know how this would look in real life tbh but I've tried to take the try-catch
+							// out of the comparator and it doesn't work; compare can't throw a ParseException...
+						}
+					}
+				});	
+			
+			
 			String toPrint = "Ordered by date it was added to Shelves:\n\n";
 			for (Book b : orderedList) {
 				toPrint = toPrint.concat(b + " (" + b.getDateAdded() + ")\n");
@@ -309,7 +317,13 @@ public class OrderBy {
 						}
 					} catch (ParseException e) {
 						e.printStackTrace();
-						return  0;
+						System.out.println("An error occured when trying to parse the string of the date of either " 
+							+ b1 + " or " + b2 + "to convert them into SimpleDateFormat in order to compare them for the "
+							+ "ordering. Check that the string in the csv is the same format as other books'.");
+						return  0; // This is the ugly part; because the try catch is inside the comparator, 
+						// I have to return an int though this is an error that should stop the process...
+						// Don't know how this would look in real life tbh but I've tried to take the try-catch
+						// out of the comparator and it doesn't work; compare can't throw a ParseException...
 					}
 
 				}
