@@ -1,9 +1,7 @@
 // BIG
 // TODO pull csv and data not in csv and stuff from goodreads API
-// TODO create an output to a text file that has data analysis; 
 // TODO implement try/ catch blocks and error messages
 // TODO order authors (See github issue) (separate file from order books?)
-// TODO create GetData function that outputs everything (appropriate) for each shelf
 
 // SMALL
 
@@ -111,6 +109,9 @@ public class Testing {
 //		
 ////		Testing the new GetData.allData:
 //		System.out.println(GetData.allData(obj.getListBooks()));
+//		
+////		Testing the new GetData.exportToTxt():
+//		GetData.exportToTxt(GetData.allData(obj.getListBooks()));
 	}
 
 }
