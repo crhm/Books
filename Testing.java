@@ -11,6 +11,9 @@ public class Testing {
 		GoodReadsData obj = new GoodReadsData();
 		obj.importFromGDCSV();
 
+////		TESTING GoodReadsData
+//		
+//		
 ////		Test printing all shelves
 //		System.out.println(obj.printableShelves());
 //		
@@ -29,6 +32,9 @@ public class Testing {
 ////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
+//		
+//		Testing the new obj.exportToTxt():
+		obj.exportToTxt(OrderBy.title(obj.getListBooks(), true));		
 //		
 //		
 ////		TESTING OrderBy		
@@ -109,9 +115,6 @@ public class Testing {
 //		
 ////		Testing the new GetData.allData:
 //		System.out.println(GetData.allData(obj.getListBooks()));
-//		
-////		Testing the new GetData.exportToTxt():
-//		GetData.exportToTxt(GetData.allData(obj.getListBooks()));
 	}
 
 }

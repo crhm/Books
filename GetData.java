@@ -2,10 +2,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 /** This class holds methods that return interesting data, indicated by their name. So far they are 
  * intended to be printer-friendly and hence most often return strings formatted for printing in console.
@@ -775,33 +771,4 @@ public class GetData {
 		}
 	}
 	
-	/** This method writes the String passed as argument (ideally the value of GetData.allData, for example) 
-	 * into a text file. It asks the user to enter the filename. If the file already exists, it appends the String 
-	 * at the end of the file. If not, it creates it and writes in it.
-	 * Throws an IOException if there is a problem writing the file, or if the user inputs an incorrect file name.
-	 * @param toExport String to be written in the file.
-	 */
-	public static void exportToTxt(String toExport) {
-		try {
-			System.out.println("Please enter a name for the export file "
-					+ "(Note that if the file already exists in the project folder, "
-					+ "it will be appended and not overwritten.):");
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String nameOfFile = br.readLine();
-			FileWriter test = null;
-			if (nameOfFile.endsWith(".txt")) {
-				test = new FileWriter(nameOfFile, true);
-			} else if (nameOfFile.matches(".*")){
-				throw new IOException("File name should end in .txt or not have an extension at all.");
-			} else {
-				test = new FileWriter(nameOfFile + ".txt", true);
-			}
-			test.write(toExport);
-			test.close();
-			System.out.println("\nData successfully exported.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
 }
