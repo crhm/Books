@@ -108,6 +108,9 @@ public class Testing {
 //		
 ////		Testing whether the new GetData.avgRatingDiff works:
 //		System.out.println(GetData.avgRatingDiff(obj.getListBooks()));
+//		
+////		Testing the new GetData.allData:
+//		System.out.println(GetData.allData(obj.getListBooks()));
 	}
 
 }

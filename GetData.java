@@ -7,6 +7,7 @@ import java.util.HashMap;
  * intended to be printer-friendly and hence most often return strings formatted for printing in console.
  * <br>Ideally in the future this would be used to display lists in a window graphically.
  * <br>Methods created so far:
+ * <br>isShelf (for internal use only)
  * <br>Number of books
  * <br>Number of authors
  * <br>Average General Goodreads ratings of Books
@@ -22,6 +23,8 @@ import java.util.HashMap;
  * <br>Book with worst general rating
  * <br>Book with best general rating
  * <br>Difference between user rating average and general rating average
+ * <br>All Data available to be printed
+ * <br>Export all data to text file
  * @author Laurene
  */
 public class GetData {
@@ -81,7 +84,7 @@ public class GetData {
 		}
 	}
 	
-	/** Returns a double that is the average general Goodreads rating of books in the HashMap listOfBooks
+	/** Returns a string containing the average general Goodreads rating of books in the HashMap listOfBooks
 	 * rounded to the 3rd decimal (the nearest one, or the one up from the number if it is 5).
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
 	 * @return double - the average general rating of books in this HashMap
@@ -701,31 +704,70 @@ public class GetData {
 		}
 	}
 	
+	/** This method is meant to agregate all above methods's outputs into a string, with the purpose of being 
+	 * passed as an argument to the exportToTxt() method. It selects only the methods appropriate to the 
+	 * HashMap passed as argument; it avoids userRating methods if it is shelf currently-reading or to-read 
+	 * for example. If the HashMap passed is a library rather than a shelf, it does a general analysis of the 
+	 * library but not a detailed analysis of each shelf afterwards. (Could be changed, haven't decided).
+	 * @param listOfBooks HashMap containing the list of books to be analysed.
+	 * @return String detailing what the HashMap is and all relevant data.
+	 */
 	public static String allData(HashMap<String, Book> listOfBooks) {
-		String toPrint = "";
-		if (!isShelf(listOfBooks)) {
-			toPrint = toPrint.concat("Data analysis for this library of several shelves:");
-			// TODO fill here
-		} else {
-			String shelfName = "";
-			for (Book b : listOfBooks.values()) {
-				shelfName = b.getShelf().getName();
-			}
-			if (shelfName.equals("read")) {
-				toPrint = toPrint.concat("Data analysis for shelf Read:");
-				// TODO fill here
-			} else if (shelfName.equals("currently-reading")) {
-				toPrint = toPrint.concat("Data analysis for shelf Currently Reading:");
-				// TODO fill here
-			} else if (shelfName.equals("want-to-read")) {
-				toPrint = toPrint.concat("Data analysis for shelf Want to Read:");
-				// TODO fill here
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {	
+			String toPrint = "";
+			if (!isShelf(listOfBooks)) { 
+				HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
+				for (Book b : listOfBooks.values()) {
+					listOfShelves.put(b.getShelf().getName(), b.getShelf());
+				}
+				toPrint = toPrint.concat("Data analysis for this library of several shelves:");
+				toPrint = toPrint.concat("\n\nOVERALL LIBRARY DATA\n");
+				toPrint = toPrint.concat("\nNumber of shelves: " + listOfShelves.values().size());
+				toPrint = toPrint.concat("\nShelves: " + listOfShelves.keySet());
+				toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
+				toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+				
+				// DO I WANT A COMPLETE DATA SET OR JUST GENERAL ONE? 
+				// AKA DO I DO IT FOR EACH SHELF IN THERE TOO?
+				// IF SO, CAN I RECYCLE STUFF I'D USE BELOW IN THE ELSE?
+				
 			} else {
-				toPrint = toPrint.concat("Data analysis for shelf " + shelfName + ":");
-				// TODO fill here
+				String shelfName = "";
+				for (Book b : listOfBooks.values()) {
+					shelfName = b.getShelf().getName();
+				}
+				if (shelfName.equals("read")) {
+					toPrint = toPrint.concat("Data analysis for shelf 'Read':\n");
+					toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
+					toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+				} else if (shelfName.equals("currently-reading")) {
+					toPrint = toPrint.concat("Data analysis for shelf 'Currently Reading':\n");
+				} else if (shelfName.equals("to-read")) {
+					toPrint = toPrint.concat("Data analysis for shelf 'To Read':\n");
+				} else {
+					toPrint = toPrint.concat("Data analysis for shelf '" + shelfName + "':\n");
+					toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
+					toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+				}
 			}
+			// General stuff, works whatever the listOfBooks is.
+			toPrint = toPrint.concat("\n" + avgGenRating(listOfBooks));
+			toPrint = toPrint.concat("\nNumber of books: " + numberOfBooks(listOfBooks));
+			toPrint = toPrint.concat("\nNumber of authors: " + numberOfAuthors(listOfBooks));
+			toPrint = toPrint.concat("\n" + authorsMultipleBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + avgMultipleBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + authorMostBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + shortestBook(listOfBooks));
+			toPrint = toPrint.concat("\n" + longestBook(listOfBooks));
+			toPrint = toPrint.concat("\n" + avgPageNum(listOfBooks));
+			toPrint = toPrint.concat("\n" + worstGenRating(listOfBooks));
+			toPrint = toPrint.concat("\n" + bestGenRating(listOfBooks));
+			return toPrint;
 		}
-		return toPrint;
 	}
 	
 	public static void exportToTxt() {
