@@ -33,36 +33,36 @@ public class Testing {
 //		System.out.println(obj.getListShelves().get("read").getBook("Medea"));
 //		System.out.println(obj.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 //		
-//		Testing the new obj.exportToTxt():
-		obj.exportToTxt(OrderBy.title(obj.getListBooks(), true));		
+////		Testing the new obj.exportToTxt():
+//		obj.exportToTxt(OrderBooksBy.title(obj.getListBooks(), true));		
 //		
 //		
-////		TESTING OrderBy		
+////		TESTING OrderBooksBy		
 //		
 //		
 ////		Testing the order by publication year
-//		System.out.println(OrderBy.publicationDate(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.publicationDate(obj.getListBooks(), true));
 //		
 ////		Testing the order by book title
-//		System.out.println(OrderBy.title(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.title(obj.getListBooks(), true));
 //		
 ////		Testing the order by authors' last names:
-//		System.out.println(OrderBy.lastName(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.lastName(obj.getListBooks(), true));
 //
 ////		Testing the order by number of pages:
-//		System.out.println(OrderBy.numberOfPages(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.numberOfPages(obj.getListBooks(), true));
 //		
 ////		Testing the order by Date added:
-//		System.out.println(OrderBy.dateAdded(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.dateAdded(obj.getListBooks(), true));
 //		
 ////		Testing the order by Date read:
-//		System.out.println(OrderBy.dateRead(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.dateRead(obj.getListBooks(), true));
 //		
 ////		Testing the order by general Rating:
-//		System.out.println(OrderBy.genRating(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.genRating(obj.getListBooks(), true));
 //		
 ////		Testing the order by user Rating:
-//		System.out.println(OrderBy.userRating(obj.getListBooks(), true));
+//		System.out.println(OrderBooksBy.userRating(obj.getListBooks(), true));
 //		
 //		
 ////		TESTING GetData		

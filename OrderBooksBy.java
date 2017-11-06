@@ -24,7 +24,7 @@ import java.util.Date;
  * <br>Order by user rating
  * @author Laurene
  */
-public class OrderBy {
+public class OrderBooksBy {
 
 	/** This returns a print friendly string consisting of the books in the HashMap listOfBooks ordered by year
 	 * of first publication (increasing or decreasing depending on parameter flag). 
