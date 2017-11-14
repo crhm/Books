@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
  * gotten from an api request in the future.
  * <br>The constructor initialises attributes as empty so the crucial method if this class
  * is importFromGDCSV(), which does the heavy lifting.
- * @author Laurene
+ * @author crhm
  */
 public class GoodReadsData { 
 

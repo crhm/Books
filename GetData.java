@@ -25,7 +25,7 @@ import java.util.HashMap;
  * <br>Difference between user rating average and general rating average
  * <br>All Data available to be printed
  * <br>Export all data to text file
- * @author Laurene
+ * @author crhm
  */
 public class GetData {
 

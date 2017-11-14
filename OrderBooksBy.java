@@ -22,7 +22,7 @@ import java.util.Date;
  * <br>Order by date read, 
  * <br>Order by general rating, 
  * <br>Order by user rating
- * @author Laurene
+ * @author crhm
  */
 public class OrderBooksBy {
 
