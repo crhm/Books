@@ -130,6 +130,9 @@ public class OrderBooksBy {
 	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by authors'
 	 * last names, alphabetically if flag = true and reverse-alphabetically if flag=false.
 	 * <br>It ignores capitalisation and treats accents (diacritic characters) like their non-accented version.
+	 * <br>It prints a new line for each book, so authors with multiple books will appear grouped together on several
+	 *  consecutive lines.
+	 * <br>Different from OrderAuthorsBy.lastName in that it prints the book titles alongside author name.
 	 * @param listOfBooks HashMap<String, Book> of books that need ordering
 	 * @param flag Boolean that determines whether order is normal or inverted.
 	 * @return A string with one book per line, in their toString format, in the order specified by the flag
@@ -157,10 +160,74 @@ public class OrderBooksBy {
 					}
 				}
 			});
-			String toPrint = "Ordered by authors last names:\n\n";
+			String toPrint = "";
+			if (flag == true) {
+				toPrint = toPrint.concat("\nSorted by alphabetical order of author's last name:\n\n");
+			} else {
+				toPrint = toPrint.concat("\nSorted by reverse alphabetical order of author's last name:\n\n");
+			}
 			for (Book b : orderedList) {
 				toPrint = toPrint.concat(b.getAuthor().getLastName() + ", " + b.getAuthor().getFirstName() 
 						+ ", " + b.getTitle() + "\n");
+			}
+			return toPrint;
+		}
+	}
+	
+	/** This returns a print friendly string of all the books passed in the HashMap listOfBooks ordered by authors'
+	 * first names, alphabetically if flag = true and reverse-alphabetically if flag=false.
+	 * <br>It ignores capitalisation and treats accents (diacritic characters) like their non-accented version.
+	 * <br>It prints a new line for each book, so authors with multiple books will appear grouped together on several
+	 *  consecutive lines.
+	 * <br>Different from OrderAuthorsBy.firstName in that it prints the book titles alongside author name.
+	 * @param listOfBooks HashMap<String, Book> of books that need ordering
+	 * @param flag Boolean that determines whether order is normal or inverted.
+	 * @return A string with one book per line, in their toString format, in the order specified by the flag
+	 */
+	public static String firstName(HashMap<String, Book> listOfBooks, Boolean flag) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			List<Book> orderedList = new ArrayList<Book>(listOfBooks.values());
+			Collections.sort(orderedList, new Comparator<Book>() {
+				public int compare(Book b1, Book b2) {
+					String temp1 = "";
+					String temp2 = "";
+					// This allows the comparison to treat accented characters (diacritical ones) like normal ones
+					// And not place them in the sort according to their true unicode value
+					//
+					// And avoids the problems of authors with no first names by treating their last names as
+					// their first for the purposes of this sort
+					if (b1.getAuthor().getFirstName().length() == 0) {
+						temp1 = Normalizer.normalize(b1.getAuthor().getLastName(), Normalizer.Form.NFD);
+					} else {
+						temp1 = Normalizer.normalize(b1.getAuthor().getFirstName(), Normalizer.Form.NFD);
+					}
+					if (b2.getAuthor().getFirstName().length() == 0) {
+						temp2 = Normalizer.normalize(b2.getAuthor().getLastName(), Normalizer.Form.NFD);
+					} else {
+						temp2 = Normalizer.normalize(b2.getAuthor().getFirstName(), Normalizer.Form.NFD);
+					}
+					// This is to make sure that comparisons will disregard capitalisation, which impacts unicode value
+					temp1 = temp1.toLowerCase();
+					temp2 = temp2.toLowerCase();
+					if (flag == true) {
+						return temp1.compareTo(temp2);
+					} else {
+						return temp2.compareTo(temp1);
+					}
+				}
+			});
+			String toPrint = "";
+			if (flag == true) {
+				toPrint = toPrint.concat("\nSorted by alphabetical order of author's first name:\n\n");
+			} else {
+				toPrint = toPrint.concat("\nSorted by reverse alphabetical order of author's first name:\n\n");
+			}
+			for (Book b : orderedList) {
+				toPrint = toPrint.concat(b.getAuthor() + ", " + b.getTitle() + "\n");
 			}
 			return toPrint;
 		}

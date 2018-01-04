@@ -48,6 +48,9 @@ public class Testing {
 //		
 ////		Testing the order by authors' last names:
 //		System.out.println(OrderBooksBy.lastName(obj.getListBooks(), true));
+//		
+////		Testing the order by authors' first names:
+//		System.out.println(OrderBooksBy.firstName(obj.getListBooks(), false));
 //
 ////		Testing the order by number of pages:
 //		System.out.println(OrderBooksBy.numberOfPages(obj.getListBooks(), true));
@@ -115,6 +118,15 @@ public class Testing {
 //		
 ////		Testing the new GetData.allData:
 //		System.out.println(GetData.allData(obj.getListBooks()));
+//
+////		TESTING OrderAuthorsBy
+//
+////		Testing the new lastName
+//		System.out.println(OrderAuthorsBy.lastName(obj.getListShelves().get("read").getListOfBooks(), false));
+//	
+////		Testing the new firstName
+//		System.out.println(OrderAuthorsBy.firstName(obj.getListShelves().get("read").getListOfBooks(), true));
+
 	}
 
 }
