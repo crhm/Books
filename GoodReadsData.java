@@ -1,40 +1,37 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.IOException;
 import java.util.HashMap;
-import java.io.FileNotFoundException;
 
 /** The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
  * from the name to everything else, so no changes are needed on that end if the file is to be
  * gotten from an api request in the future.
- * <br>The constructor initialises attributes as empty so the crucial method if this class
- * is importFromGDCSV(), which does the heavy lifting.
+ * <br>The constructor initialises attributes as empty.
  * @author crhm
  */
 public class GoodReadsData { 
 
-	private HashMap<String, Shelf> listShelves;
-	private HashMap<String, Author> listAuthors;
-	private HashMap<String, Book> listBooks;
+	private static HashMap<String, Shelf> listShelves;
+	private static HashMap<String, Author> listAuthors;
+	private static HashMap<String, Book> listBooks;
+	private static HashMap<String, Genre> listGenres;
 
 
 	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
 	 * @param listShelves Initialises listShelves as an empty HashMap<String, Shelf>
 	 * @param listAuthors Initialises listAuthors as an empty HashMap<String, Author> 
+	 * @param listBooks Initialises listBooks as an empty HashMap<String, Book>
+	 * @param listGenres Initialises listGenres as an empty HashMap<String, Genre>
 	 */
 	public GoodReadsData() {
-		this.listShelves = new HashMap<>();
-		this.listAuthors = new HashMap<>();
-		this.listBooks = new HashMap<>();
+		GoodReadsData.listShelves = new HashMap<>();
+		GoodReadsData.listAuthors = new HashMap<>();
+		GoodReadsData.listBooks = new HashMap<>();
+		GoodReadsData.listGenres = new HashMap<>();
 	}
 
 	/** Returns the HashMap<String, Shelf> called listShelves that contains all the shelves in the library export
 	 * and their key is their names, which goodreads seems to format "currently-reading" for "Currently Reading".
 	 * @return the listShelves
 	 */
-	public HashMap<String, Shelf> getListShelves() {
+	public static HashMap<String, Shelf> getListShelves() {
 		return listShelves;
 	}
 
@@ -42,8 +39,8 @@ public class GoodReadsData {
 	/**
 	 * @param listShelves the listShelves to set
 	 */
-	public void setListShelves(HashMap<String, Shelf> listShelves) {
-		this.listShelves = listShelves;
+	public static void setListShelves(HashMap<String, Shelf> listShelves) {
+		GoodReadsData.listShelves = listShelves;
 	}
 
 	/** Returns the HashMap<String, Author> called listAuthors that contains all authors in the library export
@@ -51,15 +48,15 @@ public class GoodReadsData {
 	 * an empty first name rather than an empty last name.
 	 * @return the listAuthors
 	 */
-	public HashMap<String, Author> getListAuthors() {
+	public static HashMap<String, Author> getListAuthors() {
 		return listAuthors;
 	}
 
 	/**
 	 * @param listAuthors the listAuthors to set
 	 */
-	public void setListAuthors(HashMap<String, Author> listAuthors) {
-		this.listAuthors = listAuthors;
+	public static void setListAuthors(HashMap<String, Author> listAuthors) {
+		GoodReadsData.listAuthors = listAuthors;
 	}
 
 	/** Returns the HashMap<String, Book> called listBooks that contains all of the books of the library export
@@ -67,42 +64,63 @@ public class GoodReadsData {
 	 * via ISBN as keys rather than book titles. 
 	 * @return the listBooks
 	 */
-	public HashMap<String, Book> getListBooks() {
+	public static HashMap<String, Book> getListBooks() {
 		return listBooks;
 	}
 
 	/**
 	 * @param listBooks the listBooks to set
 	 */
-	public void setListBooks(HashMap<String, Book> listBooks) {
-		this.listBooks = listBooks;
+	public static void setListBooks(HashMap<String, Book> listBooks) {
+		GoodReadsData.listBooks = listBooks;
+	}
+
+	/** Returns the list of genres in the whole library, in the form of a HashMap<String, Genre>
+	 * @return HashMap of genres
+	 */
+	public static HashMap<String, Genre> getListGenres() {
+		return listGenres;
+	}
+
+	/**
+	 * @param listGenres HashMap of genres of the library
+	 */
+	public static void setListGenres(HashMap<String, Genre> listGenres) {
+		GoodReadsData.listGenres = listGenres;
 	}
 
 	/** Adds an author to the listAuthors parameter of this class
 	 * @param author Author to be added to the listAuthors
 	 */
-	public void listAuthorsAdd(Author author){
-		this.listAuthors.put(author.getLastName(), author);
+	public static void listAuthorsAdd(Author author){
+		GoodReadsData.listAuthors.put(author.getLastName(), author);
 	}
 
 	/** Adds a shelf to the listShelves parameter of this class
 	 * @param shelf Shelf to be added to the listShelves
 	 */
-	public void listShelvesAdd(Shelf shelf){
-		this.listShelves.put(shelf.getName(), shelf);
+	public static void listShelvesAdd(Shelf shelf){
+		GoodReadsData.listShelves.put(shelf.getName(), shelf);
 	}
 	
 	/** Adds a book to the listBooks parameter of this class
 	 * @param book Book to be added to the listBooks
 	 */
-	public void listBooksAdd(Book book) {
-		this.listBooks.put(book.getIsbn(), book);
+	public static void listBooksAdd(Book book) {
+		GoodReadsData.listBooks.put(book.getIsbn(), book);
+	}
+	
+	/** Adds a genre to the listGenres parameter of this class
+	 * @param genre Genre to be added to the listGenres
+	 */
+	public static void listGenresAdd(Genre genre) {
+		GoodReadsData.listGenres.put(genre.getName(), genre);
 	}
 	
 	/** This returns a print-friendly String of all the authors, 
 	 * @return each author, to string, on a separate line
 	 */
-	public String printableAuthors() {
+	public static String printableAuthors() {
 		String printableList = "";
 		for (Author au : getListAuthors().values()) {
 			printableList = printableList.concat(au + "\n");
@@ -113,7 +131,7 @@ public class GoodReadsData {
 	/** This returns a print-friendly String of all the contents of each shelf, 
 	 * @return each shelf, to string, ending with a new line
 	 */
-	public String printableShelves() {
+	public static String printableShelves() {
 		String printableList = "";
 		for (Shelf sh : getListShelves().values()) {
 			printableList = printableList.concat(sh + "\n");
@@ -124,7 +142,7 @@ public class GoodReadsData {
 	/** This returns a print-friendly String of all the contents of each shelf, 
 	 * @return each book, to string, on a separate line
 	 */
-	public String printableBooks() {
+	public static String printableBooks() {
 		String printableList = "";
 		for (Book bo : getListBooks().values()) {
 			printableList = printableList.concat(bo + "\n");
@@ -132,194 +150,15 @@ public class GoodReadsData {
 		return printableList;
 	}
 	
-	
-	/** This is the crucial function of this class. It asks the name of the csv file to be inputted by the
-	 * user in console, but expects to find the file in the src folder in which the code is. 
-	 * Then it divides the input into one line per csv entry (and holds them in array todo2), 
-	 * then the first 19 components of each line (corresponding to the first 19 columns of the csv) 
-	 * are placed into an array, and the useful elements amongst those 19 are used to create an instance of Book, 
-	 * placed into an existing shelf or creating a new shelf if need be, and assigned to an existing author 
-	 * or creating a new author if need be.
-	 * The operation is repeated for each line in array todo2, effectively doing so for each line in the csv,
-	 * and loading the goodreads library into Books, Authors and Shelves.
+	/** This returns a print-friendly String of all the genres in the library
+	 * @return Each genre's detailed information, on a separate line
 	 */
-	public void importFromGDCSV(){
-		BufferedReader br1 = null;
-		BufferedReader br2 = null;
-		String line = "";
-
-		try {
-			br1 = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Please input name of csv file to be imported (without path) (Please ensure that "
-					+ "the file is in the \"src\" folder):");
-			try {
-				String fileName = br1.readLine();
-				
-				// Ensures this works whether the user inputs the extension or not
-				if (fileName.endsWith(".csv")) {
-					br2 = new BufferedReader(new FileReader("src/" + fileName));
-				} else {
-					br2 = new BufferedReader(new FileReader("src/" + fileName + ".csv")); 
-				}
-				
-				// Builds a string from the data in the csv file being read, where each csv line
-				// are on a separate line
-				StringBuilder sb = new StringBuilder();
-				while ((line = br2.readLine()) != null){
-					sb.append(line);
-					sb.append(System.lineSeparator());
-				}
-				String todo1 = sb.toString();
-				
-				// Places each line as an element in an array of Strings
-				String[] todo2 = todo1.split("\n");
-
-				int counter = 0;
-
-				for (String el : todo2 ){
-					if (counter!=0){ // to avoid the first line of the header of the csv, aka labels
-						
-						// Splits the line into its elements and places them in order in an array of Strings
-						// and makes sure that the comas stay within the ""
-						String[] temp = el.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); 
-						
-						// Creates an empty 19-place string array to hold the 19 different informations needed
-						String[] book = new String[19];
-
-						// Takes each element in the temp and places it in the according position in book
-						// Stops after the 19 first elements, discarding the rest since it is useless info
-						// Like notes or number of copies owned
-						int count = 0;
-						for (String e : temp){
-							if(count<19){
-								book[count] = e.trim();
-								count++;
-							}
-						}
-						
-						// Uses values in book as the parameters of the relevant class instances,
-						// initialising doubles at -1 and strings as empty, 
-						// and then checking that the values exist and that they are not empty,
-						// checking the isbn is the right length,
-						// and creating the relevant class instance if they don't already exist
-						
-						long goodreadsID = Long.parseLong(book[0]);
-						
-						String title = book[1].replace("\"", "");
-						
-						// Takes the 4th csv column entry and splits it around the commma to obtain first
-						// and last name of the author
-						String[] namesAuthor = book[3].split(", ");
-						String lastName = namesAuthor[0].replace("\"", "");
-						String firstName = namesAuthor[1].replace("\"", "");
-						
-						// To remove the doubling of names when authors go by a single name, like Colette
-						if (lastName.equals(firstName)) {
-							firstName = "";
-						}
-						
-						if (!getListAuthors().containsKey(lastName)){
-							listAuthorsAdd(new Author(firstName, lastName, 0 ));
-						}
-						
-						String isbn = "";
-						if (book[5]!= null && book[5].length()==17){
-							//isbn = book[5].substring(4, 14); // What is this? What was it for?
-							isbn = book[5].replaceAll("\"", "").replaceAll("=", "");
-						}
-						
-						double userRating = -1;
-						if (book[7]!= null && book[7].length() >0){
-							userRating = Double.parseDouble(book[7]);
-						}
-						
-						double avRating = -1;
-						if (book[8]!= null && book[8].length() >0){
-							avRating = Double.parseDouble(book[8]);
-						}
-						
-						double numPages = -1;
-						if (book[11]!= null && book[11].length() >0){
-							numPages = Double.parseDouble(book[11]); 
-						}
-						
-						String year = "";
-						if (book[13]!= null && book[13].length() >0){
-							year = book[13];
-						}
-						
-						String dateRead = "";
-						if (book[14]!= null && book[14].length() >0){
-							dateRead = book[14];
-						}
-						
-						String dateAdded = book[15];
-
-						if (!getListShelves().containsKey(book[18])){
-							listShelvesAdd(new Shelf(book[18]));
-						}
-
-						// Creates the book with its parameters
-						Book livre = new Book(title, getListAuthors().get(lastName), isbn, goodreadsID, 
-								numPages, year, avRating, userRating, dateRead, dateAdded, 
-								getListShelves().get(book[18]));
-						
-						listBooksAdd(livre);
-						
-						// Adds book to its shelf
-						livre.getShelf().addBook(livre);
-						// Adds book to its author
-						livre.getAuthor().addBook(livre);
-					}
-					counter++;
-				}
-			} catch (FileNotFoundException e) {
-				System.out.println("Sorry, no such file was found in folder \"src\".\nPlease make sure that "
-						+ "the name was typed correctly (no path, no typo),\n"
-						+ "and that the file is in the \"src\" folder.\n");
-			}
-
-		} catch (Exception e){
-			e.printStackTrace();
-		} finally {
-			if (br2 != null){
-				try{
-					br2.close();
-				} catch (IOException e){
-					e.printStackTrace();
-				}
-			}
+	public static String printableGenres() {
+		String printableList = "";
+		for (Genre g : getListGenres().values()) {
+			printableList = printableList.concat(g.toStringLong() + "\n");
 		}
-	}
-	
-	/** This method writes the String passed as argument (ideally the value of GetData.allData, 
-	 * or an OrderBy method for example) into a text file. 
-	 * It asks the user to enter the filename. If the file already exists, it appends the String 
-	 * at the end of the file. If not, it creates it and writes in it.
-	 * Throws an IOException if there is a problem writing the file, or if the user inputs an incorrect file name.
-	 * @param toExport String to be written in the file.
-	 */
-	public void exportToTxt(String toExport) {
-		try {
-			System.out.println("Please enter a name for the export file "
-					+ "(Note that if the file already exists in the project folder, "
-					+ "it will be appended and not overwritten.):");
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String nameOfFile = br.readLine();
-			FileWriter test = null;
-			if (nameOfFile.endsWith(".txt")) {
-				test = new FileWriter(nameOfFile, true);
-			} else if (nameOfFile.matches(".*")){
-				throw new IOException("File name should end in .txt or not have an extension at all.");
-			} else {
-				test = new FileWriter(nameOfFile + ".txt", true);
-			}
-			test.write(toExport);
-			test.close();
-			System.out.println("\nData successfully exported.");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
+		return printableList;
+	}		
+
 }

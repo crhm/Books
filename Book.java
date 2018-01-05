@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Book {
 	
 	private String title;
@@ -11,7 +13,7 @@ public class Book {
 	private String dateRead;
 	private String dateAdded;
 	private Shelf shelf;
-	
+	private HashMap<Genre, Integer> genres;
 
 	/** Constructor of Book
 	 * Ideally this data is extracted from a Goodreads export csv file
@@ -27,9 +29,11 @@ public class Book {
 	 * @param dateRead Date the book was read as a String (may be empty)
 	 * @param dateAdded Date the book was added to my shelves as a String (required)
 	 * @param shelf Instance of class Shelf for the shelf to which it belongs (required)
+	 * @param genres HashMap associating genres to the number (integer) of users who assigned it to the book.
 	 */
 	public Book(String title, Author author, String isbn, long goodreadsID, double numPages, String yearPublished,
-			double genRating, double userRating, String dateRead, String dateAdded, Shelf shelf) {
+			double genRating, double userRating, String dateRead, String dateAdded, Shelf shelf, 
+			HashMap<Genre, Integer> genres) {
 		this.title = title;
 		this.author = author;
 		this.isbn = isbn;
@@ -41,6 +45,7 @@ public class Book {
 		this.dateRead = dateRead;
 		this.dateAdded = dateAdded;
 		this.shelf = shelf;
+		this.genres = genres;
 	}
 
 
@@ -153,17 +158,42 @@ public class Book {
 		this.shelf = shelf;
 	}
 
+	/** Returns a List of bookGenres, which associate a Genre and the number of users 
+	 * who assigned this genre to the book.
+	 * @return the list of book genres
+	 */
+	public HashMap<Genre, Integer> getListGenres() {
+		return genres;
+	}
+
+	/** Sets the list of genres of the book; parameter ought to be a hashMap,
+	 * which associate a Genre the number of users who assigned 
+	 * this genre to the book.
+	 * @param genres the List of book genres to set
+	 */
+	public void setGenres(HashMap<Genre, Integer> genres) {
+		this.genres = genres;
+	}
+
+
 	/** 
-	 * @return All parameters of the book, in order: title, author, isbn, goodreadsID, 
-	 * number of pages, year Published, general Rating, my Rating, date read, date added, and Shelf
+	 * @return All parameters of the book, in order, one per line: title, author, isbn, goodreadsID, 
+	 * number of pages, year Published, general Rating, my Rating, date read, date added, Shelf, 
+	 * and list of Genres associated with the number of users who assigned this genre to this book.
 	 */
 	public String toStringLong(){
 		int pages = (int) numPages;
 		int rating = (int) userRating;
+		String genresPrint = "";
+		for (Genre g : genres.keySet()) {
+			genresPrint = genresPrint.concat(g + " (" + genres.get(g) + "), ");
+		}
 		return "Book\nTitle: " + title + "\nAuthor: " + author + "\nISBN: " + isbn + "\nGoodreads ID: "
 				+ goodreadsID + "\nNumber of Pages: " + pages + "\nYear Published: " + yearPublished 
 				+ "\nGeneral Rating: " + genRating + "\nMy Rating: " + rating + "\nDate Read: " 
-				+ dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName() + "\n";
+				+ dateRead + "\nDate Added: " + dateAdded + "\nShelf: " + shelf.getName() + "\n"
+				+ "Genres: " + genresPrint;
+
 	}
 
 	/* (non-Javadoc)
@@ -187,7 +217,6 @@ public class Book {
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)

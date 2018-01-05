@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Date;
 
 
-
 /** This class holds methods that, given a Hashmap<String, Book>, output a String listing books ordered 
  * according to a certain criteria (made explicit by the method name)
  * <br>Each method's order can be reversed using the second argument it is passed, the boolean. 
