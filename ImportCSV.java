@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class ImportCSV {
 
-	public Boolean checkIfEmptyOrNull(String infoToCheck) {
+	public Boolean checkIfNotEmptyOrNull(String infoToCheck) {
 		if (infoToCheck!=null && infoToCheck.length() >0) {
 			return true;
 		} else {
@@ -111,27 +111,27 @@ public class ImportCSV {
 						}
 						
 						double userRating = -1;
-						if (checkIfEmptyOrNull(book[7])){
+						if (checkIfNotEmptyOrNull(book[7])){
 							userRating = Double.parseDouble(book[7]);
 						}
 						
 						double avRating = -1;
-						if (checkIfEmptyOrNull(book[8])){
+						if (checkIfNotEmptyOrNull(book[8])){
 							avRating = Double.parseDouble(book[8]);
 						}
 						
 						double numPages = -1;
-						if (checkIfEmptyOrNull(book[11])){
+						if (checkIfNotEmptyOrNull(book[11])){
 							numPages = Double.parseDouble(book[11]); 
 						}
 						
 						String year = "";
-						if (checkIfEmptyOrNull(book[13])){
+						if (checkIfNotEmptyOrNull(book[13])){
 							year = book[13];
 						}
 						
 						String dateRead = "";
-						if (checkIfEmptyOrNull(book[14])){
+						if (checkIfNotEmptyOrNull(book[14])){
 							dateRead = book[14];
 						}
 						
@@ -146,7 +146,7 @@ public class ImportCSV {
 						HashMap<Genre, Integer> listGenresOfBook = new HashMap<Genre, Integer>();
 						
 						String extractCSVGenres = book[32];
-						if (checkIfEmptyOrNull(extractCSVGenres)) {
+						if (checkIfNotEmptyOrNull(extractCSVGenres)) {
 							extractCSVGenres = extractCSVGenres.replace("\"", "");
 							String[] genresAndSubgenres = extractCSVGenres.split(";");		
 							for (String g : genresAndSubgenres) { 
@@ -195,8 +195,7 @@ public class ImportCSV {
 					counter++;
 				}
 				if (GoodReadsData.getListGenres().isEmpty()) {
-						throw new IOException("Sorry, this csv does not seem to have the genres expansion.\n"
-								+ "Use the other version of this program for compatibility with genres-less csv.");
+						System.out.println("Please note, this csv does not seem to have the genres expansion.\n");
 				}
 			} catch (FileNotFoundException e) {
 				System.out.println("Sorry, no such file was found in folder \"src\".\nPlease make sure that "
