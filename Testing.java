@@ -76,6 +76,9 @@ public class Testing {
 ////		Testing the new firstName
 //		System.out.println(OrderAuthorsBy.firstName(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
 //		
+////		Testing the new number of Books
+//		System.out.println(OrderAuthorsBy.numberOfBooks(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
+//		
 ////		TESTING GetData		
 //		
 //		
@@ -150,8 +153,8 @@ public class Testing {
 ////		Testing genre toStringLong
 //		System.out.println(GoodReadsData.getListGenres().get("Cultural>Hungary").toStringLong());
 //		
-//		Testing genre's subgenre list
-		System.out.println(GoodReadsData.getListGenres().get("European Literature").getSubGenres().keySet());
+////		Testing genre's subgenre list
+//		System.out.println(GoodReadsData.getListGenres().get("European Literature").getSubGenres().keySet());
 	}
 
 }
