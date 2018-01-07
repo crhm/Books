@@ -77,7 +77,11 @@ public class Testing {
 //		System.out.println(OrderAuthorsBy.firstName(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
 //		
 ////		Testing the new number of Books
-//		System.out.println(OrderAuthorsBy.numberOfBooks(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
+//		System.out.println(OrderAuthorsBy.numberOfBooks(GoodReadsData.getListBooks(), false));
+//
+////		Testing the new average Publication year
+//		System.out.println(OrderAuthorsBy.averagePublicationYear(GoodReadsData.getListBooks(), true));
+//		
 //		
 ////		TESTING GetData		
 //		

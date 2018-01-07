@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,7 +122,14 @@ public class OrderAuthorsBy {
 		}
 	}
 
-	
+	/** This method returns a string of the authors of the books on the list, ordered by 
+	 * the number of books by them contained in the list (indicated in parenthesis next to their name in  
+	 * the output).<br>Order can be ascending (flag = true) or descending (flag = false).
+	 * @param listOfBooks Hashmap containing the books to be analysed. Cannot be null or empty
+	 * @param flag Boolean, determines the order of the list (ascending or descending)
+	 * @return A printable string with a context-dependent title, and then one author per 
+	 * line, with the number of their books in the list in parenthesis.
+	 */
 	public static String numberOfBooks(HashMap<String, Book> listOfBooks, Boolean flag) {
 		if (listOfBooks == null) {
 			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
@@ -137,23 +146,10 @@ public class OrderAuthorsBy {
 			List<Author> orderedList = new ArrayList<Author>(listAuthors.values());
 			Collections.sort(orderedList, new Comparator<Author>() {
 				public int compare(Author a1, Author a2) {
-					// So that if the list is not the entire library, not books are counted that are outside the list
-					int numberOfBooksInList1 = 0;
-					int numberOfBooksInList2 = 0;
-					for (Book b : a1.getListOfBooks().values()) {
-						if (listOfBooks.containsValue(b)) {
-							numberOfBooksInList1++;
-						}
-					}
-					for (Book b : a2.getListOfBooks().values()) {
-						if (listOfBooks.containsValue(b)) {
-							numberOfBooksInList2++;
-						}
-					}
 					if (flag == true) {
-						return numberOfBooksInList1 - numberOfBooksInList2;
+						return calculateNumberOfBooksInList(listOfBooks, a1) - calculateNumberOfBooksInList(listOfBooks, a2);
 					} else {
-						return numberOfBooksInList2 - numberOfBooksInList1;
+						return calculateNumberOfBooksInList(listOfBooks, a2) - calculateNumberOfBooksInList(listOfBooks, a1);
 					}
 				}
 			});
@@ -163,19 +159,104 @@ public class OrderAuthorsBy {
 			} else {
 				toPrint = toPrint.concat("Authors ordered by number of books in this list (largest to smallest):\n");
 			}
-			
+			// Print friendly formatting
 			for (Author a : orderedList) {
-				// So that if the list is not the entire library, not books are counted that are outside the list
-				int numberOfBooksInList = 0;
-				for (Book b : a.getListOfBooks().values()) {
-					if (listOfBooks.containsValue(b)) {
-						numberOfBooksInList++;
-					}
-				}
-				toPrint = toPrint.concat(a + " (" + numberOfBooksInList + ")\n");
+				toPrint = toPrint.concat(a + " (" + calculateNumberOfBooksInList(listOfBooks, a) + ")\n");
 			}
 			return toPrint;
 		}
 	}
 	
+	/** This method returns a string of the authors of the books on the list, ordered by 
+	 * the year of publication of books by them contained in the list (indicated in parenthesis 
+	 * next to their name in the output).<br>Order can be ascending (flag = true) or descending (flag = false).
+	 * <br>Authors with no books with a publication date are sorted as -11111 and displayed as 'none found'.
+	 * @param listOfBooks Hashmap containing the books to be analysed. Cannot be null or empty
+	 * @param flag Boolean, determines the order of the list (ascending or descending)
+	 * @return A printable string with a context-dependent title, and then one author per 
+	 * line, with the average year of publication of their books in the list in parenthesis.
+	 */
+	public static String averagePublicationYear(HashMap<String, Book> listOfBooks, Boolean flag) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			String toPrint = "";
+			// To avoid repetition of authors
+			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			for (Book b : listOfBooks.values()) {
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+			// Sorting them
+			List<Author> orderedList = new ArrayList<Author>(listAuthors.values());
+			Collections.sort(orderedList, new Comparator<Author>() {
+				public int compare(Author a1, Author a2) {					
+					if (flag == true) {
+						return calculateAveragePublicationYearInList(listOfBooks, a1) - calculateAveragePublicationYearInList(listOfBooks, a2);
+					} else {
+						return calculateAveragePublicationYearInList(listOfBooks, a2) - calculateAveragePublicationYearInList(listOfBooks, a1);
+					}
+				}
+			});
+			// Making sure label is appropriate to flag
+			if (flag == true) {
+				toPrint = toPrint.concat("Authors ordered by average publication year for their books in this list (earliest to latest):\n");
+			} else {
+				toPrint = toPrint.concat("Authors ordered by average publication year for their books in this list (latest to earliest):\n");
+			}
+			// Print friendly formatting
+			for (Author a : orderedList) {
+				if (calculateAveragePublicationYearInList(listOfBooks, a)==-11111) {
+					toPrint = toPrint.concat(a + " (None found)\n");
+				} else {
+					toPrint = toPrint.concat(a + " (" + calculateAveragePublicationYearInList(listOfBooks, a) + ")\n");
+				}
+			}
+			return toPrint;
+		}
+	}
+	
+	/** Needed because behavior needs to be flexible between the case where listOfBooks is a full library,
+	 *  and the case where it is not and the author's listofBooks needs to be restricted.<br>Works 
+	 *  in both cases.<br>Returns -11111 if no publication years for any books by the author have been found
+	 * @param listOfBooks
+	 * @param a
+	 * @return the average publication year of books by the author found in the list (int)
+	 */
+	private static int calculateAveragePublicationYearInList(HashMap<String, Book> listOfBooks, Author a) {
+		BigDecimal numberOfBooksInList = new BigDecimal(0);
+		BigDecimal sumPublicationYears = new BigDecimal(0);
+		for (Book b : a.getListOfBooks().values()) {
+			if (listOfBooks.containsValue(b) && !b.getYearPublished().isEmpty()) {
+				numberOfBooksInList =  numberOfBooksInList.add(new BigDecimal(1));
+				sumPublicationYears = sumPublicationYears.add(new BigDecimal(b.getYearPublished()));
+			}
+		}
+		if (numberOfBooksInList.doubleValue() != 0) { //Needed to avoid a 'divide by zero' error
+			BigDecimal average = sumPublicationYears.divide(numberOfBooksInList, 1, RoundingMode.HALF_UP);
+			return average.intValue();
+		} else { 
+			return -11111;
+		}
+		
+	}
+	
+	/** Needed because behavior needs to be flexible between the case where listOfBooks is a full library,
+	 *  and the case where it is not and the author's listofBooks needs to be restricted.
+	 *  <br>Works in both cases.
+	 * @param listOfBooks
+	 * @param a
+	 * @return
+	 */
+	private static int calculateNumberOfBooksInList(HashMap<String, Book> listOfBooks, Author a) {
+		int numberOfBooksInList = 0;
+		for (Book b : a.getListOfBooks().values()) {
+			if (listOfBooks.containsValue(b)) {
+				numberOfBooksInList++;
+			}
+		}
+		return numberOfBooksInList;
+	}
+
 }
