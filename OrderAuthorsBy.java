@@ -216,6 +216,51 @@ public class OrderAuthorsBy {
 			return toPrint;
 		}
 	}
+
+	/** This method returns a string of the authors of the books on the list, ordered by 
+	 * the percentage of books by them contained in the list that have been read (indicated in parenthesis 
+	 * next to their name in the output).<br>Order can be ascending (flag = true) or descending (flag = false).
+	 * @param listOfBooks Hashmap containing the books to be analysed. Cannot be null or empty
+	 * @param flag Boolean, determines the order of the list (ascending or descending)
+	 * @return A printable string with a context-dependent title, and then one author per 
+	 * line, with the percentage of their books in the list that has been read in parenthesis.
+	 */
+	public static String readRatio(HashMap<String, Book> listOfBooks, Boolean flag) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			String toPrint = "";
+			// To avoid repetition of authors
+			HashMap<String, Author> listAuthors = new HashMap<String, Author>();
+			for (Book b : listOfBooks.values()) {
+				listAuthors.put(b.getAuthor().getLastName(), b.getAuthor());
+			}
+			// Sorting them
+			List<Author> orderedList = new ArrayList<Author>(listAuthors.values());
+			Collections.sort(orderedList, new Comparator<Author>() {
+				public int compare(Author a1, Author a2) {					
+					if (flag == true) {
+						return calculatePercentageBooksRead(listOfBooks, a1) - calculatePercentageBooksRead(listOfBooks, a2);
+					} else {
+						return calculatePercentageBooksRead(listOfBooks, a2) - calculatePercentageBooksRead(listOfBooks, a1);
+					}
+				}
+			});
+			// Making sure label is appropriate to flag
+			if (flag == true) {
+				toPrint = toPrint.concat("Authors ordered by percentage of books read (ascending):\n");
+			} else {
+				toPrint = toPrint.concat("Authors ordered by percentage of books read (descending):\n");
+			}
+			// Print friendly formatting
+			for (Author a : orderedList) {
+				toPrint = toPrint.concat(a + " (Read: " + calculatePercentageBooksRead(listOfBooks, a) + "% of books in list)\n");
+			}
+			return toPrint;
+		}
+	}
 	
 	/** Needed because behavior needs to be flexible between the case where listOfBooks is a full library,
 	 *  and the case where it is not and the author's listofBooks needs to be restricted.<br>Works 
@@ -238,16 +283,15 @@ public class OrderAuthorsBy {
 			return average.intValue();
 		} else { 
 			return -11111;
-		}
-		
+		}	
 	}
 	
-	/** Needed because behavior needs to be flexible between the case where listOfBooks is a full library,
+	/** Needed for modularity and because behavior needs to be flexible between the case where listOfBooks is a full library,
 	 *  and the case where it is not and the author's listofBooks needs to be restricted.
 	 *  <br>Works in both cases.
 	 * @param listOfBooks
 	 * @param a
-	 * @return
+	 * @return the number of books the authors has in listOfBooks (int)
 	 */
 	private static int calculateNumberOfBooksInList(HashMap<String, Book> listOfBooks, Author a) {
 		int numberOfBooksInList = 0;
@@ -259,4 +303,26 @@ public class OrderAuthorsBy {
 		return numberOfBooksInList;
 	}
 
+	/**Needed for modularity
+	 * 
+	 * @param listOfBooks
+	 * @param a
+	 * @return the percentage of books read for the author among books of his in the list.
+	 */
+	private static int calculatePercentageBooksRead(HashMap<String, Book> listOfBooks, Author a) {
+		BigDecimal numberOfBooksInList = new BigDecimal(0);
+		BigDecimal numberOfBooksRead = new BigDecimal(0);
+		for (Book b : a.getListOfBooks().values()) {
+			if (listOfBooks.containsValue(b)) {
+				numberOfBooksInList =  numberOfBooksInList.add(new BigDecimal(1));
+				if (b.getShelf().getName().equals("read")) {
+					numberOfBooksRead = numberOfBooksRead.add(new BigDecimal(1));
+				}
+			}	
+		}
+		BigDecimal average = numberOfBooksRead.divide(numberOfBooksInList, 3, RoundingMode.HALF_UP);
+		average = average.multiply(new BigDecimal(100));
+		return average.intValue();
+	}
+	
 }

@@ -30,11 +30,12 @@ import java.util.HashMap;
 public class GetData {
 
 	/** This method is for internal use at this point, but made it public just in case, 
-	 * and is meant to distinguish between a HashMap being a library or being a shelf.
+	 * and is meant to distinguish between a HashMap being a single shelf and it not being so.
+	 * <br>Note: even if it returns false, it does not mean it's the whole library.
 	 * @param listOfBooks HashMap whose nature is to be elucidated
 	 * @return Boolean true if listOfBooks is a single shelf, false if it is not
 	 */
-	public static Boolean isShelf(HashMap<String, Book> listOfBooks) {
+	public static Boolean isOneShelf(HashMap<String, Book> listOfBooks) {
 		HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 		
 		for (Book b : listOfBooks.values()) {
@@ -171,7 +172,7 @@ public class GetData {
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
 			
-			if (isShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
+			if (isOneShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
@@ -232,7 +233,7 @@ public class GetData {
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
 			
-			if (isShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
+			if (isOneShelf(listOfBooks)) { // This behavior is for when the listOfBooks is a single shelf
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
@@ -309,7 +310,7 @@ public class GetData {
 			// to make sure the book is in the right shelf does not work because the
 			// HashMap is not a shelf.
 			
-			if (isShelf(listOfBooks)) { // Behavior for listOfBooks being a single shelf
+			if (isOneShelf(listOfBooks)) { // Behavior for listOfBooks being a single shelf
 				
 				// Initializing variables
 				int counter2 = 0;
@@ -719,7 +720,7 @@ public class GetData {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {	
 			String toPrint = "";
-			if (!isShelf(listOfBooks)) { 
+			if (!isOneShelf(listOfBooks)) { 
 				HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 				for (Book b : listOfBooks.values()) {
 					listOfShelves.put(b.getShelf().getName(), b.getShelf());
