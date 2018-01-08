@@ -1,6 +1,6 @@
 // NEW
 // TODO pull csv and data not in csv and stuff from goodreads API ?
-// TODO order authors/genres (See github issue) (separate OrderBy classes)
+// TODO order genres (See github issue)
 
 // MAINTENANCE
 // TODO implement try/ catch blocks and error messages
@@ -163,6 +163,13 @@ public class Testing {
 //		
 ////		Testing genre's subgenre list
 //		System.out.println(GoodReadsData.getListGenres().get("European Literature").getSubGenres().keySet());
+//		
+//		
+////		TESTING OrderGenresBy
+//		
+//		
+//		Testing new number of Books
+		System.out.println(OrderGenresBy.numberOfBooks(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
 	}
 
 }
