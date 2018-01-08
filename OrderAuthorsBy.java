@@ -13,6 +13,9 @@ import java.util.List;
  * <br>Methods so far:
  * <br>Orber by last Name
  * <br>Order by first Name
+ * <br>Order by number of books in lisst
+ * <br>Order by average publication year
+ * <br>Order by percentage of books in list read
  * @author crhm
  *
  */

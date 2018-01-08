@@ -1,13 +1,10 @@
-// BIG
+// NEW
 // TODO pull csv and data not in csv and stuff from goodreads API ?
-// TODO implement try/ catch blocks and error messages
 // TODO order authors/genres (See github issue) (separate OrderBy classes)
-// TODO check that method comments are up to date
-// TODO think about issue that genre.getListBooks is useless for most actions outside of genre specific methods
-// because it is not a HashMap of the same format as all other methods expect. Create another HashMap for that purpose
-// on top of the other for that purpose?
 
-// SMALL
+// MAINTENANCE
+// TODO implement try/ catch blocks and error messages
+// TODO check that method comments are up to date
 
 public class Testing {
 
@@ -85,7 +82,7 @@ public class Testing {
 //		System.out.println(OrderAuthorsBy.numberOfBooks(GoodReadsData.getListBooks(), false));
 //
 ////		Testing the new average Publication year
-//		System.out.println(OrderAuthorsBy.averagePublicationYear(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderAuthorsBy.averagePublicationYear(GoodReadsData.getListGenres().get("Thriller").getCompatibleListOfBooks(), true));
 //		
 ////		Testing the new ReadRatio
 //		System.out.println(OrderAuthorsBy.readRatio(GoodReadsData.getListBooks(), true));
