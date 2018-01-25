@@ -9,7 +9,7 @@ public class ImportCSV {
 	
 	private GoodReadsData library;
 
-	public Boolean checkIfNotEmptyOrNull(String infoToCheck) {
+	private Boolean checkIfNotEmptyOrNull(String infoToCheck) {
 		if (infoToCheck!=null && infoToCheck.length() >0) {
 			return true;
 		} else {
@@ -60,7 +60,7 @@ public class ImportCSV {
 	 * <br>It also adds the book to its corresponding shelf, genre and author.
 	 * @param line csv value of a line, aka a book's info to be parsed
 	 */
-	public void importLine(String line) {
+	private void importLine(String line) {
 		// Splits the line into its elements and places them in order in an array of Strings
 		// and makes sure that the comas stay within the ""
 		String[] temp = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1); 
@@ -155,7 +155,6 @@ public class ImportCSV {
 		
 		library.listBooksAdd(livre);
 		
-		//TODO shouldn't the stuff below be done in book constructor?
 		// Adds book to its shelf
 		livre.getShelf().addBook(livre);
 		// Adds book to its author
