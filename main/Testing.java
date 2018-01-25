@@ -1,3 +1,6 @@
+package main;
+import ordering.OrderGenresBy;
+
 // NEW
 // TODO pull csv and data not in csv and stuff from goodreads API ?
 // TODO order genres (See github issue)

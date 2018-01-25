@@ -1,3 +1,4 @@
+package main;
 import java.util.HashMap;
 
 /** This class is for book genres and their sub-genres. 

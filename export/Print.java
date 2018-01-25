@@ -1,3 +1,10 @@
+package export;
+
+import main.Author;
+import main.Book;
+import main.Genre;
+import main.GoodReadsData;
+import main.Shelf;
 
 public abstract class Print {
 		

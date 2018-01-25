@@ -1,3 +1,4 @@
+package ordering;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.Normalizer;
@@ -6,6 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import main.Author;
+import main.Book;
 
 /** This class holds methods that, given a Hashmap<String, Book>, output a String listing authors ordered 
  * according to a certain criteria (made explicit by the method name)

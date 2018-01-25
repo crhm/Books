@@ -1,3 +1,4 @@
+package main;
 import java.util.HashMap;
 
 /** Main class - establishes the data structures of the library, and holds the lists 

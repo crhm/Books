@@ -1,7 +1,12 @@
+package data;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import main.Author;
+import main.Book;
+import main.Shelf;
 
 /** This class holds methods that return interesting data, indicated by their name. So far they are 
  * intended to be printer-friendly and hence most often return strings formatted for printing in console.
