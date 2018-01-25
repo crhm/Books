@@ -11,25 +11,24 @@ import main.Shelf;
 /** This class holds methods that return interesting data, indicated by their name. So far they are 
  * intended to be printer-friendly and hence most often return strings formatted for printing in console.
  * <br>Ideally in the future this would be used to display lists in a window graphically.
- * <br>Methods created so far:
- * <br>isShelf (for internal use only)
- * <br>Number of books
- * <br>Number of authors
- * <br>Average General Goodreads ratings of Books
- * <br>Average User Ratings of books
- * <br>Number of authors with more than one book
- * <br>Average number of books amongst authors with more than one book
- * <br>Author with most books
- * <br>Shortest book
- * <br>Longest Book
- * <br>Average page number
- * <br>List of books with a specific general rating
- * <br>List of books with a specific user rating
- * <br>Book with worst general rating
- * <br>Book with best general rating
- * <br>Difference between user rating average and general rating average
- * <br>All Data available to be printed
- * <br>Export all data to text file
+ * <br><br><u>Methods created so far:</u>
+ * <li>isShelf (for internal use only)
+ * <li>Number of books
+ * <li>Number of authors
+ * <li>Number of authors with more than one book
+ * <li>Average number of books amongst authors with more than one book
+ * <li>Author with most books
+ * <li>Shortest book
+ * <li>Longest Book
+ * <li>Average page number
+ * <li>Average General Rating
+ * <li>Average User Rating
+ * <li>List of books with a specific General Rating
+ * <li>List of books with a specific User Rating
+ * <li>Book with worst General Rating
+ * <li>Book with best General Rating
+ * <li>Average difference between General Rating and User Rating
+ * <li>All of the above
  * @author crhm
  */
 public class GetData {
@@ -89,66 +88,7 @@ public class GetData {
 			return listAuthors.values().size();
 		}
 	}
-	
-	/** Returns a string containing the average general Goodreads rating of books in the HashMap listOfBooks
-	 * rounded to the 3rd decimal (the nearest one, or the one up from the number if it is 5).
-	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
-	 * @return double - the average general rating of books in this HashMap
-	 */
-	public static String avgGenRating(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks == null) {
-			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
-		} else if (listOfBooks.isEmpty()) {
-			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
-		} else {
-			double sum = 0;
-			for (Book b : listOfBooks.values()) {
-				sum = sum + b.getGenRating();
-			}
-			// For the rounding:
-			BigDecimal sumBD = new BigDecimal(sum);
-			BigDecimal totalNumber = new BigDecimal(numberOfBooks(listOfBooks));
-			BigDecimal bd = sumBD.divide(totalNumber, 3, RoundingMode.HALF_UP);
-			return "The average Goodreads rating of these " + totalNumber.intValue() + " books is " 
-					+ bd.doubleValue() + "/5 stars.";	
-		}
-	}
-	
-	/** This method returns what is the average rating the user has given to books the user has 
-	 * rated in the HashMap listOfBooks, rounded to the 3rd decimal (the nearest one, or up if it's 5).
-	 * <br>If no user rating has been found, then it returns zero.
-	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
-	 * @return double - the average user rating of books rater by the user in this HashMap
-	 */
-	public static String avgUserRating(HashMap<String, Book> listOfBooks) {
-		if (listOfBooks == null) {
-			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
-		} else if (listOfBooks.isEmpty()) {
-			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
-		} else {
-			ArrayList<Book> ratedBooks = new ArrayList<Book>();
-			for (Book b : listOfBooks.values()) {
-				if (b.getUserRating() > 0) {
-					ratedBooks.add(b);
-				}
-			}
-			if (!ratedBooks.isEmpty()) {
-				double sum = 0;
-				for (Book b : ratedBooks) {
-					sum = sum + b.getUserRating();
-				}
-				// For the rounding:
-				BigDecimal totalNumber = new BigDecimal(ratedBooks.size());
-				BigDecimal sum1 = new BigDecimal(sum);
-				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
-				return "For the " +  totalNumber.intValue() + " books which have one, the average User rating is " 
-						+ bd.doubleValue() + "/5 stars.";
-			} else {
-				return "Sorry, no books with user ratings were found.";
-			}
-			
-		}
-	}
+		
 	
 	/** This method returns the number of Authors with more than one book in listOfBooks in a string
 	 * @param listOfBooks HashMap<String, Book> That contains the books whose authors with more than one books
@@ -479,6 +419,66 @@ public class GetData {
 		}
 	}
 	
+	/** Returns a string containing the average general Goodreads rating of books in the HashMap listOfBooks
+	 * rounded to the 3rd decimal (the nearest one, or the one up from the number if it is 5).
+	 * @param listOfBooks HashMap<String, Book> That contains the books whose general ratings are to be averaged
+	 * @return double - the average general rating of books in this HashMap
+	 */
+	public static String avgGenRating(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			double sum = 0;
+			for (Book b : listOfBooks.values()) {
+				sum = sum + b.getGenRating();
+			}
+			// For the rounding:
+			BigDecimal sumBD = new BigDecimal(sum);
+			BigDecimal totalNumber = new BigDecimal(GetData.numberOfBooks(listOfBooks));
+			BigDecimal bd = sumBD.divide(totalNumber, 3, RoundingMode.HALF_UP);
+			return "The average Goodreads rating of these " + totalNumber.intValue() + " books is " 
+					+ bd.doubleValue() + "/5 stars.";	
+		}
+	}
+	
+	/** This method returns what is the average rating the user has given to books the user has 
+	 * rated in the HashMap listOfBooks, rounded to the 3rd decimal (the nearest one, or up if it's 5).
+	 * <br>If no user rating has been found, then it returns zero.
+	 * @param listOfBooks HashMap<String, Book> That contains the books whose user ratings are to be averaged
+	 * @return double - the average user rating of books rater by the user in this HashMap
+	 */
+	public static String avgUserRating(HashMap<String, Book> listOfBooks) {
+		if (listOfBooks == null) {
+			throw new NullPointerException("The HashMap passed as method argument cannot be null.");
+		} else if (listOfBooks.isEmpty()) {
+			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
+		} else {
+			ArrayList<Book> ratedBooks = new ArrayList<Book>();
+			for (Book b : listOfBooks.values()) {
+				if (b.getUserRating() > 0) {
+					ratedBooks.add(b);
+				}
+			}
+			if (!ratedBooks.isEmpty()) {
+				double sum = 0;
+				for (Book b : ratedBooks) {
+					sum = sum + b.getUserRating();
+				}
+				// For the rounding:
+				BigDecimal totalNumber = new BigDecimal(ratedBooks.size());
+				BigDecimal sum1 = new BigDecimal(sum);
+				BigDecimal bd = sum1.divide(totalNumber, 3, RoundingMode.HALF_UP);
+				return "For the " +  totalNumber.intValue() + " books which have one, the average User rating is " 
+						+ bd.doubleValue() + "/5 stars.";
+			} else {
+				return "Sorry, no books with user ratings were found.";
+			}
+			
+		}
+	}
+	
 	/** This method returns a string listing all the books whose general Goodreads rating is between 
 	 * the lower and higher boundaries passed as argument, including the lower but EXCLUDING the upper one, 
 	 * and how many there are. Boundaries have to be integer between 0 and 5.
@@ -508,7 +508,7 @@ public class GetData {
 			
 			String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a general Goodreads "
 					+ "rating between " + lowerBoundary + " and " + upperBoundary + " stars out of " 
-					+ numberOfBooks(listOfBooks) + " books:\n";
+					+ GetData.numberOfBooks(listOfBooks) + " books:\n";
 			for (Book b : ratingSpecific.values()) {
 				toPrint = toPrint.concat(b + " (" + b.getGenRating() + ")\n");
 			}
@@ -550,7 +550,7 @@ public class GetData {
 					
 					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
 							+ "rating between " + ratings[0] + " and " + ratings[1] + " stars out of " 
-							+ numberOfBooks(listOfBooks) + " books:\n";
+							+ GetData.numberOfBooks(listOfBooks) + " books:\n";
 					for (Book b : ratingSpecific.values()) {
 						toPrint = toPrint.concat(b + " (" + (int) b.getUserRating() + ")\n");
 					}
@@ -577,7 +577,7 @@ public class GetData {
 					}
 					
 					String toPrint = "List of the " + ratingSpecific.values().size() + " books which have a user "
-							+ "rating of " + ratings[0] + " stars out of " + numberOfBooks(listOfBooks) + " books:\n";
+							+ "rating of " + ratings[0] + " stars out of " + GetData.numberOfBooks(listOfBooks) + " books:\n";
 					for (Book b : ratingSpecific.values()) {
 						toPrint = toPrint.concat(b + "\n");
 					}
@@ -600,7 +600,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
-			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
+			Book[] bookArray = new Book[(GetData.numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -611,7 +611,7 @@ public class GetData {
 			// Starting outside the while with the first book in the array
 			int counter2 = 0;
 			Book worstBook = bookArray[counter2];
-			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
+			while (counter2 < (GetData.numberOfBooks(listOfBooks) - 1)) {
 				if (worstBook.getGenRating() > (bookArray[counter2 + 1].getGenRating()) 
 						&& (bookArray[counter2 + 1].getGenRating()) > 0) {
 					worstBook = bookArray[counter2 + 1];
@@ -620,7 +620,7 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "Out of " + numberOfBooks(listOfBooks) + " books, the worst-rated book is " 
+			return "Out of " + GetData.numberOfBooks(listOfBooks) + " books, the worst-rated book is " 
 				+ worstBook.getTitle() + ", by " + worstBook.getAuthor() + " (" + worstBook.getGenRating() + ")";
 		}
 	}
@@ -638,7 +638,7 @@ public class GetData {
 		} else {		
 			// Converting the HashMap to an array to be able to use indexes in order to check
 			// rating of current book against that of the next one.
-			Book[] bookArray = new Book[(numberOfBooks(listOfBooks))];
+			Book[] bookArray = new Book[(GetData.numberOfBooks(listOfBooks))];
 			int counter1 = 0;
 			for (Book b : listOfBooks.values()) {
 				bookArray[counter1] = b;
@@ -649,7 +649,7 @@ public class GetData {
 			// Starting outside the while with the first book in the array
 			int counter2 = 0;
 			Book bestBook = bookArray[counter2];
-			while (counter2 < (numberOfBooks(listOfBooks) - 1)) {
+			while (counter2 < (GetData.numberOfBooks(listOfBooks) - 1)) {
 				if (bestBook.getGenRating() < (bookArray[counter2 + 1].getGenRating())) {
 					bestBook = bookArray[counter2 + 1];
 					counter2 = counter2 + 1;
@@ -657,7 +657,7 @@ public class GetData {
 					counter2 = counter2 + 1;
 				}
 			}
-			return "Out of " + numberOfBooks(listOfBooks) + " books, the best-rated book is " 
+			return "Out of " + GetData.numberOfBooks(listOfBooks) + " books, the best-rated book is " 
 				+ bestBook.getTitle() + ", by " + bestBook.getAuthor() + " (" + bestBook.getGenRating() + ")";
 		}
 	}
@@ -697,7 +697,7 @@ public class GetData {
 				BigDecimal userAvgBD  = userSumBD.divide(totalDB, 3, RoundingMode.HALF_UP);
 				BigDecimal diffBD = genAvgBD.subtract(userAvgBD);
 				
-				return totalDB + " books, out of " + numberOfBooks(listOfBooks) 
+				return totalDB + " books, out of " + GetData.numberOfBooks(listOfBooks) 
 					+ ", were found to have both a user rating and a general goodreads rating.\n"
 						+ "For those books:\nThe average User Rating is " + userAvgBD.doubleValue() 
 						+ ",\nThe average General Goodreads"
@@ -710,7 +710,7 @@ public class GetData {
 		}
 	}
 	
-	/** This method is meant to agregate all above methods's outputs into a string, with the purpose of being 
+	/** This method is meant to agregate all data methods's outputs into a string, with the purpose of being 
 	 * passed as an argument to the exportToTxt() method. It selects only the methods appropriate to the 
 	 * HashMap passed as argument; it avoids userRating methods if it is shelf currently-reading or to-read 
 	 * for example. If the HashMap passed is a library rather than a shelf, it does a general analysis of the 
@@ -725,7 +725,7 @@ public class GetData {
 			throw new IllegalArgumentException("The HashMap passed as method argument cannot be empty.");
 		} else {	
 			String toPrint = "";
-			if (!isOneShelf(listOfBooks)) { 
+			if (!GetData.isOneShelf(listOfBooks)) { 
 				HashMap<String, Shelf> listOfShelves = new HashMap<String, Shelf>();
 				for (Book b : listOfBooks.values()) {
 					listOfShelves.put(b.getShelf().getName(), b.getShelf());
@@ -734,12 +734,13 @@ public class GetData {
 				toPrint = toPrint.concat("\n\nOVERALL LIBRARY DATA\n");
 				toPrint = toPrint.concat("\nNumber of shelves: " + listOfShelves.values().size());
 				toPrint = toPrint.concat("\nShelves: " + listOfShelves.keySet());
-				toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
-				toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+				toPrint = toPrint.concat("\n" + GetData.avgUserRating(listOfBooks));
+				toPrint = toPrint.concat("\n" + GetData.avgRatingDiff(listOfBooks));
 				
 				// DO I WANT A COMPLETE DATA SET OR JUST GENERAL ONE? 
 				// AKA DO I DO IT FOR EACH SHELF IN THERE TOO?
 				// IF SO, CAN I RECYCLE STUFF I'D USE BELOW IN THE ELSE?
+				//TODO see above
 				
 			} else {
 				String shelfName = "";
@@ -748,30 +749,30 @@ public class GetData {
 				}
 				if (shelfName.equals("read")) {
 					toPrint = toPrint.concat("Data analysis for shelf 'Read':\n");
-					toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
-					toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+					toPrint = toPrint.concat("\n" + GetData.avgUserRating(listOfBooks));
+					toPrint = toPrint.concat("\n" + GetData.avgRatingDiff(listOfBooks));
 				} else if (shelfName.equals("currently-reading")) {
 					toPrint = toPrint.concat("Data analysis for shelf 'Currently Reading':\n");
 				} else if (shelfName.equals("to-read")) {
 					toPrint = toPrint.concat("Data analysis for shelf 'To Read':\n");
 				} else {
 					toPrint = toPrint.concat("Data analysis for shelf '" + shelfName + "':\n");
-					toPrint = toPrint.concat("\n" + avgUserRating(listOfBooks));
-					toPrint = toPrint.concat("\n" + avgRatingDiff(listOfBooks));
+					toPrint = toPrint.concat("\n" + GetData.avgUserRating(listOfBooks));
+					toPrint = toPrint.concat("\n" + GetData.avgRatingDiff(listOfBooks));
 				}
 			}
 			// General stuff, works whatever the listOfBooks is.
-			toPrint = toPrint.concat("\n" + avgGenRating(listOfBooks));
-			toPrint = toPrint.concat("\nNumber of books: " + numberOfBooks(listOfBooks));
-			toPrint = toPrint.concat("\nNumber of authors: " + numberOfAuthors(listOfBooks));
-			toPrint = toPrint.concat("\n" + authorsMultipleBooks(listOfBooks));
-			toPrint = toPrint.concat("\n" + avgMultipleBooks(listOfBooks));
-			toPrint = toPrint.concat("\n" + authorMostBooks(listOfBooks));
-			toPrint = toPrint.concat("\n" + shortestBook(listOfBooks));
-			toPrint = toPrint.concat("\n" + longestBook(listOfBooks));
-			toPrint = toPrint.concat("\n" + avgPageNum(listOfBooks));
-			toPrint = toPrint.concat("\n" + worstGenRating(listOfBooks));
-			toPrint = toPrint.concat("\n" + bestGenRating(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.avgGenRating(listOfBooks));
+			toPrint = toPrint.concat("\nNumber of books: " + GetData.numberOfBooks(listOfBooks));
+			toPrint = toPrint.concat("\nNumber of authors: " + GetData.numberOfAuthors(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.authorsMultipleBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.avgMultipleBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.authorMostBooks(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.shortestBook(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.longestBook(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.avgPageNum(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.worstGenRating(listOfBooks));
+			toPrint = toPrint.concat("\n" + GetData.bestGenRating(listOfBooks));
 			toPrint = toPrint.concat("\n");
 			return toPrint;
 		}
