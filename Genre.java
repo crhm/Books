@@ -16,9 +16,8 @@ public class Genre {
 	private HashMap<String, Genre> parentGenres; // String should be name of parentGenre
 	private HashMap<String, Genre> subGenres; // String should be name of subGenre
 	
-	/** Constructs a genre with an empty listOfBooks, a name as given in argument, and if that 
-	 * name is of the format "parentGenre>subGenre>subsubGenre..." it will create a genre 
-	 * for each genre above the last subGenre and add it to the genre's HashMap of parentGenres
+	/** Constructs a genre with an empty listOfBooks, a name as given in argument, 
+	 * and empty lists for parentGenres and subGenres.
 	 * @param name String name of the genre to be created
 	 */
 	public Genre(String name) {
@@ -27,14 +26,6 @@ public class Genre {
 		this.name = name;
 		this.parentGenres = new HashMap<String, Genre>();
 		this.subGenres = new HashMap<String, Genre>();
-		if (name.contains(">")) {
-			String temp[] = name.split(">");
-			int counter = 0;
-			while (counter < temp.length - 1) {
-				parentGenres.put(temp[counter], new Genre(temp[counter]));
-				counter++;
-			}
-		}
 	}
 	
 	/**Note: This returns the actual Genre listOfBooks, which is not compatible

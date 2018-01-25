@@ -1,8 +1,7 @@
 import java.util.HashMap;
 
-/** The code if made to work with a raw, unmodified csv as it is given directly by Goodreads,
- * from the name to everything else, so no changes are needed on that end if the file is to be
- * gotten from an api request in the future.
+/** Main class - establishes the data structures of the library, and holds the lists 
+ * of shelves, authors, books and genres overall.
  * <br>The constructor initialises attributes as empty.
  * @author crhm
  */

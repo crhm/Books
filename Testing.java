@@ -16,7 +16,7 @@ public class Testing {
 //		
 //		
 ////		Test printing all shelves
-//		System.out.println(Printable.libraryShelves(library));
+//		Print.libraryShelves(library);
 //		
 ////		Other test to print shelves
 //		System.out.println(library.getListShelves());
@@ -141,7 +141,7 @@ public class Testing {
 ////		TESTING GENRES
 //
 ////		Testing overall library for genres
-//		System.out.println(Printable.libraryGenres(library));
+//		Print.libraryGenres(library);
 //		
 ////		Testing number of genres
 //		System.out.println(library.getListGenres().size());
@@ -149,17 +149,17 @@ public class Testing {
 ////		Testing getting a list of genres of a book (the melancholy of resistance)
 //		System.out.println(library.getListBooks().get("0811215040").getListGenres()); 
 //		
-////		Testing getting a list of books of a genre (Cultural)
-//		System.out.println(library.getListGenres().get("Cultural>Greece").getListOfBooks());
+////		Testing getting a list of books of a genre (Greece)
+//		System.out.println(library.getListGenres().get("Greece").getListOfBooks());
 //
 ////		Testing getting parentGenres of a genre (Hungary)
-//		System.out.println(library.getListGenres().get("Cultural>Hungary").getParentGenres().keySet());
+//		System.out.println(library.getListGenres().get("Hungary").getParentGenres().keySet());
 //		
 ////		Testing genre toString
 //		System.out.println(library.getListGenres().get("Cultural"));
 //		
 ////		Testing genre toStringLong
-//		System.out.println(library.getListGenres().get("Cultural>Hungary").toStringLong());
+//		System.out.println(library.getListGenres().get("Hungary").toStringLong());
 //		
 ////		Testing genre's subgenre list
 //		System.out.println(library.getListGenres().get("European Literature").getSubGenres().keySet());

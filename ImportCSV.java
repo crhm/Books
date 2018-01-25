@@ -31,25 +31,44 @@ public class ImportCSV {
 		if (checkIfNotEmptyOrNull(extractCSVGenres)) {
 			extractCSVGenres = extractCSVGenres.replace("\"", "");
 			String[] genresAndSubgenres = extractCSVGenres.split(";");		
+			
 			for (String g : genresAndSubgenres) { 
 				g = g.replace("|", ";"); // because for some reason splitting around "|" did not work
 				String[] genreAndNumberSeparated = g.split(";");
 				String number = genreAndNumberSeparated[1];
-				String genreAndSubgenre = genreAndNumberSeparated[0].replace(",", ">"); //makes relationship clearer
-				if (!library.getListGenres().containsKey(genreAndSubgenre)) {
-					library.listGenresAdd(new Genre(genreAndSubgenre));
+				String genreAndSubgenre = genreAndNumberSeparated[0];
+				
+				if (genreAndSubgenre.contains(",")) { // if it is a subgenre
+					String genre = genreAndSubgenre.split(",")[1];
+					String parentGenre = genreAndSubgenre.split(",")[0];
+					if (!library.getListGenres().containsKey(genre)) {
+						library.listGenresAdd(new Genre(genre));
+					}
+					listGenresOfBook.put(library.getListGenres().get(genre), Integer.parseInt(number));
+					if (!library.getListGenres().containsKey(parentGenre)) {
+						library.listGenresAdd(new Genre(parentGenre));
+					}		
+					// Check if parentGenre is not already in listGenresOfBook
+					// If so, increment its value rather than replace it.					
+					if (listGenresOfBook.containsKey(library.getListGenres().get(parentGenre))) {
+						int oldValue = listGenresOfBook.get(library.getListGenres().get(parentGenre));
+						listGenresOfBook.put(library.getListGenres().get(parentGenre), oldValue + Integer.parseInt(number));
+					} else {
+						listGenresOfBook.put(library.getListGenres().get(parentGenre), Integer.parseInt(number));
+					}
+					
+					// Making sure the parent-genre to child-genre relationship is stored in the respective
+					// HashMaps of the genres
+					library.getListGenres().get(genre).addParentGenre(library.getListGenres().get(parentGenre));
+					library.getListGenres().get(parentGenre).addSubGenre(library.getListGenres().get(genre));
+				
+				} else { // if it is not
+					String genre = genreAndSubgenre;
+					if (!library.getListGenres().containsKey(genre)) {
+						library.listGenresAdd(new Genre(genre));
+					}
+					listGenresOfBook.put(library.getListGenres().get(genre), Integer.parseInt(number));
 				}
-				listGenresOfBook.put(library.getListGenres().get(genreAndSubgenre), Integer.parseInt(number));
-				if (genreAndSubgenre.contains(">")) {
-					String parentGenreName = genreAndSubgenre.split(">")[0];
-					if (!library.getListGenres().containsKey(parentGenreName)) {
-						library.listGenresAdd(new Genre(parentGenreName));
-					}							
-					library.getListGenres().get(genreAndSubgenre).addParentGenre(library.getListGenres().get(parentGenreName));
-					library.getListGenres().get(parentGenreName).addSubGenre(library.getListGenres().get(genreAndSubgenre));
-					listGenresOfBook.put(library.getListGenres().get(parentGenreName), Integer.parseInt(number));
-				}
-
 			}
 		} 
 		return listGenresOfBook;
