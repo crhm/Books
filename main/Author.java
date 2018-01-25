@@ -81,7 +81,11 @@ public class Author {
 	 */
 	@Override
 	public String toString() {
-		return firstName + " " + lastName;
+		if (firstName.length() > 0) {
+			return firstName + " " + lastName;
+		} else {
+			return lastName;
+		}	
 	}
 	
 	/* (non-Javadoc)

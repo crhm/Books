@@ -1,0 +1,9 @@
+NEW FEATURES
+Pull csv and data not in csv and stuff from goodreads API ?
+Order genres (See github issue)
+Compare libraries
+Allow user to enter path to csv
+
+MAINTENANCE
+Implement try/ catch blocks and error messages
+Check that method comments are up to date
