@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class ImportCSV {
+	
+	private GoodReadsData library;
 
 	public Boolean checkIfNotEmptyOrNull(String infoToCheck) {
 		if (infoToCheck!=null && infoToCheck.length() >0) {
@@ -15,6 +17,14 @@ public class ImportCSV {
 		}
 	}
 	
+	/** Creates the list of genres (and associated number of votes) of a book from its "genre" value in the csv,
+	 *  and returns it so that it can be used to construct the book.
+	 * <br>If it encounters a new genre, it adds it to GoodReadsData's list of Genres.
+	 * <br>If a sub-genre is in the list, its parent-genre is added to its parentGenres list, 
+	 * and it is added to the list of subGenres of its parent-genre.
+	 * @param extractCSVGenres The csv value for 'Genres' for a given book
+	 * @return The HashMap list of Genres of the book, so that it can be used in book constructor
+	 */
 	private HashMap<Genre, Integer> genresImport(String extractCSVGenres) {
 		HashMap<Genre, Integer> listGenresOfBook = new HashMap<Genre, Integer>();
 		
@@ -22,22 +32,22 @@ public class ImportCSV {
 			extractCSVGenres = extractCSVGenres.replace("\"", "");
 			String[] genresAndSubgenres = extractCSVGenres.split(";");		
 			for (String g : genresAndSubgenres) { 
-				g = g.replace("|", ";"); // because for some reason splitting around | did not work
+				g = g.replace("|", ";"); // because for some reason splitting around "|" did not work
 				String[] genreAndNumberSeparated = g.split(";");
 				String number = genreAndNumberSeparated[1];
-				String genreAndSubgenreSeparated = genreAndNumberSeparated[0].replace(",", ">");
-				if (!GoodReadsData.getListGenres().containsKey(genreAndSubgenreSeparated)) {
-					GoodReadsData.listGenresAdd(new Genre(genreAndSubgenreSeparated));
+				String genreAndSubgenre = genreAndNumberSeparated[0].replace(",", ">"); //makes relationship clearer
+				if (!library.getListGenres().containsKey(genreAndSubgenre)) {
+					library.listGenresAdd(new Genre(genreAndSubgenre));
 				}
-				listGenresOfBook.put(GoodReadsData.getListGenres().get(genreAndSubgenreSeparated), Integer.parseInt(number));
-				if (genreAndSubgenreSeparated.contains(">")) {
-					String parentGenreName = genreAndSubgenreSeparated.split(">")[0];
-					if (!GoodReadsData.getListGenres().containsKey(parentGenreName)) {
-						GoodReadsData.listGenresAdd(new Genre(parentGenreName));
+				listGenresOfBook.put(library.getListGenres().get(genreAndSubgenre), Integer.parseInt(number));
+				if (genreAndSubgenre.contains(">")) {
+					String parentGenreName = genreAndSubgenre.split(">")[0];
+					if (!library.getListGenres().containsKey(parentGenreName)) {
+						library.listGenresAdd(new Genre(parentGenreName));
 					}							
-					GoodReadsData.getListGenres().get(genreAndSubgenreSeparated).addParentGenre(GoodReadsData.getListGenres().get(parentGenreName));
-					GoodReadsData.getListGenres().get(parentGenreName).addSubGenre(GoodReadsData.getListGenres().get(genreAndSubgenreSeparated));
-					listGenresOfBook.put(GoodReadsData.getListGenres().get(parentGenreName), Integer.parseInt(number));
+					library.getListGenres().get(genreAndSubgenre).addParentGenre(library.getListGenres().get(parentGenreName));
+					library.getListGenres().get(parentGenreName).addSubGenre(library.getListGenres().get(genreAndSubgenre));
+					listGenresOfBook.put(library.getListGenres().get(parentGenreName), Integer.parseInt(number));
 				}
 
 			}
@@ -45,6 +55,11 @@ public class ImportCSV {
 		return listGenresOfBook;
 	}
 	
+	/** Does the heavy lifting of parsing the value of a csv line, extracting the relevant info and 
+	 * creating the corresponding book, as well as adding it to the library.
+	 * <br>It also adds the book to its corresponding shelf, genre and author.
+	 * @param line csv value of a line, aka a book's info to be parsed
+	 */
 	public void importLine(String line) {
 		// Splits the line into its elements and places them in order in an array of Strings
 		// and makes sure that the comas stay within the ""
@@ -84,8 +99,8 @@ public class ImportCSV {
 			firstName = "";
 		}
 		
-		if (!GoodReadsData.getListAuthors().containsKey(lastName)){
-			GoodReadsData.listAuthorsAdd(new Author(firstName, lastName, 0 ));
+		if (!library.getListAuthors().containsKey(lastName)){
+			library.listAuthorsAdd(new Author(firstName, lastName, 0 ));
 		}
 		
 		String isbn = "";
@@ -119,10 +134,13 @@ public class ImportCSV {
 			dateRead = book[14];
 		}
 		
-		String dateAdded = book[15];
+		String dateAdded = "";
+		if (checkIfNotEmptyOrNull(book[15])) {
+			dateAdded = book[15];
+		}
 
-		if (!GoodReadsData.getListShelves().containsKey(book[18])){
-			GoodReadsData.listShelvesAdd(new Shelf(book[18]));
+		if (!library.getListShelves().containsKey(book[18])){
+			library.listShelvesAdd(new Shelf(book[18]));
 		}
 
 		// Genres
@@ -131,12 +149,13 @@ public class ImportCSV {
 
 		
 		// Creates the book with its parameters
-		Book livre = new Book(title, GoodReadsData.getListAuthors().get(lastName), isbn, goodreadsID, 
+		Book livre = new Book(title, library.getListAuthors().get(lastName), isbn, goodreadsID, 
 				numPages, year, avRating, userRating, dateRead, dateAdded, 
-				GoodReadsData.getListShelves().get(book[18]), listGenresOfBook);
+				library.getListShelves().get(book[18]), listGenresOfBook);
 		
-		GoodReadsData.listBooksAdd(livre);
+		library.listBooksAdd(livre);
 		
+		//TODO shouldn't the stuff below be done in book constructor?
 		// Adds book to its shelf
 		livre.getShelf().addBook(livre);
 		// Adds book to its author
@@ -151,17 +170,18 @@ public class ImportCSV {
 		}
 	}
 	
-	/** This is the crucial function of this class. It asks the name of the csv file to be inputted by the
+	/**Parses csv and loads the information into a corresponding library.
+	 * <br>Asks the name of the csv file to be inputted by the
 	 * user in console, but expects to find the file in the src folder in which the code is. 
 	 * Then it divides the input into one line per csv entry (and holds them in array todo2), 
-	 * then the first 19 components of each line (corresponding to the first 19 columns of the csv) 
-	 * are placed into an array, and the useful elements amongst those 19 are used to create an instance of Book, 
-	 * placed into an existing shelf or creating a new shelf if need be, and assigned to an existing author 
-	 * or creating a new author if need be.
-	 * The operation is repeated for each line in array todo2, effectively doing so for each line in the csv,
-	 * and loading the goodreads library into Books, Authors and Shelves.
+	 * then calls importLine on each.
+	 * <br>The csv should be the standard Goodreads 'export library' csv, or the expanded 
+	 * version (see enhance_goodreads_export.py and https://github.com/PaulKlinger/Enhance-GoodReads-Export)
+	 *  for genres information. This function will notify the user if the csv being loaded is not expanded.
+	 * @param library The GoodReadsData object that the data will be loaded into.
 	 */
-	public ImportCSV(){
+	public ImportCSV(GoodReadsData library){
+		this.library = library;
 		BufferedReader br1 = null;
 		BufferedReader br2 = null;
 		String line = "";
@@ -200,7 +220,7 @@ public class ImportCSV {
 					}
 					counter++;
 				}
-				if (GoodReadsData.getListGenres().isEmpty()) {
+				if (library.getListGenres().isEmpty()) {
 						System.out.println("Please note, this csv does not seem to have the genres expansion.\n");
 				}
 			} catch (FileNotFoundException e) {

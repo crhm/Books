@@ -9,167 +9,167 @@
 public class Testing {
 
 	public static void main(String[] args) {
-		new GoodReadsData();
-		new ImportCSV();
+		GoodReadsData library = new GoodReadsData();
+		new ImportCSV(library);
 
 ////		TESTING GoodReadsData, ImportCSV and ExportToTxt
 //		
 //		
 ////		Test printing all shelves
-//		System.out.println(GoodReadsData.printableShelves());
+//		System.out.println(Printable.libraryShelves(library));
 //		
 ////		Other test to print shelves
-//		System.out.println(GoodReadsData.getListShelves());
+//		System.out.println(library.getListShelves());
 //
 ////		To test whether getting a single shelf works
-//		System.out.println(GoodReadsData.getListShelves().get("read"));
+//		System.out.println(library.getListShelves().get("read"));
 //
 ////		To test whether getting a single author works		
-//		System.out.println(GoodReadsData.getListAuthors().get("Murakami"));
+//		System.out.println(library.getListAuthors().get("Murakami"));
 //
 //// 	To test whether getting something like listofBooks from an author works
-//		System.out.println(GoodReadsData.getListAuthors().get("Murakami").getListOfBooks());
+//		System.out.println(library.getListAuthors().get("Murakami").getListOfBooks());
 //
 ////		To test book.toStringLong, I needed to create a getBook function that used it in Shelf and/or Author.
-//		System.out.println(GoodReadsData.getListShelves().get("read").getBook("Medea"));
-//		System.out.println(GoodReadsData.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
+//		System.out.println(library.getListShelves().get("read").getBook("Medea"));
+//		System.out.println(library.getListAuthors().get("Murakami").getBook("Norwegian Wood"));
 //		
 ////		Testing the new ExportToTxt():
-//		new ExportToTxt(OrderBooksBy.title(GoodReadsData.getListBooks(), true));		
+//		new ExportToTxt(OrderBooksBy.title(library.getListBooks(), true));		
 //		
 //		
 ////		TESTING OrderBooksBy		
 //		
 //		
 ////		Testing the order by publication year
-//		System.out.println(OrderBooksBy.publicationDate(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.publicationDate(library.getListBooks(), true));
 //		
 ////		Testing the order by book title
-//		System.out.println(OrderBooksBy.title(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.title(library.getListBooks(), true));
 //		
 ////		Testing the order by authors' last names:
-//		System.out.println(OrderBooksBy.lastName(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.lastName(library.getListBooks(), true));
 //
 ////		Testing the order by authors' first names:
-//		System.out.println(OrderBooksBy.firstName(GoodReadsData.getListBooks(), false));
+//		System.out.println(OrderBooksBy.firstName(library.getListBooks(), false));
 //
 ////		Testing the order by number of pages:
-//		System.out.println(OrderBooksBy.numberOfPages(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.numberOfPages(library.getListBooks(), true));
 //		
 ////		Testing the order by Date added:
-//		System.out.println(OrderBooksBy.dateAdded(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.dateAdded(library.getListBooks(), true));
 //		
 ////		Testing the order by Date read:
-//		System.out.println(OrderBooksBy.dateRead(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.dateRead(library.getListBooks(), true));
 //		
 ////		Testing the order by general Rating:
-//		System.out.println(OrderBooksBy.genRating(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.genRating(library.getListBooks(), true));
 //		
 ////		Testing the order by user Rating:
-//		System.out.println(OrderBooksBy.userRating(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderBooksBy.userRating(library.getListBooks(), true));
 //		
 //		
 ////		TESTING OrderAuthorsBy
 //
 //		
 ////		Testing the new lastName
-//		System.out.println(OrderAuthorsBy.lastName(GoodReadsData.getListShelves().get("read").getListOfBooks(), false));
+//		System.out.println(OrderAuthorsBy.lastName(library.getListShelves().get("read").getListOfBooks(), false));
 //	
 ////		Testing the new firstName
-//		System.out.println(OrderAuthorsBy.firstName(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
+//		System.out.println(OrderAuthorsBy.firstName(library.getListShelves().get("read").getListOfBooks(), true));
 //		
 ////		Testing the new number of Books
-//		System.out.println(OrderAuthorsBy.numberOfBooks(GoodReadsData.getListBooks(), false));
+//		System.out.println(OrderAuthorsBy.numberOfBooks(library.getListBooks(), false));
 //
 ////		Testing the new average Publication year
-//		System.out.println(OrderAuthorsBy.averagePublicationYear(GoodReadsData.getListGenres().get("Thriller").getCompatibleListOfBooks(), true));
+//		System.out.println(OrderAuthorsBy.averagePublicationYear(library.getListGenres().get("Thriller").getCompatibleListOfBooks(), true));
 //		
 ////		Testing the new ReadRatio
-//		System.out.println(OrderAuthorsBy.readRatio(GoodReadsData.getListBooks(), true));
+//		System.out.println(OrderAuthorsBy.readRatio(library.getListBooks(), true));
 //		
 ////		TESTING GetData		
 //		
 //		
 ////		Testing whether the new GetData.numberOfBooks works:
-//		System.out.println(GetData.numberOfBooks(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.numberOfBooks(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.numberOfAuthors works:
-//		System.out.println(GetData.numberOfAuthors(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.numberOfAuthors(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.avgGenRating works:
-//		System.out.println(GetData.avgGenRating(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.avgGenRating(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.avgUserRating works:
-//		System.out.println(GetData.avgUserRating(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.avgUserRating(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.authorsMultipleBooks works:
-//		System.out.println(GetData.authorsMultipleBooks(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.authorsMultipleBooks(library.getListBooks()));
 //
 ////		Testing whether the new GetData.avgMultipleBooks works:
-//		System.out.println(GetData.avgMultipleBooks(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.avgMultipleBooks(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.authorMostBooks works:
-//		System.out.println(GetData.authorMostBooks(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.authorMostBooks(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.shortestBook works:
-//		System.out.println(GetData.shortestBook(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.shortestBook(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.longestBook works:
-//		System.out.println(GetData.longestBook(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.longestBook(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.avgPageNum works:
-//		System.out.println(GetData.avgPageNum(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.avgPageNum(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.genRatingSpecificList works:
-//		System.out.println(GetData.genRatingSpecificList(GoodReadsData.getListBooks(), 0, 3));
+//		System.out.println(GetData.genRatingSpecificList(library.getListBooks(), 0, 3));
 //		
 ////		Testing whether the new GetData.userRatingSpecificList works:
-//		System.out.println(GetData.userRatingSpecificList(GoodReadsData.getListBooks(), 5));
+//		System.out.println(GetData.userRatingSpecificList(library.getListBooks(), 5));
 //		
 ////		Testing whether the new GetData.worstGenRating works:
-//		System.out.println(GetData.worstGenRating(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.worstGenRating(library.getListBooks()));
 //
 ////		Testing whether the new GetData.bestGenRating works:
-//		System.out.println(GetData.bestGenRating(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.bestGenRating(library.getListBooks()));
 //		
 ////		Testing whether the new GetData.avgRatingDiff works:
-//		System.out.println(GetData.avgRatingDiff(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.avgRatingDiff(library.getListBooks()));
 //		
 ////		Testing the new GetData.allData:
-//		System.out.println(GetData.allData(GoodReadsData.getListBooks()));
+//		System.out.println(GetData.allData(library.getListBooks()));
 //		
 ////		TESTING GENRES
 //
 ////		Testing overall library for genres
-//		System.out.println(GoodReadsData.printableGenres());
+//		System.out.println(Printable.libraryGenres(library));
 //		
 ////		Testing number of genres
-//		System.out.println(GoodReadsData.getListGenres().size());
+//		System.out.println(library.getListGenres().size());
 //
 ////		Testing getting a list of genres of a book (the melancholy of resistance)
-//		System.out.println(GoodReadsData.getListBooks().get("0811215040").getListGenres()); 
+//		System.out.println(library.getListBooks().get("0811215040").getListGenres()); 
 //		
 ////		Testing getting a list of books of a genre (Cultural)
-//		System.out.println(GoodReadsData.getListGenres().get("Cultural>Greece").getListOfBooks());
+//		System.out.println(library.getListGenres().get("Cultural>Greece").getListOfBooks());
 //
 ////		Testing getting parentGenres of a genre (Hungary)
-//		System.out.println(GoodReadsData.getListGenres().get("Cultural>Hungary").getParentGenres().keySet());
+//		System.out.println(library.getListGenres().get("Cultural>Hungary").getParentGenres().keySet());
 //		
 ////		Testing genre toString
-//		System.out.println(GoodReadsData.getListGenres().get("Cultural"));
+//		System.out.println(library.getListGenres().get("Cultural"));
 //		
 ////		Testing genre toStringLong
-//		System.out.println(GoodReadsData.getListGenres().get("Cultural>Hungary").toStringLong());
+//		System.out.println(library.getListGenres().get("Cultural>Hungary").toStringLong());
 //		
 ////		Testing genre's subgenre list
-//		System.out.println(GoodReadsData.getListGenres().get("European Literature").getSubGenres().keySet());
+//		System.out.println(library.getListGenres().get("European Literature").getSubGenres().keySet());
 //		
 //		
 ////		TESTING OrderGenresBy
 //		
 //		
-//		Testing new number of Books
-		System.out.println(OrderGenresBy.numberOfBooks(GoodReadsData.getListShelves().get("read").getListOfBooks(), true));
+////		Testing new number of Books
+		System.out.println(OrderGenresBy.numberOfBooks(library.getListShelves().get("read").getListOfBooks(), true));
 	}
 
 }
