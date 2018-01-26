@@ -159,8 +159,8 @@ public class ImportCSV {
 			dateAdded = book[15];
 		}
 
-		if (!library.getListShelves().containsKey(book[18])){
-			library.listShelvesAdd(new Shelf(book[18]));
+		if (!library.getLibraryShelves().getList().containsKey(book[18])){
+			library.getLibraryShelves().add(new Shelf(book[18]));
 		}
 
 		// Genres
@@ -171,7 +171,7 @@ public class ImportCSV {
 		// Creates the book with its parameters
 		Book livre = new Book(title, library.getLibraryAuthors().getList().get(lastName), isbn, goodreadsID, 
 				numPages, year, avRating, userRating, dateRead, dateAdded, 
-				library.getListShelves().get(book[18]), listGenresOfBook);
+				library.getLibraryShelves().getList().get(book[18]), listGenresOfBook);
 		
 		library.getLibraryBooks().add(livre);
 		

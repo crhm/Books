@@ -9,7 +9,7 @@ import export.IExportStrategy;
  */
 public class GoodReadsData {
 
-	private HashMap<String, Shelf> listShelves;
+	private ListShelves libraryShelves;
 	private ListAuthors libraryAuthors;
 	private ListBooks libraryBooks;
 	private HashMap<String, Genre> listGenres;
@@ -17,7 +17,7 @@ public class GoodReadsData {
 
 
 	public GoodReadsData() {
-		this.listShelves = new HashMap<>();
+		this.libraryShelves = new ListShelves();
 		this.libraryAuthors = new ListAuthors();
 		this.libraryBooks = new ListBooks();
 		this.listGenres = new HashMap<>();
@@ -27,16 +27,16 @@ public class GoodReadsData {
 	 * and their key is their names, which goodreads seems to format "currently-reading" for "Currently Reading".
 	 * @return the listShelves
 	 */
-	public HashMap<String, Shelf> getListShelves() {
-		return this.listShelves;
+	public ListShelves getLibraryShelves() {
+		return this.libraryShelves;
 	}
 
 
 	/**
 	 * @param listShelves the listShelves to set
 	 */
-	public void setListShelves(HashMap<String, Shelf> listShelves) {
-		this.listShelves = listShelves;
+	public void setListShelves(ListShelves libraryShelves) {
+		this.libraryShelves = libraryShelves;
 	}
 
 	
@@ -78,16 +78,6 @@ public class GoodReadsData {
 	public void setListGenres(HashMap<String, Genre> listGenres) {
 		this.listGenres = listGenres;
 	}
-
-
-
-	/** Adds a shelf to the listShelves parameter of this class
-	 * @param shelf Shelf to be added to the listShelves
-	 */
-	public void listShelvesAdd(Shelf shelf){
-		this.listShelves.put(shelf.getName(), shelf);
-	}
-	
 	
 	/** Adds a genre to the listGenres parameter of this class
 	 * @param genre Genre to be added to the listGenres
@@ -128,5 +118,15 @@ public class GoodReadsData {
 			throw new IllegalArgumentException("No book with that ISBN was found in the library.");
 		}
 		return book;
+	}
+	
+	public Shelf getShelf(String s) {
+		Shelf shelf = null;
+		if (libraryShelves.getList().containsKey(s)) {
+			shelf = libraryShelves.getList().get(s);
+		} else {
+			throw new IllegalArgumentException("No Shelf with that name was found in the library.");
+		}
+		return shelf;
 	}
 }
