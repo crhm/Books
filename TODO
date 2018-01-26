@@ -8,3 +8,5 @@ Allow users to expand a csv or not (integrate .py script)
 MAINTENANCE
 Implement try/ catch blocks and error messages
 Check that method comments are up to date
+Figure out why export(String s) it doesn't automatically go for toString and what I can do to change that.
+Propagate export changes in test
