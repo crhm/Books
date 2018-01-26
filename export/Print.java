@@ -18,15 +18,15 @@ public abstract class Print {
 		System.out.println(printableList);
 	}
 	
-	/** This prints a print-friendly String of all the authors, 
-	 */
-	public static void libraryAuthors(GoodReadsData library) {
-		String printableList = "";
-		for (Author au : library.getListAuthors().values()) {
-			printableList = printableList.concat(au + "\n");
-		}
-		System.out.println(printableList);
-	}	
+//	/** This prints a print-friendly String of all the authors, 
+//	 */
+//	public static void libraryAuthors(GoodReadsData library) {
+//		String printableList = "";
+//		for (Author au : library.getListAuthors().values()) {
+//			printableList = printableList.concat(au + "\n");
+//		}
+//		System.out.println(printableList);
+//	}	
 	
 	/** This prints a print-friendly String of all the contents of each shelf, 
 	 */

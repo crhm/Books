@@ -119,8 +119,8 @@ public class ImportCSV {
 			firstName = "";
 		}
 		
-		if (!library.getListAuthors().containsKey(lastName)){
-			library.listAuthorsAdd(new Author(firstName, lastName, 0 ));
+		if (!library.getLibraryAuthors().getList().containsKey(lastName)){
+			library.getLibraryAuthors().listAdd(new Author(firstName, lastName, 0 ));
 		}
 		
 		String isbn = "";
@@ -169,7 +169,7 @@ public class ImportCSV {
 
 		
 		// Creates the book with its parameters
-		Book livre = new Book(title, library.getListAuthors().get(lastName), isbn, goodreadsID, 
+		Book livre = new Book(title, library.getLibraryAuthors().getList().get(lastName), isbn, goodreadsID, 
 				numPages, year, avRating, userRating, dateRead, dateAdded, 
 				library.getListShelves().get(book[18]), listGenresOfBook);
 		

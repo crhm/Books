@@ -11,7 +11,8 @@ import export.IExportStrategy;
 public class GoodReadsData { 
 
 	private HashMap<String, Shelf> listShelves;
-	private HashMap<String, Author> listAuthors;
+	//private HashMap<String, Author> listAuthors;
+	private LibraryAuthors libraryAuthors;
 	private HashMap<String, Book> listBooks;
 	private HashMap<String, Genre> listGenres;
 	private IExportStrategy exportStrategy = null;
@@ -25,7 +26,8 @@ public class GoodReadsData {
 	 */
 	public GoodReadsData() {
 		this.listShelves = new HashMap<>();
-		this.listAuthors = new HashMap<>();
+		//this.listAuthors = new HashMap<>();
+		this.libraryAuthors = new LibraryAuthors();
 		this.listBooks = new HashMap<>();
 		this.listGenres = new HashMap<>();
 	}
@@ -46,20 +48,14 @@ public class GoodReadsData {
 		this.listShelves = listShelves;
 	}
 
-	/** Returns the HashMap<String, Author> called listAuthors that contains all authors in the library export
-	 * and their key is their last Names, hence why authors who go by a single name like Colette are assigned 
-	 * an empty first name rather than an empty last name.
-	 * @return the listAuthors
-	 */
-	public HashMap<String, Author> getListAuthors() {
-		return this.listAuthors;
+	
+	public LibraryAuthors getLibraryAuthors() {
+		return this.libraryAuthors;
 	}
 
-	/**
-	 * @param listAuthors the listAuthors to set
-	 */
-	public void setListAuthors(HashMap<String, Author> listAuthors) {
-		this.listAuthors = listAuthors;
+	
+	public void setLibraryAuthors(LibraryAuthors libraryAuthors) {
+		this.libraryAuthors = libraryAuthors;
 	}
 
 	/** Returns the HashMap<String, Book> called listBooks that contains all of the books of the library export
@@ -92,12 +88,7 @@ public class GoodReadsData {
 		this.listGenres = listGenres;
 	}
 
-	/** Adds an author to the listAuthors parameter of this class
-	 * @param author Author to be added to the listAuthors
-	 */
-	public void listAuthorsAdd(Author author){
-		this.listAuthors.put(author.getLastName(), author);
-	}
+
 
 	/** Adds a shelf to the listShelves parameter of this class
 	 * @param shelf Shelf to be added to the listShelves
@@ -133,4 +124,10 @@ public class GoodReadsData {
 	public void export(String s) {
 		this.exportStrategy.export(s);
 	}
+	
+//	public String getAuthor(String s) {
+//		String author = "";
+//		//TODO
+//		return author;
+//	}
 }
