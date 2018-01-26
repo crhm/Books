@@ -1,12 +1,11 @@
 package main;
-import java.util.HashMap;
 
 public class Author {
 	
 	private String firstName;
 	private String lastName;
 	private double goodreadsID;
-	private HashMap<String, Book> listOfBooks; //String is the isbn
+	private ListBooks listOfBooks; //String is the isbn
 	
 	/** Constructor of Author - object author to be associated with books
 	 * Take data from Goodreads?
@@ -18,7 +17,7 @@ public class Author {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.goodreadsID = goodreadsID;
-		this.listOfBooks = new HashMap<>();
+		this.listOfBooks = new ListBooks();
 	}
 	
 	public String getFirstName() {
@@ -41,10 +40,10 @@ public class Author {
 	}
 	
 	public void addBook(Book book){
-		this.listOfBooks.put(book.getIsbn(), book);
+		this.listOfBooks.add(book);
 	}
 	
-	public HashMap<String, Book> getListOfBooks() {
+	public ListBooks getListOfBooks() {
 		return listOfBooks;
 	}
 	
@@ -57,7 +56,7 @@ public class Author {
 		String errorMessage = "Sorry, " + title + " was not found for this author";
 		double flag = 0;
 		String bookInfo = "";
-		for (Book b : getListOfBooks().values()){
+		for (Book b : getListOfBooks().getList().values()){
 			if (b.getTitle().equals(title)) {
 				flag++;
 				bookInfo = b.toStringLong();

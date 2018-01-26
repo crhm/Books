@@ -2,15 +2,15 @@ package main;
 
 import java.util.HashMap;
 
-public class LibraryAuthors {
+public class ListAuthors {
 	
 	private HashMap<String, Author> list;
 	
-	public LibraryAuthors() {
+	public ListAuthors() {
 		this.list = new HashMap<String, Author>();
 	}
 
-	/** Returns the HashMap<String, Author> called listAuthors that contains all authors in the library export
+	/** Returns the HashMap<String, Author> called listAuthors that contains all authors
 	 * and their key is their last Names, hence why authors who go by a single name like Colette are assigned 
 	 * an empty first name rather than an empty last name.
 	 * @return the listAuthors
@@ -26,11 +26,11 @@ public class LibraryAuthors {
 	/** Adds an author to the listAuthors parameter of this class
 	 * @param author Author to be added to the listAuthors
 	 */
-	public void listAdd(Author author){
+	public void add(Author author){
 		this.list.put(author.getLastName(), author);
 	}
 	
-	/** This returns a print-friendly String of all the authors, 
+	/** This returns a print-friendly String of all the authors 
 	 */
 	@Override
 	public String toString() {

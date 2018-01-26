@@ -5,34 +5,25 @@ import export.IExportStrategy;
 
 /** Main class - establishes the data structures of the library, and holds the lists 
  * of shelves, authors, books and genres overall.
- * <br>The constructor initialises attributes as empty.
  * @author crhm
  */
-public class GoodReadsData { 
+public class GoodReadsData {
 
 	private HashMap<String, Shelf> listShelves;
-	//private HashMap<String, Author> listAuthors;
-	private LibraryAuthors libraryAuthors;
-	private HashMap<String, Book> listBooks;
+	private ListAuthors libraryAuthors;
+	private ListBooks libraryBooks;
 	private HashMap<String, Genre> listGenres;
 	private IExportStrategy exportStrategy = null;
 
 
-	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
-	 * @param listShelves Initialises listShelves as an empty HashMap<String, Shelf>
-	 * @param listAuthors Initialises listAuthors as an empty HashMap<String, Author> 
-	 * @param listBooks Initialises listBooks as an empty HashMap<String, Book>
-	 * @param listGenres Initialises listGenres as an empty HashMap<String, Genre>
-	 */
 	public GoodReadsData() {
 		this.listShelves = new HashMap<>();
-		//this.listAuthors = new HashMap<>();
-		this.libraryAuthors = new LibraryAuthors();
-		this.listBooks = new HashMap<>();
+		this.libraryAuthors = new ListAuthors();
+		this.libraryBooks = new ListBooks();
 		this.listGenres = new HashMap<>();
 	}
 
-	/** Returns the HashMap<String, Shelf> called listShelves that contains all the shelves in the library export
+	/** Returns the ListShelves called libraryShelves that contains all the shelves in the library export
 	 * and their key is their names, which goodreads seems to format "currently-reading" for "Currently Reading".
 	 * @return the listShelves
 	 */
@@ -49,29 +40,29 @@ public class GoodReadsData {
 	}
 
 	
-	public LibraryAuthors getLibraryAuthors() {
+	public ListAuthors getLibraryAuthors() {
 		return this.libraryAuthors;
 	}
 
 	
-	public void setLibraryAuthors(LibraryAuthors libraryAuthors) {
+	public void setLibraryAuthors(ListAuthors libraryAuthors) {
 		this.libraryAuthors = libraryAuthors;
 	}
 
-	/** Returns the HashMap<String, Book> called listBooks that contains all of the books of the library export
+	/** Returns the ListBooks called libraryBooks that contains all of the books of the library export
 	 * and their key is their ISBN, to be consistent with the listOfBooks in Shelf and Author which also work
 	 * via ISBN as keys rather than book titles. 
 	 * @return the listBooks
 	 */
-	public HashMap<String, Book> getListBooks() {
-		return this.listBooks;
+	public ListBooks getLibraryBooks() {
+		return this.libraryBooks;
 	}
 
 	/**
-	 * @param listBooks the listBooks to set
+	 * @param library the listBooks to set
 	 */
-	public void setListBooks(HashMap<String, Book> listBooks) {
-		this.listBooks = listBooks;
+	public void setLibraryBooks(ListBooks libraryBooks) {
+		this.libraryBooks = libraryBooks;
 	}
 
 	/** Returns the list of genres in the whole library, in the form of a HashMap<String, Genre>
@@ -97,12 +88,6 @@ public class GoodReadsData {
 		this.listShelves.put(shelf.getName(), shelf);
 	}
 	
-	/** Adds a book to the listBooks parameter of this class
-	 * @param book Book to be added to the listBooks
-	 */
-	public void listBooksAdd(Book book) {
-		this.listBooks.put(book.getIsbn(), book);
-	}
 	
 	/** Adds a genre to the listGenres parameter of this class
 	 * @param genre Genre to be added to the listGenres
@@ -125,9 +110,23 @@ public class GoodReadsData {
 		this.exportStrategy.export(s);
 	}
 	
-//	public String getAuthor(String s) {
-//		String author = "";
-//		//TODO
-//		return author;
-//	}
+	public Author getAuthor(String s) {
+		Author author = null;
+		if (libraryAuthors.getList().containsKey(s)) {
+			author = libraryAuthors.getList().get(s);
+		} else {
+			throw new IllegalArgumentException("No author of that name was found in the library.");
+		}
+		return author;
+	}
+	
+	public Book getBook(String s) {
+		Book book = null;
+		if (libraryBooks.getList().containsKey(s)) {
+			book = libraryBooks.getList().get(s);
+		} else {
+			throw new IllegalArgumentException("No book with that ISBN was found in the library.");
+		}
+		return book;
+	}
 }

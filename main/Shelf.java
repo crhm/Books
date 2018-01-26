@@ -1,10 +1,9 @@
 package main;
-import java.util.HashMap;
 
 public class Shelf {
 	
 	private String name;
-	private HashMap<String, Book> listOfBooks; //String is the isbn
+	private ListBooks listOfBooks; //String is the isbn
 	
 	/** Constructor of Shelf
 	 * @param name Name of Shelf (required)
@@ -12,7 +11,7 @@ public class Shelf {
 	 */
 	public Shelf(String name) {
 		this.name = name;
-		this.listOfBooks = new HashMap<String, Book>();
+		this.listOfBooks = new ListBooks();
 	}
 	
 	public String getName() {
@@ -27,7 +26,7 @@ public class Shelf {
 	 * and their key is their ISBN.
 	 * @return
 	 */
-	public HashMap<String, Book> getListOfBooks() {
+	public ListBooks getListOfBooks() {
 		return listOfBooks;
 	}
 	
@@ -35,7 +34,7 @@ public class Shelf {
 	 * @param listOfBooks A HashMap with book ISBNs as keys and Book instances as values that will be the list
 	 * of books that the shelf contains
 	 */
-	public void setListOfBooks(HashMap<String, Book> listOfBooks) {
+	public void setListOfBooks(ListBooks listOfBooks) {
 		this.listOfBooks = listOfBooks;
 	}
 	
@@ -43,7 +42,7 @@ public class Shelf {
 	 * @param book Book to add to shelf
 	 */
 	public void addBook(Book book){
-		this.listOfBooks.put(book.getIsbn(), book);
+		this.listOfBooks.add(book);
 	}
 	
 	/** Returns detailed info about one of its books if it finds it, otherwise it displays
@@ -55,7 +54,7 @@ public class Shelf {
 		String errorMessage = "Sorry, " + title + " was not found in this shelf";
 		double flag = 0;
 		String bookInfo = "";
-		for (Book b : getListOfBooks().values()){
+		for (Book b : getListOfBooks().getList().values()){
 			if (b.getTitle().equals(title)) {
 				flag++;
 				bookInfo = b.toStringLong();
@@ -71,11 +70,8 @@ public class Shelf {
 	 */
 	@Override
 	public String toString() {
-		String list = "";
-		for (Book b : getListOfBooks().values()){
-			list = list.concat(b.toString() + "\n");
-		}
-		return "\nShelf " + name + ":\n" + list ;
+
+		return "\nShelf " + name + ":\n" + listOfBooks ;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

@@ -120,7 +120,7 @@ public class ImportCSV {
 		}
 		
 		if (!library.getLibraryAuthors().getList().containsKey(lastName)){
-			library.getLibraryAuthors().listAdd(new Author(firstName, lastName, 0 ));
+			library.getLibraryAuthors().add(new Author(firstName, lastName, 0 ));
 		}
 		
 		String isbn = "";
@@ -173,7 +173,7 @@ public class ImportCSV {
 				numPages, year, avRating, userRating, dateRead, dateAdded, 
 				library.getListShelves().get(book[18]), listGenresOfBook);
 		
-		library.listBooksAdd(livre);
+		library.getLibraryBooks().add(livre);
 		
 		// Adds book to its shelf
 		livre.getShelf().addBook(livre);

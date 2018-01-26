@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class Genre {
 	
-	private HashMap<Book, Integer> listOfBooks; // This is not the usual HashMap format for a list of books because
+	private HashMap<Book, Integer> listOfBooks; // This is not the usual ListBooks format for a list of books because
 	// there is additional information to hold about each genre's assignment to a each book, namely,
 	// the number of goodreads users who had, at the time, assigned that genre to that book. That is
 	// represented by the integer.
@@ -92,14 +92,14 @@ public class Genre {
 	}
 	
 	/** Method meant to return a listOfBooks for the genre that is compatible with further operations
-	 * as designed for a HashMap<String, Book>, and thus creates one by discarding the number
+	 * as designed for a ListBooks, and thus creates one by discarding the number
 	 * associated with each book in the main listOfBooks of Genre.
-	 * @return a compatible HashMap of the books of this genre.
+	 * @return a ListBooks of the books of this genre.
 	 */
-	public HashMap<String, Book> getCompatibleListOfBooks(){
-		HashMap<String, Book> compatibleList = new HashMap<String, Book>();
+	public ListBooks getCompatibleListOfBooks(){
+		ListBooks compatibleList = new ListBooks();
 		for (Book b : listOfBooks.keySet()) {
-			compatibleList.put(b.getIsbn(), b);
+			compatibleList.add(b);
 		}
 		return compatibleList;
 	}
