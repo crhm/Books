@@ -1,6 +1,8 @@
 package main;
 import java.util.HashMap;
 
+import export.IExportStrategy;
+
 /** Main class - establishes the data structures of the library, and holds the lists 
  * of shelves, authors, books and genres overall.
  * <br>The constructor initialises attributes as empty.
@@ -12,6 +14,7 @@ public class GoodReadsData {
 	private HashMap<String, Author> listAuthors;
 	private HashMap<String, Book> listBooks;
 	private HashMap<String, Genre> listGenres;
+	private IExportStrategy exportStrategy = null;
 
 
 	/** Constructor of the GoodReadsData object - Initialises its two attributes as empty
@@ -117,4 +120,17 @@ public class GoodReadsData {
 		this.listGenres.put(genre.getName(), genre);
 	}	
 
+	/**Sets the export strategy to be subsequently used for export(String s)
+	 * @param strategy IExportStrategy to set for later export
+	 */
+	public void setExportStrategy(IExportStrategy strategy) {
+		this.exportStrategy = strategy;
+	}
+	
+	/**Delegates exporting to currently set exportStrategy.
+	 * @param s The string to be exported
+	 */
+	public void export(String s) {
+		this.exportStrategy.export(s);
+	}
 }
