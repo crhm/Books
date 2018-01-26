@@ -1,5 +1,4 @@
 package main;
-import java.util.HashMap;
 
 import export.IExportStrategy;
 
@@ -12,7 +11,7 @@ public class GoodReadsData {
 	private ListShelves libraryShelves;
 	private ListAuthors libraryAuthors;
 	private ListBooks libraryBooks;
-	private HashMap<String, Genre> listGenres;
+	private ListGenres libraryGenres;
 	private IExportStrategy exportStrategy = null;
 
 
@@ -20,7 +19,7 @@ public class GoodReadsData {
 		this.libraryShelves = new ListShelves();
 		this.libraryAuthors = new ListAuthors();
 		this.libraryBooks = new ListBooks();
-		this.listGenres = new HashMap<>();
+		this.libraryGenres = new ListGenres();
 	}
 
 	/** Returns the ListShelves called libraryShelves that contains all the shelves in the library export
@@ -65,26 +64,13 @@ public class GoodReadsData {
 		this.libraryBooks = libraryBooks;
 	}
 
-	/** Returns the list of genres in the whole library, in the form of a HashMap<String, Genre>
-	 * @return HashMap of genres
-	 */
-	public HashMap<String, Genre> getListGenres() {
-		return this.listGenres;
+	public ListGenres getLibraryGenres() {
+		return libraryGenres;
 	}
 
-	/**
-	 * @param listGenres HashMap of genres of the library
-	 */
-	public void setListGenres(HashMap<String, Genre> listGenres) {
-		this.listGenres = listGenres;
+	public void setLibraryGenres(ListGenres libraryGenres) {
+		this.libraryGenres = libraryGenres;
 	}
-	
-	/** Adds a genre to the listGenres parameter of this class
-	 * @param genre Genre to be added to the listGenres
-	 */
-	public void listGenresAdd(Genre genre) {
-		this.listGenres.put(genre.getName(), genre);
-	}	
 
 	/**Sets the export strategy to be subsequently used for export(String s)
 	 * @param strategy IExportStrategy to set for later export
@@ -96,8 +82,8 @@ public class GoodReadsData {
 	/**Delegates exporting to currently set exportStrategy.
 	 * @param s The string to be exported
 	 */
-	public void export(String s) {
-		this.exportStrategy.export(s);
+	public void export(Object o) {
+		this.exportStrategy.export(o);
 	}
 	
 	public Author getAuthor(String s) {
@@ -105,7 +91,8 @@ public class GoodReadsData {
 		if (libraryAuthors.getList().containsKey(s)) {
 			author = libraryAuthors.getList().get(s);
 		} else {
-			throw new IllegalArgumentException("No author of that name was found in the library.");
+			//throw new IllegalArgumentException("No author of that name was found in the library.");
+			// The above broke the app so figure out something else / implications of having nothing here?
 		}
 		return author;
 	}
@@ -115,7 +102,8 @@ public class GoodReadsData {
 		if (libraryBooks.getList().containsKey(s)) {
 			book = libraryBooks.getList().get(s);
 		} else {
-			throw new IllegalArgumentException("No book with that ISBN was found in the library.");
+			//throw new IllegalArgumentException("No book with that ISBN was found in the library.");
+			// The above broke the app so figure out something else / implications of having nothing here?
 		}
 		return book;
 	}
@@ -125,8 +113,20 @@ public class GoodReadsData {
 		if (libraryShelves.getList().containsKey(s)) {
 			shelf = libraryShelves.getList().get(s);
 		} else {
-			throw new IllegalArgumentException("No Shelf with that name was found in the library.");
+			//throw new IllegalArgumentException("No shelf with that name was found in the library.");
+			// The above broke the app so figure out something else / implications of having nothing here?
 		}
 		return shelf;
+	}
+	
+	public Genre getGenre(String s) {
+		Genre genre = null;
+		if(libraryGenres.getList().containsKey(s)) {
+			genre = libraryGenres.getList().get(s);
+		} else {
+			//throw new IllegalArgumentException("No genre with that name was found in the library.");
+			// The above broke the app so figure out something else / implications of having nothing here?
+		}
+		return genre;
 	}
 }

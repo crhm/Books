@@ -13,5 +13,4 @@ Create a LibraryBooks object, a LibraryAuthors object, a LibraryShelves object, 
 	Propagate changes
 	Update/ rewrite method comments
 	Propagate use of getBook/Author/Shelf/Genre method
-Figure out why export(String s) it doesn't automatically go for toString and what I can do to change that.
 Propagate export changes in test

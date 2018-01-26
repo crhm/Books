@@ -42,33 +42,33 @@ public class ImportCSV {
 				if (genreAndSubgenre.contains(",")) { // if it is a subgenre
 					String genre = genreAndSubgenre.split(",")[1];
 					String parentGenre = genreAndSubgenre.split(",")[0];
-					if (!library.getListGenres().containsKey(genre)) {
-						library.listGenresAdd(new Genre(genre));
+					if (library.getGenre(genre) == null) { //TODO Check
+						library.getLibraryGenres().add(new Genre(genre));
 					}
-					listGenresOfBook.put(library.getListGenres().get(genre), Integer.parseInt(number));
-					if (!library.getListGenres().containsKey(parentGenre)) {
-						library.listGenresAdd(new Genre(parentGenre));
+					listGenresOfBook.put(library.getGenre(genre), Integer.parseInt(number));
+					if (library.getGenre(parentGenre) == null) {
+						library.getLibraryGenres().add(new Genre(parentGenre));
 					}		
 					// Check if parentGenre is not already in listGenresOfBook
 					// If so, increment its value rather than replace it.					
-					if (listGenresOfBook.containsKey(library.getListGenres().get(parentGenre))) {
-						int oldValue = listGenresOfBook.get(library.getListGenres().get(parentGenre));
-						listGenresOfBook.put(library.getListGenres().get(parentGenre), oldValue + Integer.parseInt(number));
+					if (listGenresOfBook.containsKey(library.getGenre(parentGenre))) { //TODO Check
+						int oldValue = listGenresOfBook.get(library.getGenre(parentGenre));
+						listGenresOfBook.put(library.getGenre(parentGenre), oldValue + Integer.parseInt(number));
 					} else {
-						listGenresOfBook.put(library.getListGenres().get(parentGenre), Integer.parseInt(number));
+						listGenresOfBook.put(library.getGenre(parentGenre), Integer.parseInt(number));
 					}
 					
 					// Making sure the parent-genre to child-genre relationship is stored in the respective
 					// HashMaps of the genres
-					library.getListGenres().get(genre).addParentGenre(library.getListGenres().get(parentGenre));
-					library.getListGenres().get(parentGenre).addSubGenre(library.getListGenres().get(genre));
+					library.getGenre(genre).addParentGenre(library.getGenre(parentGenre));
+					library.getGenre(parentGenre).addSubGenre(library.getGenre(genre));
 				
 				} else { // if it is not
 					String genre = genreAndSubgenre;
-					if (!library.getListGenres().containsKey(genre)) {
-						library.listGenresAdd(new Genre(genre));
+					if (library.getGenre(genre) == null) { //TODO Check
+						library.getLibraryGenres().add(new Genre(genre));
 					}
-					listGenresOfBook.put(library.getListGenres().get(genre), Integer.parseInt(number));
+					listGenresOfBook.put(library.getGenre(genre), Integer.parseInt(number));
 				}
 			}
 		} 
@@ -239,7 +239,7 @@ public class ImportCSV {
 					}
 					counter++;
 				}
-				if (library.getListGenres().isEmpty()) {
+				if (library.getLibraryGenres().getList().isEmpty()) { //TODO Check
 						System.out.println("Please note, this csv does not seem to have the genres expansion.\n");
 				}
 			} catch (FileNotFoundException e) {
