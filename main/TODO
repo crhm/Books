@@ -3,6 +3,7 @@ Pull csv and data not in csv and stuff from goodreads API ?
 Order genres (See github issue)
 Compare libraries
 Allow user to enter path to csv
+Allow users to expand a csv or not (integrate .py script)
 
 MAINTENANCE
 Implement try/ catch blocks and error messages
