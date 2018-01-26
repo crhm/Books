@@ -121,8 +121,8 @@ public class GetData {
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
-					for (Book b : a.getListOfBooks().values()) {
-						if (b.getShelf().getListOfBooks() == listOfBooks) {
+					for (Book b : a.getListOfBooks().getList().values()) {
+						if (b.getShelf().getListOfBooks().getList() == listOfBooks) {
 							temp1++;
 						}
 					}
@@ -136,7 +136,7 @@ public class GetData {
 			} else { // This behavior is for when the listOfBooks is the whole library
 				
 				for (Author a : listAuthors.values()) {
-					if (a.getListOfBooks().values().size() > 1) {
+					if (a.getListOfBooks().getList().values().size() > 1) {
 						numAuthorsMB++;
 					}
 				}
@@ -182,8 +182,8 @@ public class GetData {
 				
 				for (Author a : listAuthors.values()) {
 					int temp1 = 0; //counter of books in the shelf
-					for (Book b : a.getListOfBooks().values()) {
-						if (b.getShelf().getListOfBooks() == listOfBooks) {
+					for (Book b : a.getListOfBooks().getList().values()) {
+						if (b.getShelf().getListOfBooks().getList() == listOfBooks) {
 							temp1++;
 						}
 					}
@@ -196,9 +196,9 @@ public class GetData {
 			} else { // This behavior is for when the listOfBooks is the whole library
 				
 				for (Author a : listAuthors.values()) {
-					if (a.getListOfBooks().values().size() > 1) {
+					if (a.getListOfBooks().getList().values().size() > 1) {
 						numAuthorsMB++;
-						sum = sum + a.getListOfBooks().values().size();
+						sum = sum + a.getListOfBooks().getList().values().size();
 					}
 				}
 			}
@@ -263,8 +263,8 @@ public class GetData {
 				Author largestAuthor = authorArray[counter2];	
 				// To make sure the books counted are the books in that specific shelf, not all
 				// of the author's books regardless of shelf.
-				for (Book b : largestAuthor.getListOfBooks().values()) {  
-					if (b.getShelf().getListOfBooks() == listOfBooks) {
+				for (Book b : largestAuthor.getListOfBooks().getList().values()) {  
+					if (b.getShelf().getListOfBooks().getList() == listOfBooks) {
 						bookNumber++;
 					}
 				}
@@ -274,8 +274,8 @@ public class GetData {
 				// Highest number, and trying the next author if not.
 				while (counter2 < (listAuthors.values().size() - 1)) {
 					int temp = 0;
-					for (Book b : authorArray[counter2 + 1].getListOfBooks().values()) {  
-						if (b.getShelf().getListOfBooks() == listOfBooks) {
+					for (Book b : authorArray[counter2 + 1].getListOfBooks().getList().values()) {  
+						if (b.getShelf().getListOfBooks().getList() == listOfBooks) {
 							temp++;
 						}
 					}
@@ -297,11 +297,11 @@ public class GetData {
 				// This works even when there is only one author; does not cause
 				// Out Of Index errors for the array, because it does not enter the if.
 				int counter2 = 0;
-				int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks());
+				int bookNumber = numberOfBooks(authorArray[counter2].getListOfBooks().getList());
 				Author largestAuthor = authorArray[counter2];
 				while (counter2 < (listAuthors.values().size() - 1)) {
-					if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks())) {
-						bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks());
+					if (bookNumber < numberOfBooks(authorArray[counter2 + 1].getListOfBooks().getList())) {
+						bookNumber = numberOfBooks(authorArray[counter2 + 1].getListOfBooks().getList());
 						largestAuthor = authorArray[counter2 + 1];
 						counter2++;
 					} else {
