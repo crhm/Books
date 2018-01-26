@@ -8,3 +8,5 @@ Allow users to expand a csv or not (integrate .py script)
 MAINTENANCE
 Implement try/ catch blocks and error messages
 Check that method comments are up to date
+Create a LibraryBooks object, a LibraryAuthors object, a LibraryShelves object, a LibraryGenres object, 
+	which would have as a data member the HashMap, and have the methods like addBook/Author/Shelf/Genre and toString?
