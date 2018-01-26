@@ -2,18 +2,23 @@ package main;
 
 import java.util.HashMap;
 
+/** Class that manipulates lists of books.
+ * <br>CLass variable 'list' is a HashMap that contains the books, 
+ * where their key is their ISBN (as a String).
+ * @author crhm
+ *
+ */
 public class ListBooks {
 	
 	private HashMap<String, Book> list;
 	
+	/**ListBooks constructor.
+	 * <br>Initialises class variable 'list' as an empty HashMap.
+	 */
 	public ListBooks() {
 		this.list = new HashMap<String, Book>();
 	}
 
-	/** Returns the HashMap<String, Book> called listBooks that contains all books in the list
-	 * and their key is their ISBN, which is a string. 
-	 * @return the listBooks
-	 */
 	public HashMap<String, Book> getList() {
 		return list;
 	}
@@ -22,14 +27,15 @@ public class ListBooks {
 		this.list = listBooks;
 	}
 
-	/** Adds an book to the listBooks parameter of this class
-	 * @param book Book to be added to the listBooks
+	/** Adds an book to class variable 'list'
+	 * @param book Book to be added to the list
 	 */
 	public void add(Book book){
 		this.list.put(book.getIsbn(), book);
 	}
 	
-	/** This returns a print-friendly String of all the books 
+	/** This returns a print-friendly String of all the books,
+	 * each toString() and on its own line. 
 	 */
 	@Override
 	public String toString() {

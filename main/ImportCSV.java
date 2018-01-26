@@ -60,8 +60,8 @@ public class ImportCSV {
 					
 					// Making sure the parent-genre to child-genre relationship is stored in the respective
 					// HashMaps of the genres
-					library.getGenre(genre).addParentGenre(library.getGenre(parentGenre));
-					library.getGenre(parentGenre).addSubGenre(library.getGenre(genre));
+					library.getGenre(genre).getParentGenres().add(library.getGenre(parentGenre));
+					library.getGenre(parentGenre).getSubGenres().add(library.getGenre(genre));
 				
 				} else { // if it is not
 					String genre = genreAndSubgenre;
@@ -183,7 +183,7 @@ public class ImportCSV {
 		for (Genre g : listGenresOfBook.keySet()) {
 			g.addBook(livre, listGenresOfBook.get(g));
 			// Including parent
-			for (Genre parentGenre : g.getParentGenres().values()) {
+			for (Genre parentGenre : g.getParentGenres().getList().values()) {
 				parentGenre.addBook(livre, listGenresOfBook.get(parentGenre));
 			}
 		}

@@ -14,8 +14,8 @@ public class Genre {
 	// the number of goodreads users who had, at the time, assigned that genre to that book. That is
 	// represented by the integer.
 	private String name;
-	private HashMap<String, Genre> parentGenres; // String should be name of parentGenre
-	private HashMap<String, Genre> subGenres; // String should be name of subGenre
+	private ListGenres parentGenres; // String should be name of parentGenre
+	private ListGenres subGenres; // String should be name of subGenre
 	
 	/** Constructs a genre with an empty listOfBooks, a name as given in argument, 
 	 * and empty lists for parentGenres and subGenres.
@@ -25,8 +25,8 @@ public class Genre {
 		super();
 		this.listOfBooks = new HashMap<Book, Integer>();
 		this.name = name;
-		this.parentGenres = new HashMap<String, Genre>();
-		this.subGenres = new HashMap<String, Genre>();
+		this.parentGenres = new ListGenres();
+		this.subGenres = new ListGenres();
 	}
 	
 	/**Note: This returns the actual Genre listOfBooks, which is not compatible
@@ -53,28 +53,20 @@ public class Genre {
 	}
 	
 	
-	public HashMap<String, Genre> getParentGenres() {
+	public ListGenres getParentGenres() {
 		return parentGenres;
 	}
 	
-	public void setParentGenres(HashMap<String, Genre> parentGenres) {
+	public void setParentGenres(ListGenres parentGenres) {
 		this.parentGenres = parentGenres;
 	}
-
-	public void addParentGenre(Genre newParentGenre) {
-		this.parentGenres.put(newParentGenre.getName(), newParentGenre);
-	}
 	
-	public HashMap<String, Genre> getSubGenres() {
+	public ListGenres getSubGenres() {
 		return subGenres;
 	}
 
-	public void setSubGenres(HashMap<String, Genre> subGenres) {
+	public void setSubGenres(ListGenres subGenres) {
 		this.subGenres = subGenres;
-	}
-	
-	public void addSubGenre(Genre newSubGenre) {
-		this.subGenres.put(newSubGenre.getName(), newSubGenre);
 	}
 
 	public void addBook(Book b, Integer i) {
@@ -88,7 +80,7 @@ public class Genre {
 	public String toStringLong() {
 
 		return "Genre: "  + name + ", number of Books: " + listOfBooks.size() 
-				+ ", parent-genres: " + parentGenres.keySet() + ", sub-genres: " + subGenres.keySet();
+				+ ", parent-genres: " + parentGenres.getList().keySet() + ", sub-genres: " + subGenres.getList().keySet();
 	}
 	
 	/** Method meant to return a listOfBooks for the genre that is compatible with further operations
