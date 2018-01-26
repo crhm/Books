@@ -128,9 +128,9 @@ public class GoodReadsData {
 	}
 	
 	/**Delegates exporting to currently set exportStrategy.
-	 * @param s The string to be exported
+	 * @param o The object to be exported
 	 */
-	public void export(String s) {
-		this.exportStrategy.export(s);
+	public void export(Object o) {
+		this.exportStrategy.export(o);
 	}
 }

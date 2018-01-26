@@ -1,6 +1,6 @@
 package export;
 
-/** IExportStrategy which outputs the string passed as argument to export(String s) in console
+/** IExportStrategy which outputs the Object passed as argument to export(Object o) in console
  *  on a new line.
  * @author crhm
  *
@@ -8,8 +8,8 @@ package export;
 public class ConsoleStrategy implements IExportStrategy {
 
 	@Override
-	public void export(String s) {
-		System.out.println(s);	
+	public void export(Object o) {
+		System.out.println(o);	
 	}
 
 }
