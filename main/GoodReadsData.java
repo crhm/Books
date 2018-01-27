@@ -119,6 +119,7 @@ public class GoodReadsData {
 		return shelf;
 	}
 	
+
 	/**Finds a genre in the list of all genres of the library.
 	 * @param s The name of the genre to find
 	 * @return the genre of that name if one exists in the library, 
@@ -133,5 +134,6 @@ public class GoodReadsData {
 			//TODO The above broke the app so figure out something else / implications of having nothing here?
 		}
 		return genre;
-	}
+  }
+  
 }

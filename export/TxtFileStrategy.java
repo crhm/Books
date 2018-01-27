@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**IExportStrategy that writes the Object passed as argument to export(Object o), in its toString() form, into a text file. 
+
  * <br>It asks the user to enter the filename. If the file already exists, it appends the String 
  * at the end of the file. If not, it creates it and writes in it.
  * <br>Throws an IOException if there is a problem writing the file, or if the user inputs an incorrect file name.

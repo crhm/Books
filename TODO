@@ -4,7 +4,16 @@ Order genres (See github issue)
 Compare libraries
 Allow user to enter path to csv
 Allow users to expand a csv or not (integrate .py script)
+Associate a library to a user and a date?
 
 MAINTENANCE
 Implement try/ catch blocks and error messages
 Check that method comments are up to date
+Figure out if ListBooks/Authors/GEnres/etc should not all implement an interface, and if so whther they can
+	aka if implementation can have a restriction of type for method type / parameters for example from object to
+	book
+Maybe Author, Genre and Shelf should implement some kind of interface to reflect the fact that they all 
+	hold a list of books and have behavior relating to that ? but same problem as above.
+	
+Should I use an interface for any other orthogonal thing?
+Delete useless setters
