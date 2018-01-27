@@ -2,8 +2,8 @@ package main;
 
 public class Shelf {
 	
-	private String name;
-	private ListBooks listOfBooks; //String is the isbn
+	final private String name;
+	final private ListBooks listOfBooks; //String is the isbn
 	
 	/** Constructor of Shelf
 	 * @param name Name of Shelf (required)

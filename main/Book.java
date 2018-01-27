@@ -3,18 +3,18 @@ import java.util.HashMap;
 
 public class Book {
 	
-	private String title;
-	private Author author;
-	private String isbn;
-	private long goodreadsID;
-	private double numPages;
-	private String yearPublished;
-	private double genRating;
-	private double userRating;
-	private String dateRead;
-	private String dateAdded;
-	private Shelf shelf;
-	private HashMap<Genre, Integer> genres;
+	final private String title;
+	final private Author author;
+	final private String isbn;
+	final private long goodreadsID;
+	final private double numPages;
+	final private String yearPublished;
+	final private double genRating;
+	final private double userRating;
+	final private String dateRead;
+	final private String dateAdded;
+	final private Shelf shelf;
+	final private HashMap<Genre, Integer> genres;
 
 	/** Constructor of Book
 	 * Ideally this data is extracted from a Goodreads export csv file

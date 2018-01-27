@@ -9,7 +9,7 @@ import java.util.HashMap;
  */
 public class ListGenres {
 	
-	private HashMap<String, Genre> list;
+	final private HashMap<String, Genre> list;
 	
 	/**ListGenres constructor.
 	 * <br>Initialises the class variable 'list', as an empty HashMap.

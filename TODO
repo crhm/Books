@@ -17,5 +17,4 @@ Maybe Author, Genre and Shelf should implement some kind of interface to reflect
 	
 Should I use an interface for any other orthogonal thing?
 Figure out if equals methods are correct or should be tweaked
-Figure out if I should make everything final
 Figure out if I should not put getBook methods in an interface of some kind...

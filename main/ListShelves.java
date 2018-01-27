@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class ListShelves {
 	
-	private HashMap<String, Shelf> list;
+	final private HashMap<String, Shelf> list;
 	
 	/**ListShelves constructor.
 	 * Initialises class variable 'list' as an empty HashMap.

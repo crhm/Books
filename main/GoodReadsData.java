@@ -9,10 +9,10 @@ import export.IExportStrategy;
  */
 public class GoodReadsData {
 
-	private ListShelves libraryShelves;
-	private ListAuthors libraryAuthors;
-	private ListBooks libraryBooks;
-	private ListGenres libraryGenres;
+	final private ListShelves libraryShelves;
+	final private ListAuthors libraryAuthors;
+	final private ListBooks libraryBooks;
+	final private ListGenres libraryGenres;
 	private IExportStrategy exportStrategy = null;
 
 	/**GoodReadsData constructor.

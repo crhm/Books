@@ -10,13 +10,13 @@ package main;
  */
 public class Genre {
 	
-	private ListBooksWithGenreAssignment listOfBooks; // This is not the usual ListBooks format for a list of books because
+	final private ListBooksWithGenreAssignment listOfBooks; // This is not the usual ListBooks format for a list of books because
 	// there is additional information to hold about each genre's assignment to a each book, namely,
 	// the number of goodreads users who had, at the time, assigned that genre to that book. That is
 	// represented by the class variable 'listWithGenreAssignment'.
-	private String name;
-	private ListGenres parentGenres; // String should be name of parentGenre
-	private ListGenres subGenres; // String should be name of subGenre
+	final private String name;
+	final private ListGenres parentGenres; // String should be name of parentGenre
+	final private ListGenres subGenres; // String should be name of subGenre
 	
 	/** Constructs a genre with an new listOfBooksWithGenreAssignment, a name as given in argument, 
 	 * and new ListGenres for parentGenres and subGenres.

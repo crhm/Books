@@ -2,10 +2,10 @@ package main;
 
 public class Author {
 	
-	private String firstName;
-	private String lastName;
-	private double goodreadsID;
-	private ListBooks listOfBooks; //String is the isbn
+	final private String firstName;
+	final private String lastName;
+	final private double goodreadsID;
+	final private ListBooks listOfBooks; //String is the isbn
 	
 	/** Constructor of Author - object author to be associated with books
 	 * Take data from Goodreads?

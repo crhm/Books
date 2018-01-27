@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class ListBooks {
 	
-	private HashMap<String, Book> list;
+	final private HashMap<String, Book> list;
 	
 	/**ListBooks constructor.
 	 * <br>Initialises class variable 'list' as an empty HashMap.

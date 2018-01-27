@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 public class ListBooksWithGenreAssignment extends ListBooks {
 	
-	private HashMap<Book, Integer> listWithGenreAssignment;
+	final private HashMap<Book, Integer> listWithGenreAssignment;
 	
 	/**ListBooksWithGenreAssignment constructor.
 	 * <br>Calls ListBooks constructor then 

@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class ListAuthors {
 	
-	private HashMap<String, Author> list;
+	final private HashMap<String, Author> list;
 	
 	/**ListAuthors constructor.
 	 * Initialises class variable 'list' as an empty HashMap.
