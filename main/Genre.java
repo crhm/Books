@@ -1,46 +1,47 @@
 package main;
-import java.util.HashMap;
 
-/** This class is for book genres and their sub-genres. 
- * This assumes that there is never more than a direct parent-child relationship, and that there
+/** This class is for book genres.
+ * <br>It keeps track of their parentGenres and their subGenres. 
+ * <br>It also keeps track of how many users assigned each book to the genre.
+ * <br>It assumes that there is never more than a direct parent-child relationship, and that there
  * is never grandparent-genres for example. (This seems to be the case in the expansion provided as
  * far as I can tell).
  * @author crhm
  */
 public class Genre {
 	
-	private HashMap<Book, Integer> listOfBooks; // This is not the usual HashMap format for a list of books because
+	private ListBooksWithGenreAssignment listOfBooks; // This is not the usual ListBooks format for a list of books because
 	// there is additional information to hold about each genre's assignment to a each book, namely,
 	// the number of goodreads users who had, at the time, assigned that genre to that book. That is
-	// represented by the integer.
+	// represented by the class variable 'listWithGenreAssignment'.
 	private String name;
-	private HashMap<String, Genre> parentGenres; // String should be name of parentGenre
-	private HashMap<String, Genre> subGenres; // String should be name of subGenre
+	private ListGenres parentGenres; // String should be name of parentGenre
+	private ListGenres subGenres; // String should be name of subGenre
 	
-	/** Constructs a genre with an empty listOfBooks, a name as given in argument, 
-	 * and empty lists for parentGenres and subGenres.
+	/** Constructs a genre with an new listOfBooksWithGenreAssignment, a name as given in argument, 
+	 * and new ListGenres for parentGenres and subGenres.
 	 * @param name String name of the genre to be created
 	 */
 	public Genre(String name) {
 		super();
-		this.listOfBooks = new HashMap<Book, Integer>();
+		this.listOfBooks = new ListBooksWithGenreAssignment();
 		this.name = name;
-		this.parentGenres = new HashMap<String, Genre>();
-		this.subGenres = new HashMap<String, Genre>();
+		this.parentGenres = new ListGenres();
+		this.subGenres = new ListGenres();
 	}
 	
-	/**Note: This returns the actual Genre listOfBooks, which is not compatible
-	 * with regular operations as it is a HashMap<Book, Integer> rather than a
-	 * HashMap<String, Book>. Use getCompatibleListOfBooks() for a usable
-	 * HashMap<String, Book>.
-	 * @return a HashMap associating each book of the genre with the number of users
-	 *  who assigned said book to said genre.
+	/**Note: This returns a ListBooksWithGenreAssignment, which has two HashMaps, one compatible
+	 * with regular operations, and one not, as it is a HashMap<Book, Integer> rather than a
+	 * HashMap<String, Book>. Use getListOfBooks().getList() for a standard HashMap<String, Book>, and 
+	 * getListOfBooks().getListWithGenreAssignment() for the one where books are paired with number of users who assigned
+	 * them to the genre.
+	 * @return a ListBooksWithGenreAssignment 
 	 */
-	public HashMap<Book, Integer> getListOfBooks() {
+	public ListBooksWithGenreAssignment getListOfBooks() {
 		return listOfBooks;
 	}
 
-	public void setListOfBooks(HashMap<Book, Integer> listOfBooks) {
+	public void setListOfBooks(ListBooksWithGenreAssignment listOfBooks) {
 		this.listOfBooks = listOfBooks;
 	}
 
@@ -53,32 +54,30 @@ public class Genre {
 	}
 	
 	
-	public HashMap<String, Genre> getParentGenres() {
+	public ListGenres getParentGenres() {
 		return parentGenres;
 	}
 	
-	public void setParentGenres(HashMap<String, Genre> parentGenres) {
+	public void setParentGenres(ListGenres parentGenres) {
 		this.parentGenres = parentGenres;
 	}
-
-	public void addParentGenre(Genre newParentGenre) {
-		this.parentGenres.put(newParentGenre.getName(), newParentGenre);
-	}
 	
-	public HashMap<String, Genre> getSubGenres() {
+	public ListGenres getSubGenres() {
 		return subGenres;
 	}
 
-	public void setSubGenres(HashMap<String, Genre> subGenres) {
+	public void setSubGenres(ListGenres subGenres) {
 		this.subGenres = subGenres;
 	}
-	
-	public void addSubGenre(Genre newSubGenre) {
-		this.subGenres.put(newSubGenre.getName(), newSubGenre);
-	}
 
+	/** Adds a book to this genre's ListBooksWithGenreAssignment, by adding to both of its 
+	 * class variable HashMaps. 
+	 * @param b The book to add to the list
+	 * @param i The number of users who assigned this book to the genre.
+	 */
 	public void addBook(Book b, Integer i) {
-		this.listOfBooks.put(b, i);
+		this.listOfBooks.addWithGenreAssignment(b, i);
+		this.listOfBooks.add(b);
 	}
 	
 	/** Returns a string of the format "Genre: genreName, number of Books: x, parent-Genres: [setOfParentGenres]"
@@ -87,21 +86,8 @@ public class Genre {
 	 */
 	public String toStringLong() {
 
-		return "Genre: "  + name + ", number of Books: " + listOfBooks.size() 
-				+ ", parent-genres: " + parentGenres.keySet() + ", sub-genres: " + subGenres.keySet();
-	}
-	
-	/** Method meant to return a listOfBooks for the genre that is compatible with further operations
-	 * as designed for a HashMap<String, Book>, and thus creates one by discarding the number
-	 * associated with each book in the main listOfBooks of Genre.
-	 * @return a compatible HashMap of the books of this genre.
-	 */
-	public HashMap<String, Book> getCompatibleListOfBooks(){
-		HashMap<String, Book> compatibleList = new HashMap<String, Book>();
-		for (Book b : listOfBooks.keySet()) {
-			compatibleList.put(b.getIsbn(), b);
-		}
-		return compatibleList;
+		return "Genre: "  + name + ", number of Books: " + listOfBooks.getList().size() 
+				+ ", parent-genres: " + parentGenres.getList().keySet() + ", sub-genres: " + subGenres.getList().keySet();
 	}
 	
 	/** Only returns the name of the genre

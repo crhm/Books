@@ -279,7 +279,7 @@ public class OrderAuthorsBy {
 	private static int calculateAveragePublicationYearInList(HashMap<String, Book> listOfBooks, Author a) {
 		BigDecimal numberOfBooksInList = new BigDecimal(0);
 		BigDecimal sumPublicationYears = new BigDecimal(0);
-		for (Book b : a.getListOfBooks().values()) {
+		for (Book b : a.getListOfBooks().getList().values()) {
 			if (listOfBooks.containsValue(b) && !b.getYearPublished().isEmpty()) {
 				numberOfBooksInList =  numberOfBooksInList.add(new BigDecimal(1));
 				sumPublicationYears = sumPublicationYears.add(new BigDecimal(b.getYearPublished()));
@@ -302,7 +302,7 @@ public class OrderAuthorsBy {
 	 */
 	private static int calculateNumberOfBooksInList(HashMap<String, Book> listOfBooks, Author a) {
 		int numberOfBooksInList = 0;
-		for (Book b : a.getListOfBooks().values()) {
+		for (Book b : a.getListOfBooks().getList().values()) {
 			if (listOfBooks.containsValue(b)) {
 				numberOfBooksInList++;
 			}
@@ -319,7 +319,7 @@ public class OrderAuthorsBy {
 	private static int calculatePercentageBooksRead(HashMap<String, Book> listOfBooks, Author a) {
 		BigDecimal numberOfBooksInList = new BigDecimal(0);
 		BigDecimal numberOfBooksRead = new BigDecimal(0);
-		for (Book b : a.getListOfBooks().values()) {
+		for (Book b : a.getListOfBooks().getList().values()) {
 			if (listOfBooks.containsValue(b)) {
 				numberOfBooksInList =  numberOfBooksInList.add(new BigDecimal(1));
 				if (b.getShelf().getName().equals("read")) {

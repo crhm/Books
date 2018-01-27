@@ -1,7 +1,8 @@
 package export;
 
-/** IExportStrategy which outputs the Object passed as argument to export(Object o) in console
- *  on a new line.
+/** IExportStrategy which outputs the object passed as argument to export(Object o) in console
+ *  on a new line, in its toString() form.
+
  * @author crhm
  *
  */
