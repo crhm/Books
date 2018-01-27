@@ -23,10 +23,6 @@ public class ListAuthors {
 		return list;
 	}
 
-	public void setList(HashMap<String, Author> listAuthors) {
-		this.list = listAuthors;
-	}
-
 	/**Adds an author to class variable 'list'.
 	 * @param author Author to add to the list.
 	 */

@@ -54,109 +54,44 @@ public class Book {
 		return title;
 	}
 
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
 	public Author getAuthor() {
 		return author;
 	}
-
-
-	public void setAuthor(Author author) {
-		this.author = author;
-	}
-
 
 	public String getIsbn() {
 		return isbn;
 	}
 
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-
-
 	public long getGoodreadsID() {
 		return goodreadsID;
 	}
-
-
-	public void setGoodreadsID(long goodreadsID) {
-		this.goodreadsID = goodreadsID;
-	}
-
 
 	public double getNumPages() {
 		return numPages;
 	}
 
-
-	public void setNumPages(double numPages) {
-		this.numPages = numPages;
-	}
-
-
 	public String getYearPublished() {
 		return yearPublished;
 	}
-
-
-	public void setYearPublished(String yearPublished) {
-		this.yearPublished = yearPublished;
-	}
-
 
 	public double getGenRating() {
 		return genRating;
 	}
 
-
-	public void setGenRating(double genRating) {
-		this.genRating = genRating;
-	}
-
-
 	public double getUserRating() {
 		return userRating;
 	}
-
-
-	public void setUserRating(double userRating) {
-		this.userRating = userRating;
-	}
-
 
 	public String getDateRead() {
 		return dateRead;
 	}
 
-
-	public void setDateRead(String dateRead) {
-		this.dateRead = dateRead;
-	}
-
-
 	public String getDateAdded() {
 		return dateAdded;
 	}
 
-
-	public void setDateAdded(String dateAdded) {
-		this.dateAdded = dateAdded;
-	}
-
-
 	public Shelf getShelf() {
 		return shelf;
-	}
-
-
-	public void setShelf(Shelf shelf) {
-		this.shelf = shelf;
 	}
 
 	/** Returns a List of bookGenres, which associate a Genre and the number of users 
@@ -166,16 +101,6 @@ public class Book {
 	public HashMap<Genre, Integer> getListGenres() {
 		return genres;
 	}
-
-	/** Sets the list of genres of the book; parameter ought to be a hashMap,
-	 * which associate a Genre the number of users who assigned 
-	 * this genre to the book.
-	 * @param genres the List of book genres to set
-	 */
-	public void setGenres(HashMap<Genre, Integer> genres) {
-		this.genres = genres;
-	}
-
 
 	/** 
 	 * @return All parameters of the book, in order, one per line: title, author, isbn, goodreadsID, 

@@ -30,10 +30,6 @@ public class ListBooksWithGenreAssignment extends ListBooks {
 		return listWithGenreAssignment;
 	}
 
-	public void setListWithGenreAssignment(HashMap<Book, Integer> listWithGenreAssignment) {
-		this.listWithGenreAssignment = listWithGenreAssignment;
-	}
-
 	/** Adds an book to class variable 'listWithGenreAssignment'
 	 * @param book Book to be added to the list
 	 * @param i number of users who assigned this book to this genre

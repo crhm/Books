@@ -21,10 +21,6 @@ public class ListGenres {
 	public HashMap<String, Genre> getList() {
 		return this.list;
 	}
-
-	public void setList(HashMap<String, Genre> listGenres) {
-		this.list = listGenres;
-	}
 	
 	/** Adds a genre to the class variable 'list'
 	 * @param genre Genre to be added to the list

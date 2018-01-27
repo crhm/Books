@@ -22,10 +22,6 @@ public class ListShelves {
 	public HashMap<String, Shelf> getList() {
 		return list;
 	}
-
-	public void setList(HashMap<String, Shelf> list) {
-		this.list = list;
-	}
 	
 	/**Adds a Shelf to class variable 'list'.
 	 * @param shelf Shelf to add to the list.

@@ -23,10 +23,6 @@ public class ListBooks {
 		return list;
 	}
 
-	public void setList(HashMap<String, Book> listBooks) {
-		this.list = listBooks;
-	}
-
 	/** Adds an book to class variable 'list'
 	 * @param book Book to be added to the list
 	 */

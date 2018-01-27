@@ -41,33 +41,16 @@ public class Genre {
 		return listOfBooks;
 	}
 
-	public void setListOfBooks(ListBooksWithGenreAssignment listOfBooks) {
-		this.listOfBooks = listOfBooks;
-	}
-
 	public String getName() {
 		return name;
 	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	
 	public ListGenres getParentGenres() {
 		return parentGenres;
 	}
 	
-	public void setParentGenres(ListGenres parentGenres) {
-		this.parentGenres = parentGenres;
-	}
-	
 	public ListGenres getSubGenres() {
 		return subGenres;
-	}
-
-	public void setSubGenres(ListGenres subGenres) {
-		this.subGenres = subGenres;
 	}
 
 	/** Adds a book to this genre's ListBooksWithGenreAssignment, by adding to both of its 

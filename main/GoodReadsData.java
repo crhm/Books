@@ -29,32 +29,16 @@ public class GoodReadsData {
 		return this.libraryShelves;
 	}
 
-	public void setListShelves(ListShelves libraryShelves) {
-		this.libraryShelves = libraryShelves;
-	}
-
 	public ListAuthors getLibraryAuthors() {
 		return this.libraryAuthors;
-	}
-
-	public void setLibraryAuthors(ListAuthors libraryAuthors) {
-		this.libraryAuthors = libraryAuthors;
 	}
 
 	public ListBooks getLibraryBooks() {
 		return this.libraryBooks;
 	}
 
-	public void setLibraryBooks(ListBooks libraryBooks) {
-		this.libraryBooks = libraryBooks;
-	}
-
 	public ListGenres getLibraryGenres() {
 		return libraryGenres;
-	}
-
-	public void setLibraryGenres(ListGenres libraryGenres) {
-		this.libraryGenres = libraryGenres;
 	}
 
 	/**Sets the export strategy to be subsequently used for export(Object o)

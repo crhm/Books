@@ -18,24 +18,12 @@ public class Shelf {
 		return name;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
-	}
-	
 	/** Returns the HashMap<String, Book> called listOfBooks which contains all the books in the shelf, 
 	 * and their key is their ISBN.
 	 * @return
 	 */
 	public ListBooks getListOfBooks() {
 		return listOfBooks;
-	}
-	
-	/** Sets the list of books that the shelf contains, 
-	 * @param listOfBooks A HashMap with book ISBNs as keys and Book instances as values that will be the list
-	 * of books that the shelf contains
-	 */
-	public void setListOfBooks(ListBooks listOfBooks) {
-		this.listOfBooks = listOfBooks;
 	}
 	
 	/** Adds a book to the Shelf by putting it in its listOfBooks
@@ -50,7 +38,7 @@ public class Shelf {
 	 * @param title String of book title
 	 * @return All info available on that book
 	 */
-	public String getBook(String title) {
+	public String getBook(String title) { //TODO figure out if this is needed and if it should be simplified cf. GoodReadsData()
 		String errorMessage = "Sorry, " + title + " was not found in this shelf";
 		double flag = 0;
 		String bookInfo = "";

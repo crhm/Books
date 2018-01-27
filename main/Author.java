@@ -23,20 +23,13 @@ public class Author {
 	public String getFirstName() {
 		return firstName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+	
 	public String getLastName() {
 		return lastName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+	
 	public double getGoodreadsID() {
 		return goodreadsID;
-	}
-	public void setGoodreadsID(double goodreadsID) {
-		this.goodreadsID = goodreadsID;
 	}
 	
 	public void addBook(Book book){
@@ -52,7 +45,7 @@ public class Author {
 	 * @param title String of book title
 	 * @return All info available on that book
 	 */
-	public String getBook(String title) {
+	public String getBook(String title) { //TODO figure out if I need this, or should make it simpler cf. getBook() in GoodReadsData
 		String errorMessage = "Sorry, " + title + " was not found for this author";
 		double flag = 0;
 		String bookInfo = "";

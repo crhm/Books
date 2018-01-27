@@ -16,4 +16,6 @@ Maybe Author, Genre and Shelf should implement some kind of interface to reflect
 	hold a list of books and have behavior relating to that ? but same problem as above.
 	
 Should I use an interface for any other orthogonal thing?
-Delete useless setters
+Figure out if equals methods are correct or should be tweaked
+Figure out if I should make everything final
+Figure out if I should not put getBook methods in an interface of some kind...
