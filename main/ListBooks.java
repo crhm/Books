@@ -40,6 +40,36 @@ public class ListBooks {
 			printableList = printableList.concat(bo + "\n");
 		}
 		return printableList;
-	}	
+	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((list == null) ? 0 : list.hashCode());
+		return result;
+	}
+
+	/**Returns true if object is a ListBooks with a HashMap 'list' equal to this one's.
+	 * <br>If not, returns false.
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ListBooks other = (ListBooks) obj;
+		if (list == null) {
+			if (other.list != null)
+				return false;
+		} else if (!list.equals(other.list))
+			return false;
+		return true;
+	}
+
+
+	
 }

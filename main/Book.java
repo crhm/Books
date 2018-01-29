@@ -144,8 +144,8 @@ public class Book {
 		return result;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**Returns true if obj is a Book witht the same author and title as this one.
+	 *  <br>Returns false if not.
 	 */
 	@Override
 	public boolean equals(Object obj) {

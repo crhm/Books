@@ -10,13 +10,6 @@ Add Read dates from expansion to books
 MAINTENANCE
 Implement try/ catch blocks and error messages
 Check that method comments are up to date
-Figure out if ListBooks/Authors/GEnres/etc should not all implement an interface, and if so whther they can
-	aka if implementation can have a restriction of type for method type / parameters for example from object to
-	book
-Maybe Author, Genre and Shelf should implement some kind of interface to reflect the fact that they all 
-	hold a list of books and have behavior relating to that ? but same problem as above.
-	
 Should I use an interface for any other orthogonal thing?
-Figure out if equals methods are correct or should be tweaked
 Figure out if I should not put getBook methods in an interface of some kind...
 Change python script to parse book genre page without requiring login

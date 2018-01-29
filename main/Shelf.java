@@ -86,8 +86,11 @@ public class Shelf {
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) {
 			return false;
+		} else if (!listOfBooks.equals(other.getListOfBooks())) {
+			return false;
+		}
 		return true;
 	}
 	
